@@ -216,9 +216,9 @@
       <category term="ICPC" scheme="http://decision01.cn/categories/ICPC/"/>
     
     
-      <category term="C/C++" scheme="http://decision01.cn/tags/C-C/"/>
-    
       <category term="ICPC" scheme="http://decision01.cn/tags/ICPC/"/>
+    
+      <category term="C/C++" scheme="http://decision01.cn/tags/C-C/"/>
     
       <category term="字符串" scheme="http://decision01.cn/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
     
@@ -248,11 +248,11 @@
       <category term="Codeforces" scheme="http://decision01.cn/categories/Codeforces/"/>
     
     
-      <category term="C/C++" scheme="http://decision01.cn/tags/C-C/"/>
-    
       <category term="Codeforces" scheme="http://decision01.cn/tags/Codeforces/"/>
     
       <category term="ICPC" scheme="http://decision01.cn/tags/ICPC/"/>
+    
+      <category term="C/C++" scheme="http://decision01.cn/tags/C-C/"/>
     
   </entry>
   

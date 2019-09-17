@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://decision01.cn/"/>
-  <updated>2019-08-23T14:58:23.388Z</updated>
+  <updated>2019-09-17T15:17:05.049Z</updated>
   <id>http://decision01.cn/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PE文件结构</title>
+    <link href="http://decision01.cn/2019/09/17/PE%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/"/>
+    <id>http://decision01.cn/2019/09/17/PE文件结构/</id>
+    <published>2019-09-17T15:07:27.000Z</published>
+    <updated>2019-09-17T15:17:05.049Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><blockquote><p>PE文件的全称是Portable Executable，意为可移植的可执行的文件，常见的EXE、DLL、OCX、SYS、COM都是PE文件，PE文件是微软Windows操作系统上的程序文件（可能是间接被执行，如DLL）<br>——百度百科</p></blockquote><h5 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h5><p>PE文件使用的是平面地址空间，代码和数据被合并在一起，组成庞大的组织结构。文件的内容分割为不同的区块（如.data、.idata、.text，这些区块甚至可以自己命名），区段中包含代码数据，各个区块按照页边界来对齐，区块没有限制大小，是一个连续的结构。每块都有他自己在内存中的属性，比如：这个块是否可读可写，或者只读等等。<br>在加载的时候，windows加载器遍历整个PE文件并决定文件的哪个部分被映射，这种映射方式是将文件较高的偏移位置映射到较高的内存地址中。<br><img src="./1568626216975.png" alt="PE文件加载到内存中的情形"></p><h5 id="VA-amp-RVA"><a href="#VA-amp-RVA" class="headerlink" title="VA &amp; RVA"></a>VA &amp; RVA</h5><p>VA：进程虚拟内存的绝对地址<br>RVA：相对虚拟地址，从某个基准地址开始的相对地址</p><h5 id="DOS头"><a href="#DOS头" class="headerlink" title="DOS头"></a>DOS头</h5><p>在PE头的最前面有一个<code>IMAGE_DOS_HEADER</code>结构体，用于扩展已有的DOS EXE头<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _IMAGE_DOS_HEADER &#123;      </span><br><span class="line">    WORD   e_magic;                     </span><br><span class="line">    WORD   e_cblp;                      </span><br><span class="line">    WORD   e_cp;                        </span><br><span class="line">    WORD   e_crlc;                      </span><br><span class="line">    WORD   e_cparhdr;                   </span><br><span class="line">    WORD   e_minalloc;                  </span><br><span class="line">    WORD   e_maxalloc;                  </span><br><span class="line">    WORD   e_ss;                       </span><br><span class="line">    WORD   e_sp;                     </span><br><span class="line">    WORD   e_csum;                      </span><br><span class="line">    WORD   e_ip;                       </span><br><span class="line">    WORD   e_cs;                        </span><br><span class="line">    WORD   e_lfarlc;                    </span><br><span class="line">    WORD   e_ovno;                      </span><br><span class="line">    WORD   e_res[4];                   </span><br><span class="line">    WORD   e_oemid;                     </span><br><span class="line">    WORD   e_oeminfo;                   </span><br><span class="line">    WORD   e_res2[10];                 </span><br><span class="line">    LONG   e_lfanew;                   </span><br><span class="line">  &#125; IMAGE_DOS_HEADER, *PIMAGE_DOS_HEADER;</span><br></pre></td></tr></table></figure></p><p>两个重要成员：</p><ul><li><code>e_magic</code>：DOS签名，一般为ASCII值”MZ“</li><li><code>e_lfanew</code>：指示NT头的偏移</li></ul><h5 id="DOS存根（stub）"><a href="#DOS存根（stub）" class="headerlink" title="DOS存根（stub）"></a>DOS存根（stub）</h5><p>由代码和数据混合而成的一个大小不固定的可选项，可以存放一些不会影响程序运行的数据，在通常的程序中，会存放<code>This program cannot be run in Dos mode</code></p><h5 id="NT头"><a href="#NT头" class="headerlink" title="NT头"></a>NT头</h5><p>NT头结构体有三个成员：签名结构体、文件头、可选头<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_NT_HEADERS</span> &#123;</span></span><br><span class="line">DWORD Signatured;</span><br><span class="line">IMAGE_FILE_HEADER FileHeader;</span><br><span class="line">IMAGE_OPTIONAL_HEADER32 OptionalHeader;</span><br><span class="line">&#125; IMAGE_NT_HEADER32, *PIMAGE_NT_HEADERS32;</span><br></pre></td></tr></table></figure></p><h5 id="NT头：文件头"><a href="#NT头：文件头" class="headerlink" title="NT头：文件头"></a>NT头：文件头</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_FILE_HEADER</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    WORD Machine;                   <span class="comment">// 文件运行平台</span></span><br><span class="line">    WORD NumberOfSections;          <span class="comment">// 区段个数</span></span><br><span class="line">    DWORD TimeDateStamp;            <span class="comment">// 文件创建时间</span></span><br><span class="line">    DWORD PointerToSymbolTable;     <span class="comment">// 符号表偏移</span></span><br><span class="line">    DWORD NumberOfSymbols;          <span class="comment">// 符号个数</span></span><br><span class="line">    WORD SizeOfOptionalHeader;      <span class="comment">// 扩展头大小</span></span><br><span class="line">    WORD Characteristics;           <span class="comment">// PE文件属性</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><del>（待续。。。）</del></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h5 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h5&gt;&lt;blockquote&gt;
+&lt;p&gt;PE文件的全称是Portable Executable，意为可移植的可执行的文件，常见的EXE、DLL、OCX、S
+      
+    
+    </summary>
+    
+      <category term="Reverse" scheme="http://decision01.cn/categories/Reverse/"/>
+    
+    
+      <category term="File Struct" scheme="http://decision01.cn/tags/File-Struct/"/>
+    
+  </entry>
   
   <entry>
     <title>Codeforces1207-C Gas Pipeline</title>

@@ -98,23 +98,20 @@
 
 
 
-  <meta name="description" content="初始实地规划UL:  27°20’6.05”北  105°15’18.66”东DR: 27°16’29.70”北  105°20’6.26”东实地面积：$6635.27  7914.32 m^2$Minecraft内部方块：$12700160000$分块：$1216$分块面积：10581600视角海拔高度：11.84公里影像时间：$2018/12/3$ 区块一的建设选定区块(80008000 ~">
-<meta name="keywords" content="Minecraft">
+  <meta name="description" content="前言 PE文件的全称是Portable Executable，意为可移植的可执行的文件，常见的EXE、DLL、OCX、SYS、COM都是PE文件，PE文件是微软Windows操作系统上的程序文件（可能是间接被执行，如DLL）——百度百科  简述PE文件使用的是平面地址空间，代码和数据被合并在一起，组成庞大的组织结构。文件的内容分割为不同的区块（如.data、.idata、.text，这些区块甚至可">
+<meta name="keywords" content="File Struct">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Minecraft大型地图规划记录">
-<meta property="og:url" content="http://decision01.cn/2019/04/02/Minecraft大型地图规划记录/index.html">
+<meta property="og:title" content="PE文件结构">
+<meta property="og:url" content="http://decision01.cn/2019/09/17/PE文件结构/index.html">
 <meta property="og:site_name" content="Decision&#39;s Blog">
-<meta property="og:description" content="初始实地规划UL:  27°20’6.05”北  105°15’18.66”东DR: 27°16’29.70”北  105°20’6.26”东实地面积：$6635.27  7914.32 m^2$Minecraft内部方块：$12700160000$分块：$1216$分块面积：10581600视角海拔高度：11.84公里影像时间：$2018/12/3$ 区块一的建设选定区块(80008000 ~">
+<meta property="og:description" content="前言 PE文件的全称是Portable Executable，意为可移植的可执行的文件，常见的EXE、DLL、OCX、SYS、COM都是PE文件，PE文件是微软Windows操作系统上的程序文件（可能是间接被执行，如DLL）——百度百科  简述PE文件使用的是平面地址空间，代码和数据被合并在一起，组成庞大的组织结构。文件的内容分割为不同的区块（如.data、.idata、.text，这些区块甚至可">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://decision01.cn/2019/04/02/Minecraft大型地图规划记录/QQ截图20190329132606.jpg">
-<meta property="og:image" content="http://decision01.cn/2019/04/02/Minecraft大型地图规划记录/QQ截图20190402213157.jpg">
-<meta property="og:image" content="http://decision01.cn/2019/04/02/Minecraft大型地图规划记录/2019-04-02_21.25.34.png">
-<meta property="og:image" content="http://decision01.cn/2019/04/02/Minecraft大型地图规划记录/2019-04-02_21.25.12.png">
-<meta property="og:updated_time" content="2019-04-02T13:45:07.005Z">
+<meta property="og:image" content="http://decision01.cn/2019/09/17/PE文件结构/1568626216975.png">
+<meta property="og:updated_time" content="2019-09-17T15:17:05.049Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Minecraft大型地图规划记录">
-<meta name="twitter:description" content="初始实地规划UL:  27°20’6.05”北  105°15’18.66”东DR: 27°16’29.70”北  105°20’6.26”东实地面积：$6635.27  7914.32 m^2$Minecraft内部方块：$12700160000$分块：$1216$分块面积：10581600视角海拔高度：11.84公里影像时间：$2018/12/3$ 区块一的建设选定区块(80008000 ~">
-<meta name="twitter:image" content="http://decision01.cn/2019/04/02/Minecraft大型地图规划记录/QQ截图20190329132606.jpg">
+<meta name="twitter:title" content="PE文件结构">
+<meta name="twitter:description" content="前言 PE文件的全称是Portable Executable，意为可移植的可执行的文件，常见的EXE、DLL、OCX、SYS、COM都是PE文件，PE文件是微软Windows操作系统上的程序文件（可能是间接被执行，如DLL）——百度百科  简述PE文件使用的是平面地址空间，代码和数据被合并在一起，组成庞大的组织结构。文件的内容分割为不同的区块（如.data、.idata、.text，这些区块甚至可">
+<meta name="twitter:image" content="http://decision01.cn/2019/09/17/PE文件结构/1568626216975.png">
 
 
 
@@ -123,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="http://decision01.cn/2019/04/02/Minecraft大型地图规划记录/">
+  <link rel="canonical" href="http://decision01.cn/2019/09/17/PE文件结构/">
 
 
 
@@ -133,7 +130,7 @@
   };
 </script>
 
-  <title>Minecraft大型地图规划记录 | Decision's Blog</title>
+  <title>PE文件结构 | Decision's Blog</title>
   
 
 
@@ -353,7 +350,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://decision01.cn/2019/04/02/Minecraft大型地图规划记录/">
+    <link itemprop="mainEntityOfPage" href="http://decision01.cn/2019/09/17/PE文件结构/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Decision">
@@ -370,7 +367,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Minecraft大型地图规划记录
+          <h1 class="post-title" itemprop="name headline">PE文件结构
 
               
             
@@ -396,7 +393,7 @@
                 
               
 
-              <time title="创建时间：2019-04-02 21:34:24 / 修改时间：21:45:07" itemprop="dateCreated datePublished" datetime="2019-04-02T21:34:24+08:00">2019-04-02</time>
+              <time title="创建时间：2019-09-17 23:07:27 / 修改时间：23:17:05" itemprop="dateCreated datePublished" datetime="2019-09-17T23:07:27+08:00">2019-09-17</time>
             
 
             
@@ -418,7 +415,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Minecraft/" itemprop="url" rel="index"><span itemprop="name">Minecraft</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Reverse/" itemprop="url" rel="index"><span itemprop="name">Reverse</span></a></span>
 
                 
                 
@@ -437,8 +434,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/04/02/Minecraft大型地图规划记录/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/02/Minecraft大型地图规划记录/" itemprop="commentCount"></span>
+                <a href="/2019/09/17/PE文件结构/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/09/17/PE文件结构/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -446,7 +443,7 @@
 
           
           
-            <span id="/2019/04/02/Minecraft大型地图规划记录/" class="leancloud_visitors" data-flag-title="Minecraft大型地图规划记录">
+            <span id="/2019/09/17/PE文件结构/" class="leancloud_visitors" data-flag-title="PE文件结构">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -477,9 +474,21 @@
       
 
       
-        <h4 id="初始实地规划"><a href="#初始实地规划" class="headerlink" title="初始实地规划"></a>初始实地规划</h4><p>UL:  27°20’6.05”北  105°15’18.66”东<br>DR: 27°16’29.70”北  105°20’6.26”东<br>实地面积：$6635.27 <em> 7914.32 m^2$<br>Minecraft内部方块：$12700</em>160000$<br>分块：$12<em>16$<br>分块面积：1058</em>1600<br>视角海拔高度：11.84公里<br>影像时间：$2018/12/3$<br><img src="./QQ截图20190329132606.jpg" alt="Alt text"></p>
-<h4 id="区块一的建设"><a href="#区块一的建设" class="headerlink" title="区块一的建设"></a>区块一的建设</h4><p>选定区块(8000<em>8000 ~ 9000</em>9000)进行建设<br>首先在google earth上定位出重要点对应的位置，比例为1米对应2个方块<br><img src="./QQ截图20190402213157.jpg" alt="Alt text"></p>
-<h5 id="河道的建设"><a href="#河道的建设" class="headerlink" title="河道的建设"></a>河道的建设</h5><p>之前我没有发现worldedit中的远程魔杖<code>/farwand</code>和选区移动<code>//shift &lt;数量&gt; [方向]</code>以及拓展选区<code>//expand &lt;数量&gt; [方向]</code>收缩选区<code>//contract &lt;数量&gt; [方向]</code>的指令，导致不规则选区的操作十分繁杂<br>那么现在只需要在<code>poly</code>模式下进行对应处理即可<br><img src="./2019-04-02_21.25.34.png" alt="Alt text"><br><img src="./2019-04-02_21.25.12.png" alt="Alt text"></p>
+        <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><blockquote>
+<p>PE文件的全称是Portable Executable，意为可移植的可执行的文件，常见的EXE、DLL、OCX、SYS、COM都是PE文件，PE文件是微软Windows操作系统上的程序文件（可能是间接被执行，如DLL）<br>——百度百科</p>
+</blockquote>
+<h5 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h5><p>PE文件使用的是平面地址空间，代码和数据被合并在一起，组成庞大的组织结构。文件的内容分割为不同的区块（如.data、.idata、.text，这些区块甚至可以自己命名），区段中包含代码数据，各个区块按照页边界来对齐，区块没有限制大小，是一个连续的结构。每块都有他自己在内存中的属性，比如：这个块是否可读可写，或者只读等等。<br>在加载的时候，windows加载器遍历整个PE文件并决定文件的哪个部分被映射，这种映射方式是将文件较高的偏移位置映射到较高的内存地址中。<br><img src="./1568626216975.png" alt="PE文件加载到内存中的情形"></p>
+<h5 id="VA-amp-RVA"><a href="#VA-amp-RVA" class="headerlink" title="VA &amp; RVA"></a>VA &amp; RVA</h5><p>VA：进程虚拟内存的绝对地址<br>RVA：相对虚拟地址，从某个基准地址开始的相对地址</p>
+<h5 id="DOS头"><a href="#DOS头" class="headerlink" title="DOS头"></a>DOS头</h5><p>在PE头的最前面有一个<code>IMAGE_DOS_HEADER</code>结构体，用于扩展已有的DOS EXE头<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _IMAGE_DOS_HEADER &#123;      </span><br><span class="line">    WORD   e_magic;                     </span><br><span class="line">    WORD   e_cblp;                      </span><br><span class="line">    WORD   e_cp;                        </span><br><span class="line">    WORD   e_crlc;                      </span><br><span class="line">    WORD   e_cparhdr;                   </span><br><span class="line">    WORD   e_minalloc;                  </span><br><span class="line">    WORD   e_maxalloc;                  </span><br><span class="line">    WORD   e_ss;                       </span><br><span class="line">    WORD   e_sp;                     </span><br><span class="line">    WORD   e_csum;                      </span><br><span class="line">    WORD   e_ip;                       </span><br><span class="line">    WORD   e_cs;                        </span><br><span class="line">    WORD   e_lfarlc;                    </span><br><span class="line">    WORD   e_ovno;                      </span><br><span class="line">    WORD   e_res[4];                   </span><br><span class="line">    WORD   e_oemid;                     </span><br><span class="line">    WORD   e_oeminfo;                   </span><br><span class="line">    WORD   e_res2[10];                 </span><br><span class="line">    LONG   e_lfanew;                   </span><br><span class="line">  &#125; IMAGE_DOS_HEADER, *PIMAGE_DOS_HEADER;</span><br></pre></td></tr></table></figure></p>
+<p>两个重要成员：</p>
+<ul>
+<li><code>e_magic</code>：DOS签名，一般为ASCII值”MZ“</li>
+<li><code>e_lfanew</code>：指示NT头的偏移</li>
+</ul>
+<h5 id="DOS存根（stub）"><a href="#DOS存根（stub）" class="headerlink" title="DOS存根（stub）"></a>DOS存根（stub）</h5><p>由代码和数据混合而成的一个大小不固定的可选项，可以存放一些不会影响程序运行的数据，在通常的程序中，会存放<code>This program cannot be run in Dos mode</code></p>
+<h5 id="NT头"><a href="#NT头" class="headerlink" title="NT头"></a>NT头</h5><p>NT头结构体有三个成员：签名结构体、文件头、可选头<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_NT_HEADERS</span> &#123;</span></span><br><span class="line">	DWORD Signatured;</span><br><span class="line">	IMAGE_FILE_HEADER FileHeader;</span><br><span class="line">	IMAGE_OPTIONAL_HEADER32 OptionalHeader;</span><br><span class="line">&#125; IMAGE_NT_HEADER32, *PIMAGE_NT_HEADERS32;</span><br></pre></td></tr></table></figure></p>
+<h5 id="NT头：文件头"><a href="#NT头：文件头" class="headerlink" title="NT头：文件头"></a>NT头：文件头</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_FILE_HEADER</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    WORD Machine;                   <span class="comment">// 文件运行平台</span></span><br><span class="line">    WORD NumberOfSections;          <span class="comment">// 区段个数</span></span><br><span class="line">    DWORD TimeDateStamp;            <span class="comment">// 文件创建时间</span></span><br><span class="line">    DWORD PointerToSymbolTable;     <span class="comment">// 符号表偏移</span></span><br><span class="line">    DWORD NumberOfSymbols;          <span class="comment">// 符号个数</span></span><br><span class="line">    WORD SizeOfOptionalHeader;      <span class="comment">// 扩展头大小</span></span><br><span class="line">    WORD Characteristics;           <span class="comment">// PE文件属性</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><del>（待续。。。）</del></p>
 
       
     </div>
@@ -503,7 +512,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Minecraft/" rel="tag"># Minecraft</a>
+            <a href="/tags/File-Struct/" rel="tag"># File Struct</a>
           
         </div>
       
@@ -516,8 +525,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/21/字符串学习笔记/" rel="next" title="字符串学习笔记">
-                <i class="fa fa-chevron-left"></i> 字符串学习笔记
+              <a href="/2019/08/23/Codeforces1207C/" rel="next" title="Codeforces1207-C Gas Pipeline">
+                <i class="fa fa-chevron-left"></i> Codeforces1207-C Gas Pipeline
               </a>
             
           </div>
@@ -525,10 +534,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/13/UESTC暑假前集训-数据结构/" rel="prev" title="UESTC暑假前集训-数据结构-解题报告">
-                UESTC暑假前集训-数据结构-解题报告 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -774,7 +779,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始实地规划"><span class="nav-number">1.</span> <span class="nav-text">初始实地规划</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#区块一的建设"><span class="nav-number">2.</span> <span class="nav-text">区块一的建设</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#河道的建设"><span class="nav-number">2.1.</span> <span class="nav-text">河道的建设</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#简述"><span class="nav-number">2.</span> <span class="nav-text">简述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#VA-amp-RVA"><span class="nav-number">3.</span> <span class="nav-text">VA &amp; RVA</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DOS头"><span class="nav-number">4.</span> <span class="nav-text">DOS头</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DOS存根（stub）"><span class="nav-number">5.</span> <span class="nav-text">DOS存根（stub）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NT头"><span class="nav-number">6.</span> <span class="nav-text">NT头</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NT头：文件头"><span class="nav-number">7.</span> <span class="nav-text">NT头：文件头</span></a></li></ol></div>
             
 
           </div>
@@ -1087,6 +1092,46 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 

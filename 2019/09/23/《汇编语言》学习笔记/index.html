@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="寄存器(reg)： CPU中存储数据的器件 在8086CPU中，有14个寄存器，可以分为8个通用寄存器、1个指令指针寄存器、1个标志寄存器以及4个段寄存器  通用寄存器：用于传送和暂存数据，也可参与算术逻辑运算，并保存运算结果。AH&amp;amp;AL = AX (accumulator):累加寄存器，主要是在进行运算的时候存放操作数，同时所有的I/O指令都使用这一寄存器与外界设备传送数据BH&amp;amp;">
+<meta name="keywords" content="Assemble">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《汇编语言》学习笔记">
+<meta property="og:url" content="http://decision01.cn/2019/09/23/《汇编语言》学习笔记/index.html">
+<meta property="og:site_name" content="Decision&#39;s Blog">
+<meta property="og:description" content="寄存器(reg)： CPU中存储数据的器件 在8086CPU中，有14个寄存器，可以分为8个通用寄存器、1个指令指针寄存器、1个标志寄存器以及4个段寄存器  通用寄存器：用于传送和暂存数据，也可参与算术逻辑运算，并保存运算结果。AH&amp;amp;AL = AX (accumulator):累加寄存器，主要是在进行运算的时候存放操作数，同时所有的I/O指令都使用这一寄存器与外界设备传送数据BH&amp;amp;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-23T12:01:54.916Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《汇编语言》学习笔记">
+<meta name="twitter:description" content="寄存器(reg)： CPU中存储数据的器件 在8086CPU中，有14个寄存器，可以分为8个通用寄存器、1个指令指针寄存器、1个标志寄存器以及4个段寄存器  通用寄存器：用于传送和暂存数据，也可参与算术逻辑运算，并保存运算结果。AH&amp;amp;AL = AX (accumulator):累加寄存器，主要是在进行运算的时候存放操作数，同时所有的I/O指令都使用这一寄存器与外界设备传送数据BH&amp;amp;">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Decision's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://decision01.cn/2019/09/23/《汇编语言》学习笔记/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>《汇编语言》学习笔记 | Decision's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Decision's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">山河犹在 故人长绝</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://decision01.cn/2019/09/23/《汇编语言》学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Decision">
+      <meta itemprop="description" content="山河犹在 故人长绝">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/d3c332e47b56134bab228c086c6578d5?s=250">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Decision's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">《汇编语言》学习笔记
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-23 20:00:02 / 修改时间：20:01:54" itemprop="dateCreated datePublished" datetime="2019-09-23T20:00:02+08:00">2019-09-23</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Reverse/" itemprop="url" rel="index"><span itemprop="name">Reverse</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/09/23/《汇编语言》学习笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/09/23/《汇编语言》学习笔记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/09/23/《汇编语言》学习笔记/" class="leancloud_visitors" data-flag-title="《汇编语言》学习笔记">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="寄存器-reg-：-CPU中存储数据的器件"><a href="#寄存器-reg-：-CPU中存储数据的器件" class="headerlink" title="寄存器(reg)： CPU中存储数据的器件"></a>寄存器(reg)： CPU中存储数据的器件</h4><blockquote>
+<p>在8086CPU中，有14个寄存器，可以分为8个通用寄存器、1个指令指针寄存器、1个标志寄存器以及4个段寄存器</p>
+</blockquote>
+<h5 id="通用寄存器：用于传送和暂存数据，也可参与算术逻辑运算，并保存运算结果。"><a href="#通用寄存器：用于传送和暂存数据，也可参与算术逻辑运算，并保存运算结果。" class="headerlink" title="通用寄存器：用于传送和暂存数据，也可参与算术逻辑运算，并保存运算结果。"></a>通用寄存器：用于传送和暂存数据，也可参与算术逻辑运算，并保存运算结果。</h5><p>AH&amp;AL = AX (accumulator):累加寄存器，主要是在进行运算的时候存放<strong>操作数</strong>，同时<strong>所有的I/O指令都使用这一寄存器与外界设备传送数据</strong><br>BH&amp;BL = BX (basic):基址寄存器，用于地址的索引<br>CH&amp;CL = CX (count):计数寄存器，用于计数，在移位操作以及循环(loop)时作为隐含的<strong>计数器</strong><br>DH&amp;DL = DX(data):数据寄存器，用于数据传递。在书中以8086CPU为例，如果是要用32位的数作为被除数时，通过使用DX与AX存放数据，DX放高16位，AX放低16位<br>SP(Stack Pointer):堆栈指针，与SS配合使用，可指向目前的<strong>堆栈</strong>位置（也就是当前栈顶的偏移地址）<br>BP(Base Pointer):基址指针寄存器，可用作SS的一个<strong>相对基址</strong>位置<br>SI(Source Index):源变址寄存器，可用来存放<strong>相对于DS段之源变址指针</strong>，主要用于对内存单元操作时与DS一起表示DS:SI处的内存单元<br>DI(Destination Index):目的变址寄存器，可用来存放<strong>相对于ES 段之目的变址指针</strong>，主要用于对内存单元操作时与DS一起表示DS:DI处的内存单元</p>
+<blockquote>
+<p>SI和DI寄存器不可以分为两个8位的寄存器使用<br>在没有寄存器参与的指令中，应该使用指令<code>X ptr</code>参与以指明要操作的内存单元的大小为<code>byte</code>大小或<code>word</code>大小，否则CPU无法指定要访问的单元是字单元还是字节单元</p>
+</blockquote>
+<h5 id="指针指令寄存器：用于控制程序中指令的执行顺序"><a href="#指针指令寄存器：用于控制程序中指令的执行顺序" class="headerlink" title="指针指令寄存器：用于控制程序中指令的执行顺序"></a>指针指令寄存器：用于控制程序中指令的执行顺序</h5><p>IP：指向段内指令的偏移量，<strong>在8086机中，CPU将CS:IP指向的内容当作指令执行</strong>。</p>
+<h5 id="标志寄存器"><a href="#标志寄存器" class="headerlink" title="标志寄存器"></a>标志寄存器</h5><p>PSW：也可称作flag寄存器，16位的存放条件标志、控制标志寄存器，在0、2、4、6、7、8、9、10、11位上分别对应了CF、PF、AF、ZF、SF、TF、IF、DF、OF标志</p>
+<blockquote>
+<p>CF(Carry Flag)：记录了运算结果给的最高有效位向更高位的进位值，或从更高位的借位值<br>PF(Parity Flag)：记录相关的指令执行后结果的所有bit位中的1的个数是否是偶数，若是偶数则对应为1<br>AF(Auxiliary Carry Flag)：<br>ZF(Zero Flag)：零标志，记录在相关指令执行后结果是否为0，结果为0时(ZF)=1<br>SF(Sign Flag)：记录相关指令执行后结果是否为负，如果是负则对应为1，可以理解为它记录了结果的最高位符号位<br>TF(Trap Flag)：<br>IF(Interrupt-enable Flag)：<br>DF(Direction Flag)：控制每次操作之后SI和DI的增减，(DF) = 1时两者递增，反之递减<br>OF(Overflow Flag)：溢出标记位，相加操作移除</p>
+<h5 id="段寄存器-sreg-：对内存的分段管理而设置"><a href="#段寄存器-sreg-：对内存的分段管理而设置" class="headerlink" title="段寄存器(sreg)：对内存的分段管理而设置"></a>段寄存器(sreg)：对内存的分段管理而设置</h5><p>CS(Code Segment):代码段寄存器<br>DS(Data Segment):数据段寄存器，在mov操作仅仅指定偏移地址的情况下，默认<strong>内存单元段地址</strong>由该寄存器存储<br>SS(Stack Segment):堆栈段寄存器，存放<strong>栈顶的段地址</strong><br>ES(Extra Segment):附加段寄存器</p>
+<ul>
+<li>在8086机中，不能通过mov指令对CS:IP的值进行修改，但是可以通过<code>jmp ax</code>指令进行类似<code>mov IP,ax</code>的操作；不仅是不能对CS:IP进行修改，在8086CPU中，由于硬件设计问题，mov不支持将数据<strong>直接送入</strong>段寄存器的操作。</li>
+</ul>
+</blockquote>
+<p>在访问内存单元的时候，可以使用<code>段寄存器:[偏移地址]</code>的形式对内存单元访问</p>
+<h4 id="字节和字"><a href="#字节和字" class="headerlink" title="字节和字"></a>字节和字</h4><ul>
+<li>字节：记为<code>byte</code>，一个字节由8个bit位组成，存在8位寄存器中</li>
+<li>字：记为<code>word</code>，由两个字节组成</li>
+</ul>
+<p>当一个字存储在16位寄存器中的时候，假设在AX寄存器中，则AH存放高8位，AL存放低8位</p>
+<h4 id="汇编指令"><a href="#汇编指令" class="headerlink" title="汇编指令"></a>汇编指令</h4><h5 id="mov"><a href="#mov" class="headerlink" title="mov"></a>mov</h5><p><code>mov 寄存器,数据</code>：将数据直接送入寄存器中（在未指明段时一般是指通用寄存器）<br><code>mov 寄存器,寄存器</code>：将一个寄存器中的数据送到另外一个寄存器<br><code>mov 寄存器,内存单元</code>：将指定内存单元的数据送入寄存器，可以使用类似<code>mov ax,[0]</code>的形式，在方括号中的值或者数字是相对与DS数据段里面的偏移地址<br><code>mov 内存单元,寄存器</code>：将寄存器里面的数据送入内存单元<br><code>mov 段寄存器,内存单元</code>：将指定内存单元的数据送入段寄存器<br><code>mov 内存单元,段寄存器</code>：将指定段寄存器的数据送入内存单元<br><code>mov 段寄存器,寄存器</code>：将寄存器里面的数据送到段寄存器，前面说的是不能用<code>mov</code>指令将数据直接送入，但是可以通过先把数据存入寄存器，再从通用寄存器转移到段寄存器<br><code>mov 段寄存器,寄存器</code>：将段寄存器里面的数据送到寄存器，因为8086CPU内部有寄存器到段寄存器的通路，反之也可以</p>
+<blockquote>
+<p><code>add</code>和<code>sub</code>指令与<code>mov</code>一样，有两个操作对象，其形式与<code>mov</code>指令类似<br>[address]表示一个偏移地址为address的内存单元，在进行mov操作的时候段地址默认为DS寄存器中的地址<br>同时[address]也可以用[bx]的形式，偏移地址在bx寄存器中</p>
+</blockquote>
+<h5 id="add-amp-sub"><a href="#add-amp-sub" class="headerlink" title="add &amp; sub"></a>add &amp; sub</h5><p><code>add 操作对象1,操作对象2</code>：把操作对象1和操作对象2的和放入操作对象1中，与<code>mov</code>指令的形式类似<br><code>sub 操作对象1,操作对象2</code>：操作对象1减去操作对象2的值放入操作对象1中，同上</p>
+<h5 id="inc-amp-dec"><a href="#inc-amp-dec" class="headerlink" title="inc &amp; dec"></a>inc &amp; dec</h5><p><code>inc 操作对象</code>：将操作对象的值自加1<br><code>dec 操作对象</code>：将操作对象的值自减1</p>
+<h5 id="div-amp-mul"><a href="#div-amp-mul" class="headerlink" title="div &amp; mul"></a>div &amp; mul</h5><p>div指令的除数在reg或者内存单元中，被除数默认放在AX和DX中<br><code>div reg(内存单元)</code>：用在reg或者内存单元中的除数去除被除数，得到的商存放在AL中，余数放在AH中，如果除数是16位，则AX存储除法操作的商，DX存储除法的余数<br>mul指令要求两个相乘的数位数必须相同，如果都是8位，一个默认放在AL中，另外一个放在8位reg或者内存单元中；如果都是16位，一个放在AX中，另外一个放在16位reg或者内存单元中<br><code>mul reg(内存单元)</code>：8位乘法的结果默认放在AX中，16位乘法的结果的高位放在DX中，低位放在AX中</p>
+<h5 id="push-amp-pop"><a href="#push-amp-pop" class="headerlink" title="push &amp; pop"></a>push &amp; pop</h5><p><code>push</code>和<code>pop</code>主要是进行对栈的操作，在8086CPU中<strong>以字为单位</strong>进行操作<br><code>push 寄存器</code>：首先SP = SP - 2，然后将寄存器中的数据存放到SS:SP指向的内存单元（因为栈是从高地址向低地址方向增长）<br><code>pop 寄存器</code>：将SS:SP的数据存放到寄存器中，然后SP = SP + 2，进行pop操作后，之前SS:SP指向的内存单元数据还存在，但是现在已经不在栈中</p>
+<p>除了对寄存器的操作，这两个指令还可以使用<code>push 段寄存器</code>、<code>push 内存单元</code>、<code>pop 段寄存器</code>、<code>pop 内存单元</code>的指令进行对栈的操作</p>
+<ul>
+<li>在8086CPU中，不会保证对栈的操作不好越界，在栈满的时候进行<code>push</code>和栈空的时候<code>pop</code>都会导致栈顶超界的问题，只能在编程过程中根据要存入的数据大小来安排栈的大小；</li>
+<li>编写汇编程序的过程中，可以通过先声明对应的数据，然后让SS:SP指向数据的地址，然后使用这一部分空间当作栈</li>
+</ul>
+<h5 id="loop：循环"><a href="#loop：循环" class="headerlink" title="loop：循环"></a>loop：循环</h5><p><code>loop 标号</code>：令cx寄存器中的值自减1，然后判断是否为0，为0时结束循环然后向下执行程序，否则跳转到标号的位置执行程序</p>
+<blockquote>
+<p>loop对应章节（P104）知识点：汇编程序中，数据不能以字母开头，在字母前要加一个0</p>
+</blockquote>
+<h5 id="dw-define-word-amp-db-define-byte"><a href="#dw-define-word-amp-db-define-byte" class="headerlink" title="dw(define word) &amp; db(define byte)"></a>dw(define word) &amp; db(define byte)</h5><p><code>dw(db) data1,data2,.....</code>：主要用于定义字型数据和字节型数据<br><code>db &#39;(string)&#39;</code>：定义字符串类型，字符串的存储是存对应的ASCII码<br><code>dd data</code>：（double word）定义双字类型数据</p>
+<blockquote>
+<p>字符的转换：<br>大写字母 + 20H = 小写字母<br>小写字母 - 20H = 大写字母</p>
+</blockquote>
+<h5 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h5><p><code>and 操作对象1,操作对象2</code>：将操作对象1和操作对象2进行按位与运算后放入操作对象1中<br><code>or 操作对象1,操作对象2</code>：将操作对象1和操作对象2进行按位或运算后放入操作对象1中<br><code>xor 操作对象1,操作对象2</code>：将操作对象1和操作对象2进行按位异或运算后放入操作对象1中<br><code>not 操作对象</code>：将操作对象按位取反<br><code>shl(shr) 操作对象</code>：将操作对象逻辑左（右）移一位，直接在右（左）边补一个0<br><code>sal(sar) 操作对象</code>：将操作对象算数左（右）移一位，直接在右（左）边补一个0，但是与逻辑移位操作不同的是，最高位的符号位保存不变，也就是说保留了算术中的符号</p>
+<blockquote>
+<p>移位操作的最高位会被移入PSW寄存器的CF位中</p>
+</blockquote>
+<h5 id="jmp：无条件跳转"><a href="#jmp：无条件跳转" class="headerlink" title="jmp：无条件跳转"></a>jmp：无条件跳转</h5><p><code>jmp reg(idata)</code>：段内转移，将偏移地址（IP）修改为idata或者reg内所存的地址<br><code>jmp address1:address2</code>：直接修改CS为address1，IP为address2，实现段间转移<br><code>jmp short ptr 标号</code>：(IP) = (IP) + 8位偏移量，段内短转移<br><code>jmp near ptr 标号</code>：(IP) = (IP) + 16位偏移量，段内近转移<br><code>jmp far ptr 标号</code>：实现段间转移，也称为远转移，同时修改段地址和偏移地址<br><code>jmp word ptr 内存单元地址</code>：实现段内转移，修改(IP)为内存单元中存放的偏移量<br><code>jmp dword ptr 内存单元地址</code>：实现段间转移，将(CS)修改为内存单元地址的高地址，(IP)修改为内存单元地址的低地址，即(CS) = (内存单元地址) + 2、(IP) = (内存单元地址)<br>在编译器将指令转换为指令码时，会通过汇编指令中的标号计算出位移量以实现跳转</p>
+<h5 id="offset：取得标号的偏移地址"><a href="#offset：取得标号的偏移地址" class="headerlink" title="offset：取得标号的偏移地址"></a>offset：取得标号的偏移地址</h5><h5 id="jcxz：有条件转移指令"><a href="#jcxz：有条件转移指令" class="headerlink" title="jcxz：有条件转移指令"></a>jcxz：有条件转移指令</h5><p><code>jcxz 标号</code>：如果(cx) = 0，转移到标号除执行<br>相当于:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if((cx) == 0) jmp short 标号</span><br></pre></td></tr></table></figure></p>
+<h5 id="ret-amp-retf"><a href="#ret-amp-retf" class="headerlink" title="ret  &amp; retf"></a>ret  &amp; retf</h5><p>主要用于实现(CS:IP)的跳转<br><code>ret</code>：将(IP)修改为栈顶的字，相当于<code>pop IP</code><br><code>retf</code>：将(IP)修改为(SS:SP)的字、将(CS)修改为(SS:SP + 2)的字，相当于<code>pop IP</code>然后<code>pop CS</code></p>
+<h5 id="call"><a href="#call" class="headerlink" title="call"></a>call</h5><p><code>call 标号</code>：将当前的(IP)压入栈，然后跳转到标号位置，相当于：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">push IP</span><br><span class="line">jmp near ptr 标号</span><br></pre></td></tr></table></figure></p>
+<p><code>call far ptr 标号</code>：实现段间跳转，先把CS、IP依次压栈，然后跳转到标号位置，相当于：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">push CS</span><br><span class="line">push IP</span><br><span class="line">jmp far ptr 标号</span><br></pre></td></tr></table></figure></p>
+<p><code>call reg</code>：将当前的(IP)压入栈，然后IP修改为reg中存储的偏移地址，相当于：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">push IP</span><br><span class="line">jmp reg</span><br></pre></td></tr></table></figure></p>
+<p><code>call word ptr 内存单元</code>：与上面类似，先把(IP)压栈，然后(IP)修改为内存单元中存储的偏移地址<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">push IP</span><br><span class="line">jmp word ptr 内存单元地址</span><br></pre></td></tr></table></figure></p>
+<p><code>call dword ptr 内存单元</code>：先把CS、IP依次压栈，然后(CS)、(IP)依次修改为内存单元地址中的两个字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">push CS</span><br><span class="line">push IP</span><br><span class="line">jmp dword ptr 内存单元地址</span><br></pre></td></tr></table></figure></p>
+<h5 id="dup"><a href="#dup" class="headerlink" title="dup"></a>dup</h5><p><code>db(dw) X dup (Y)</code>：将Y重复定义X次</p>
+<h5 id="cmp"><a href="#cmp" class="headerlink" title="cmp"></a>cmp</h5><p>比较指令，相当于<code>sub</code><br><code>cmp 操作对象1，操作对象2</code>：计算操作结果1 - 操作结果2，根据结果对标志寄存器进行设置<br><code>je 地址</code>：对于cmp指令的结果，如果两数相等就转移<br><code>jne 地址</code>：对于cmp指令的结果，如果两数不相等就转移<br><code>jb 地址</code>：低于则转移<br><code>jnb 地址</code>：不低于则转移<br><code>ja 地址</code>：高于则转移<br><code>jna 地址</code>：不高于则转移</p>
+<h5 id="movsb-amp-movsw"><a href="#movsb-amp-movsw" class="headerlink" title="movsb &amp; movsw"></a>movsb &amp; movsw</h5><p><code>movsb</code>：将DS:SI指向的内存单元中的字节送入ES:DI中，根据DF位使SI和DI递增或递减<br><code>movsw</code>：将DS:SI指向的内存单元中的字送入ES:DI中，根据DF位使SI和DI递增或递减</p>
+<h5 id="rep"><a href="#rep" class="headerlink" title="rep"></a>rep</h5><p>一般是配合<code>movsb</code>和<code>movsw</code>一起使用<br><code>rep movsb(sw)</code>：根据CX的值，实现CX个字符的传送</p>
+<h5 id="cls-amp-std"><a href="#cls-amp-std" class="headerlink" title="cls &amp; std"></a>cls &amp; std</h5><p><code>cls</code>：（Clear Direct Flag）将标志寄存器的DF位置0<br><code>std</code>：（Set Direct Flag）将标志寄存器的DF位置0</p>
+<h5 id="pushf-amp-popf"><a href="#pushf-amp-popf" class="headerlink" title="pushf &amp; popf"></a>pushf &amp; popf</h5><p><code>pushf</code>：将标志寄存器的数据<br><code>popf</code>：从栈顶弹出数据送入标志寄存器</p>
+<h4 id="汇编程序"><a href="#汇编程序" class="headerlink" title="汇编程序"></a>汇编程序</h4><p>一个简单的汇编语言源程序：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">assume cs:codesg</span><br><span class="line"></span><br><span class="line">codesg segment</span><br><span class="line">		mov ax,0123H</span><br><span class="line">		mov bx,0456H</span><br><span class="line">		add ax,bx</span><br><span class="line">		add ax,ax</span><br><span class="line">		</span><br><span class="line">		mov ax,4C00h</span><br><span class="line">		int 21H</span><br><span class="line">codesg ends</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<h5 id="伪指令"><a href="#伪指令" class="headerlink" title="伪指令"></a>伪指令</h5><p>汇编语言源程序中，有<strong>汇编指令</strong>和<strong>伪指令</strong>两种，下面三个指令是伪指令<br><code>段名 segment</code>：与<code>段名 ends</code>是成对使用的伪指令，定义一个段，同时需要有一个名称来标识<br><code>段名 ends</code>：标识一个段的结束<br><code>end [标号]</code>：汇编程序的结束标记，在编译器遇到<code>end</code>指令的时候，就会停止对程序的编译，同时还可以加一个标号在后面通知编译器程序的入口<br><code>assume 段寄存器:段名,[段寄存器:段名],...</code>：用于使某一个段寄存器和程序终端某一个段关联</p>
+<blockquote>
+<p>对assume伪指令的深入了解：<a href="https://blog.csdn.net/qq_40627648/article/details/84063124" target="_blank" rel="noopener">Link</a></p>
+</blockquote>
+<h5 id="标号"><a href="#标号" class="headerlink" title="标号"></a>标号</h5><p>在伪指令中，使用某个名称作为段的一个标号，汇编过程中编译、连接程序处理为一个段的段地址<br>标号仅仅是指定了某个标号对应的指令行，并没有嵌套程序的作用，如果没有跳转，程序会继续往下运行</p>
+<h5 id="程序返回：一个程序结束后将CPU的控制器交还给它得以运行的程序的过程"><a href="#程序返回：一个程序结束后将CPU的控制器交还给它得以运行的程序的过程" class="headerlink" title="程序返回：一个程序结束后将CPU的控制器交还给它得以运行的程序的过程"></a>程序返回：一个程序结束后将CPU的控制器交还给它得以运行的程序的过程</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov ax,4C00h</span><br><span class="line">int 21H</span><br></pre></td></tr></table></figure>
+<p>这一段汇编指令所实现的功能就是程序返回，在程序结束运行后，放回到command中，CPU继续执行command</p>
+<blockquote>
+<p>程序返回的两个指令的原理：</p>
+</blockquote>
+<h5 id="编译-amp-连接：P83-与-P85"><a href="#编译-amp-连接：P83-与-P85" class="headerlink" title="编译 &amp; 连接：P83 与 P85"></a>编译 &amp; 连接：P83 与 P85</h5><h5 id="彩色字符显示缓冲区"><a href="#彩色字符显示缓冲区" class="headerlink" title="彩色字符显示缓冲区"></a>彩色字符显示缓冲区</h5><ul>
+<li>显示缓冲区的内存地址是<code>B8000H - BFFFFH</code></li>
+<li>00 - 01 单元对应显示器的第1列，02 - 03 单元对应显示器的第2列，依次类推</li>
+<li>显示缓冲区的偶地址存放字符的ASCII码，奇地址存放字符的颜色属性</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Assemble/" rel="tag"># Assemble</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/18/逆向工程学习-Acid-burn/" rel="next" title="逆向工程学习--Acid burn">
+                <i class="fa fa-chevron-left"></i> 逆向工程学习--Acid burn
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://s.gravatar.com/avatar/d3c332e47b56134bab228c086c6578d5?s=250" alt="Decision">
+            
+              <p class="site-author-name" itemprop="name">Decision</p>
+              <div class="site-description motion-element" itemprop="description">山河犹在 故人长绝</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Decision2016" title="GitHub &rarr; https://github.com/Decision2016" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://blog.csdn.net/decision2016" title="CSDN &rarr; https://blog.csdn.net/decision2016" rel="noopener" target="_blank"><i class="fa fa-fw fa-CSDN"></i>CSDN</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://herano.github.io/" title="https://herano.github.io/" rel="noopener" target="_blank">HeRaNO's blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.f1ag.com/" title="http://www.f1ag.com/" rel="noopener" target="_blank">F1ag's blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://joytsing.github.io/" title="https://joytsing.github.io/" rel="noopener" target="_blank">JoyTing's blog</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#寄存器-reg-：-CPU中存储数据的器件"><span class="nav-number">1.</span> <span class="nav-text">寄存器(reg)： CPU中存储数据的器件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#通用寄存器：用于传送和暂存数据，也可参与算术逻辑运算，并保存运算结果。"><span class="nav-number">1.1.</span> <span class="nav-text">通用寄存器：用于传送和暂存数据，也可参与算术逻辑运算，并保存运算结果。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#指针指令寄存器：用于控制程序中指令的执行顺序"><span class="nav-number">1.2.</span> <span class="nav-text">指针指令寄存器：用于控制程序中指令的执行顺序</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#标志寄存器"><span class="nav-number">1.3.</span> <span class="nav-text">标志寄存器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#段寄存器-sreg-：对内存的分段管理而设置"><span class="nav-number">1.4.</span> <span class="nav-text">段寄存器(sreg)：对内存的分段管理而设置</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字节和字"><span class="nav-number">2.</span> <span class="nav-text">字节和字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#汇编指令"><span class="nav-number">3.</span> <span class="nav-text">汇编指令</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#mov"><span class="nav-number">3.1.</span> <span class="nav-text">mov</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#add-amp-sub"><span class="nav-number">3.2.</span> <span class="nav-text">add &amp; sub</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#inc-amp-dec"><span class="nav-number">3.3.</span> <span class="nav-text">inc &amp; dec</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#div-amp-mul"><span class="nav-number">3.4.</span> <span class="nav-text">div &amp; mul</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#push-amp-pop"><span class="nav-number">3.5.</span> <span class="nav-text">push &amp; pop</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#loop：循环"><span class="nav-number">3.6.</span> <span class="nav-text">loop：循环</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#dw-define-word-amp-db-define-byte"><span class="nav-number">3.7.</span> <span class="nav-text">dw(define word) &amp; db(define byte)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#位运算"><span class="nav-number">3.8.</span> <span class="nav-text">位运算</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#jmp：无条件跳转"><span class="nav-number">3.9.</span> <span class="nav-text">jmp：无条件跳转</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#offset：取得标号的偏移地址"><span class="nav-number">3.10.</span> <span class="nav-text">offset：取得标号的偏移地址</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#jcxz：有条件转移指令"><span class="nav-number">3.11.</span> <span class="nav-text">jcxz：有条件转移指令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ret-amp-retf"><span class="nav-number">3.12.</span> <span class="nav-text">ret  &amp; retf</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#call"><span class="nav-number">3.13.</span> <span class="nav-text">call</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#dup"><span class="nav-number">3.14.</span> <span class="nav-text">dup</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cmp"><span class="nav-number">3.15.</span> <span class="nav-text">cmp</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#movsb-amp-movsw"><span class="nav-number">3.16.</span> <span class="nav-text">movsb &amp; movsw</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#rep"><span class="nav-number">3.17.</span> <span class="nav-text">rep</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cls-amp-std"><span class="nav-number">3.18.</span> <span class="nav-text">cls &amp; std</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pushf-amp-popf"><span class="nav-number">3.19.</span> <span class="nav-text">pushf &amp; popf</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#汇编程序"><span class="nav-number">4.</span> <span class="nav-text">汇编程序</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#伪指令"><span class="nav-number">4.1.</span> <span class="nav-text">伪指令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#标号"><span class="nav-number">4.2.</span> <span class="nav-text">标号</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#程序返回：一个程序结束后将CPU的控制器交还给它得以运行的程序的过程"><span class="nav-number">4.3.</span> <span class="nav-text">程序返回：一个程序结束后将CPU的控制器交还给它得以运行的程序的过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#编译-amp-连接：P83-与-P85"><span class="nav-number">4.4.</span> <span class="nav-text">编译 &amp; 连接：P83 与 P85</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#彩色字符显示缓冲区"><span class="nav-number">4.5.</span> <span class="nav-text">彩色字符显示缓冲区</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Decision</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.1</div>
+
+
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unjkp.com/valine/dist/Valine.min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+
+  
+  
+  <script src="/js/src/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: true,
+        notify: false,
+        appId: 'r7u2cTYXLzmJRW6AzAH1pUGL-gzGzoHsz',
+        appKey: 'qtmKFWEuvpURfvlnG77J5RS0',
+        placeholder: 'Just go go',
+        avatar:'mp',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+  </script>
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $('.leancloud_visitors');
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            
+            Counter('put', '/classes/Counter/' + counter.objectId, JSON.stringify({ time: { '__op': 'Increment', 'amount': 1 } }))
+            
+              .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+              })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1 }))
+                .done(function() {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function() {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+        .fail(function ({ responseJSON }) {
+          console.log('LeanCloud Counter Error: ' + responseJSON.code + ' ' + responseJSON.error);
+        });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + 'r7u2cTYXLzmJRW6AzAH1pUGL-gzGzoHsz')
+        .done(function({ api_server }) {
+          var Counter = function(method, url, data) {
+            return $.ajax({
+              method: method,
+              url: 'https://' + api_server + '/1.1' + url,
+              headers: {
+                'X-LC-Id': 'r7u2cTYXLzmJRW6AzAH1pUGL-gzGzoHsz',
+                'X-LC-Key': 'qtmKFWEuvpURfvlnG77J5RS0',
+                'Content-Type': 'application/json',
+              },
+              data: data
+            });
+          };
+          
+            addCount(Counter);
+          
+        });
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://decision01.cn/"/>
-  <updated>2019-09-23T12:01:54.916Z</updated>
+  <updated>2019-10-20T08:42:50.295Z</updated>
   <id>http://decision01.cn/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Windows画板程序记录-windows窗口的创建与布局</title>
+    <link href="http://decision01.cn/2019/10/20/Windows%E7%94%BB%E6%9D%BF%E7%A8%8B%E5%BA%8F%E8%AE%B0%E5%BD%95-windows%E7%AA%97%E5%8F%A3%E7%9A%84%E5%88%9B%E5%BB%BA%E4%B8%8E%E5%B8%83%E5%B1%80/"/>
+    <id>http://decision01.cn/2019/10/20/Windows画板程序记录-windows窗口的创建与布局/</id>
+    <published>2019-10-20T08:34:08.000Z</published>
+    <updated>2019-10-20T08:42:50.295Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>前言<br>说起来有两篇文章鸽了挺久了，然后感觉自己最近学的也有点杂，先把这个写了之后再继续学别的那些东西emmmm</p><h3 id="画板程序的初期规划"><a href="#画板程序的初期规划" class="headerlink" title="画板程序的初期规划"></a>画板程序的初期规划</h3><p>我用百度脑图记录了一个大概的树形图表示程序的结构，后面或许还有一些东西可以加进去，慢慢实现的同时再看吧<br><img src="./Windows画板程序需求.png" alt="Windows画板程序需求"></p><h3 id="窗口的创建"><a href="#窗口的创建" class="headerlink" title="窗口的创建"></a>窗口的创建</h3></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;前言&lt;br&gt;说起来有两篇文章鸽了挺久了，然后感觉自己最近学的也有点杂，先把这个写了之后再继续学别的那些东西emmmm&lt;/p&gt;
+&lt;h3 id=&quot;画板程序的初期规划&quot;&gt;&lt;a href=&quot;#画板程序的初期规划&quot; class=&quot;headerlink&quot; ti
+      
+    
+    </summary>
+    
+      <category term="Development" scheme="http://decision01.cn/categories/Development/"/>
+    
+    
+      <category term="WindowsApi" scheme="http://decision01.cn/tags/WindowsApi/"/>
+    
+  </entry>
   
   <entry>
     <title>《汇编语言》学习笔记</title>
@@ -395,9 +422,9 @@
       <category term="ICPC" scheme="http://decision01.cn/categories/ICPC/"/>
     
     
-      <category term="C/C++" scheme="http://decision01.cn/tags/C-C/"/>
-    
       <category term="ICPC" scheme="http://decision01.cn/tags/ICPC/"/>
+    
+      <category term="C/C++" scheme="http://decision01.cn/tags/C-C/"/>
     
       <category term="字符串" scheme="http://decision01.cn/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
     
@@ -427,11 +454,11 @@
       <category term="Codeforces" scheme="http://decision01.cn/categories/Codeforces/"/>
     
     
-      <category term="C/C++" scheme="http://decision01.cn/tags/C-C/"/>
-    
       <category term="Codeforces" scheme="http://decision01.cn/tags/Codeforces/"/>
     
       <category term="ICPC" scheme="http://decision01.cn/tags/ICPC/"/>
+    
+      <category term="C/C++" scheme="http://decision01.cn/tags/C-C/"/>
     
   </entry>
   

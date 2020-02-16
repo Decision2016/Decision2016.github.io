@@ -105,10 +105,13 @@
 <meta property="og:site_name" content="Decision&#39;s Blog">
 <meta property="og:description" content="放一个Minecraft服务器搭建的博文，免得后面什么时候要用上又把过程忘了。。。 这个教程后半段是参考了网络上的教程，因为现在没有搭建的需要所以还没进行实际操作（逃 此处搭建服务器为linux服务器，minecraft版本为1.12.2 安装MCSManagerMCSManager用于网页端管理mc服务器，不需要可以跳过这一步 MCSManager仓库  # 安装 Node 版本控制工具(若没有">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-05T17:02:42.369Z">
+<meta property="og:image" content="http://decision01.cn/2020/02/06/Minecraft-Forge服务器搭建/QQ截图20200216165526.png">
+<meta property="og:image" content="http://decision01.cn/2020/02/06/Minecraft-Forge服务器搭建/QQ截图20200216182800.png">
+<meta property="og:updated_time" content="2020-02-16T10:31:41.624Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Minecraft Forge服务器搭建">
 <meta name="twitter:description" content="放一个Minecraft服务器搭建的博文，免得后面什么时候要用上又把过程忘了。。。 这个教程后半段是参考了网络上的教程，因为现在没有搭建的需要所以还没进行实际操作（逃 此处搭建服务器为linux服务器，minecraft版本为1.12.2 安装MCSManagerMCSManager用于网页端管理mc服务器，不需要可以跳过这一步 MCSManager仓库  # 安装 Node 版本控制工具(若没有">
+<meta name="twitter:image" content="http://decision01.cn/2020/02/06/Minecraft-Forge服务器搭建/QQ截图20200216165526.png">
 
 
 
@@ -390,12 +393,24 @@
                 
               
 
-              <time title="创建时间：2020-02-06 00:22:06 / 修改时间：01:02:42" itemprop="dateCreated datePublished" datetime="2020-02-06T00:22:06+08:00">2020-02-06</time>
+              <time title="创建时间：2020-02-06 00:22:06" itemprop="dateCreated datePublished" datetime="2020-02-06T00:22:06+08:00">2020-02-06</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-02-16 18:31:41" itemprop="dateModified" datetime="2020-02-16T18:31:41+08:00">2020-02-16</time>
               
             
           </span>
@@ -464,11 +479,17 @@
 <p>为了让网页端在后台运行，可以使用命令<code>npm install forever -g</code>下载</p>
 <p>然后运行<code>forever start app.js</code>启动网页端在后台进行运行</p>
 <h1 id="搭建服务器"><a href="#搭建服务器" class="headerlink" title="搭建服务器"></a>搭建服务器</h1><p>进入网页管理界面，进入<code>服务端管理-引导创建服务器</code>创建新目录，并配置服务器参数</p>
+<p><img src="./QQ截图20200216165526.png" alt="服务端创建界面"></p>
 <p>(这里默认已经安装了Java8)</p>
 <p>在<a href="https://mcversions.net/download/1.12.2" target="_blank" rel="noopener">https://mcversions.net/download/1.12.2</a>下载服务端（ubuntu下使用wget命令直接下载到服务器），将下载好的服务端放入创建好的新目录</p>
+<p>也可以在服务器管理中的文件管理进行服务端的上传</p>
 <p>还需要在forge官网<a href="https://files.minecraftforge.net/" target="_blank" rel="noopener">https://files.minecraftforge.net/</a>下载对应版本的installer，也放到之前的目录中</p>
-<p>运行命令<code>java -jar [installer文件名] nogui --installServer</code>,运行完后会多出来universal版本和新的server版本</p>
-<p>运行完成后继续运行<code>java -jar [universal文件名] nogui</code>，最后在MCSMansger中运行服务端即可</p>
+<p>运行命令<code>java -jar [installer文件名] --install</code>,运行完后会多出来universal版本和新的server版本</p>
+<p>这个命令会下载一些依赖库，需要一点时间，也可以上传本地游戏libraries文件夹到服务器文件夹</p>
+<p>在依赖库下载安装后或者上传依赖库之后</p>
+<p>将服务器参数中的服务端文件夹修改为<code>[minecraft服务端版本]-server.jar</code></p>
+<p><img src="./QQ截图20200216182800.png" alt="服务端文件名设置"></p>
+<p>最后启动服务端，可以看到目录中多出来mod文件夹用于存放mod</p>
 
       
     </div>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://decision01.cn/"/>
-  <updated>2020-02-16T10:31:41.624Z</updated>
+  <updated>2020-02-21T10:34:30.744Z</updated>
   <id>http://decision01.cn/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Windows Api编程开发记录</title>
+    <link href="http://decision01.cn/2020/02/21/Windows-Api%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/"/>
+    <id>http://decision01.cn/2020/02/21/Windows-Api编程开发记录/</id>
+    <published>2020-02-21T03:26:35.000Z</published>
+    <updated>2020-02-21T10:34:30.744Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>该博文皆在于记录在Windows api开发过程中遇到的一些函数以及用法</p></blockquote><h1 id="reinterpret-cast-expression"><a href="#reinterpret-cast-expression" class="headerlink" title="reinterpret_cast(expression)"></a>reinterpret_cast<new_type>(expression)</new_type></h1><p>这是在setWindowLongPtr函数运用的同时需要用到的转换符</p><p><code>reinterpret_cast</code>是C++中的一个强制类型转换运算符，类似的还有<code>static_cast</code>、<code>reinterpret_cast</code>、<code>const_cast</code>、<code>dynamic_cast</code></p><p><code>reinterpret_cast</code>用于进行无关类型之间的转换，会产生一个新值与原始参数的比特位完全相同，它是一个编译时的命令，用于指示编译器将表达式视为具有new_type的类型</p><blockquote><p>使用场景：</p><ul><li>指针类型到足够大的整数类型</li><li>整数类型或枚举类型到指针类型</li><li>指向函数的指针到另一个不同类型的指向函数的指针</li><li>指向对象的指针到另一个不同类型的指向对象的指针</li><li>指向类函数成员的指针到另一个指向不同类型的函数成员的指针</li><li>指向类数据成员的指针到另一个指向不同类型的数据成员的指针</li></ul></blockquote><h1 id="SetWindowLongPtr及GetWindowLongPtr函数"><a href="#SetWindowLongPtr及GetWindowLongPtr函数" class="headerlink" title="SetWindowLongPtr及GetWindowLongPtr函数"></a>SetWindowLongPtr及GetWindowLongPtr函数</h1><h2 id="SetWindowLongPtr"><a href="#SetWindowLongPtr" class="headerlink" title="SetWindowLongPtr"></a>SetWindowLongPtr</h2><p>这个函数是参考Notepad++的源代码看到的。遇到的一个问题是窗口在注册时需要一个回调函数，但是这个回调函数在封装的对象中是static属性，这也就导致了这个回调函数不能访问对象的窗口句柄。而Notepad++中还定义了一个回调函数runProc用于处理和窗口自身句柄有关的东西，同时也在窗口创建的create函数或是WM_NCCREATE消息中用到了这个函数。</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">::SetWindowLongPtr(_hSelf, GWLP_USERDATA, <span class="keyword">reinterpret_cast</span>&lt;LONG_PTR&gt;(<span class="keyword">this</span>));</span><br><span class="line">_tabBarDefaultProc = <span class="keyword">reinterpret_cast</span>&lt;WNDPROC&gt;(::SetWindowLongPtr(_hSelf, GWLP_WNDPROC, <span class="keyword">reinterpret_cast</span>&lt;LONG_PTR&gt;(TabBarPlus_Proc)</span><br></pre></td></tr></table></figure><blockquote><p>API文档描述：Changes an attribute of the specified window. The function also sets a value at the specified offset in the extra window memory.</p></blockquote><p>函数句法：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">LONG_PTR <span class="title">SetWindowLongPtrA</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HWND     hWnd,</span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="keyword">int</span>      nIndex,</span></span></span><br><span class="line"><span class="function"><span class="params">  LONG_PTR dwNewLong</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure><p>hWnd自然是要修改的窗口的句柄，nIndex是偏移量，而不同的偏移量有不同的意义，参考<a href="https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-setwindowlongptra" target="_blank" rel="noopener">SetWindowLongPtrA function</a></p><p>上面代码中的<code>GWLP_USERDATA</code>代表偏移量为-21，用于设置与窗口关联的数据</p><p>其代码意义在于将对象自身的指针转换后存入窗口的对应偏移量处，而在static类的WinProc回调函数中获取该对象指针以调用其runProc函数，以实现窗口对消息的响应</p><p>该函数在调用成功之后会返回一个指定偏移量的前一个值，否则返回0</p><h2 id="GetWindowLongPtr"><a href="#GetWindowLongPtr" class="headerlink" title="GetWindowLongPtr"></a>GetWindowLongPtr</h2><blockquote><p>Retrieves information about the specified window. The function also retrieves the value at a specified offset into the extra window memory.</p></blockquote><p>函数句法：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">LONG_PTR <span class="title">GetWindowLongPtrA</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HWND hWnd,</span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="keyword">int</span>  nIndex</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure><p>该函数用于检索对应偏移量中存储的值，在函数调用成功的情况下会返回所请求的值。</p><p>用于与<code>SetWindowLongPtr</code>函数搭配使用，在存储指针之后，使用该函数获取指针用以调用，在notepad++中的例子：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pSplitterContainer = (SplitterContainer *)::GetWindowLongPtr(hwnd, GWLP_USERDATA);</span><br><span class="line"><span class="keyword">if</span> (!pSplitterContainer)</span><br><span class="line"><span class="keyword">return</span> ::DefWindowProc(hwnd, message, wParam, lParam);</span><br><span class="line"><span class="keyword">return</span> pSplitterContainer-&gt;runProc(message, wParam, lParam)</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;该博文皆在于记录在Windows api开发过程中遇到的一些函数以及用法&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;reinterpret-cast-expression&quot;&gt;&lt;a href=&quot;#reinterpret-cast-expre
+      
+    
+    </summary>
+    
+      <category term="Dev" scheme="http://decision01.cn/categories/Dev/"/>
+    
+    
+      <category term="Windows" scheme="http://decision01.cn/tags/Windows/"/>
+    
+  </entry>
   
   <entry>
     <title>Minecraft Forge服务器搭建</title>

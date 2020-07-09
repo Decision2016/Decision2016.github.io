@@ -106,7 +106,7 @@
 <meta property="og:site_name" content="Decision&#39;s Blog">
 <meta property="og:description" content="该博文皆在于记录在Windows api开发过程中遇到的一些函数以及用法  reinterpret_cast(expression)这是在setWindowLongPtr函数运用的同时需要用到的转换符 reinterpret_cast是C++中的一个强制类型转换运算符，类似的还有static_cast、reinterpret_cast、const_cast、dynamic_cast reinte">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-21T10:34:30.744Z">
+<meta property="og:updated_time" content="2020-07-09T16:16:45.125Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Windows Api编程开发记录">
 <meta name="twitter:description" content="该博文皆在于记录在Windows api开发过程中遇到的一些函数以及用法  reinterpret_cast(expression)这是在setWindowLongPtr函数运用的同时需要用到的转换符 reinterpret_cast是C++中的一个强制类型转换运算符，类似的还有static_cast、reinterpret_cast、const_cast、dynamic_cast reinte">
@@ -391,12 +391,24 @@
                 
               
 
-              <time title="创建时间：2020-02-21 11:26:35 / 修改时间：18:34:30" itemprop="dateCreated datePublished" datetime="2020-02-21T11:26:35+08:00">2020-02-21</time>
+              <time title="创建时间：2020-02-21 11:26:35" itemprop="dateCreated datePublished" datetime="2020-02-21T11:26:35+08:00">2020-02-21</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-07-10 00:16:45" itemprop="dateModified" datetime="2020-07-10T00:16:45+08:00">2020-07-10</time>
               
             
           </span>
@@ -508,6 +520,7 @@
 <p>该函数用于检索对应偏移量中存储的值，在函数调用成功的情况下会返回所请求的值。</p>
 <p>用于与<code>SetWindowLongPtr</code>函数搭配使用，在存储指针之后，使用该函数获取指针用以调用，在notepad++中的例子：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pSplitterContainer = (SplitterContainer *)::GetWindowLongPtr(hwnd, GWLP_USERDATA);</span><br><span class="line"><span class="keyword">if</span> (!pSplitterContainer)</span><br><span class="line">	<span class="keyword">return</span> ::DefWindowProc(hwnd, message, wParam, lParam);</span><br><span class="line"><span class="keyword">return</span> pSplitterContainer-&gt;runProc(message, wParam, lParam)</span><br></pre></td></tr></table></figure>
+<p>PS： 由于开学停止了使用Windows api手撸一个音乐播放器的项目，因为真的太麻烦了。。（以后有时间研究这玩意儿再写吧）</p>
 
       
     </div>
@@ -553,6 +566,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/07/10/Bukkit服务端插件开发（一）/" rel="prev" title="Bukkit服务端插件开发（一）">
+                Bukkit服务端插件开发（一） <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -627,7 +644,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -660,9 +677,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -721,7 +736,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">21</span>
+                      
+                    
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

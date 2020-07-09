@@ -98,18 +98,18 @@
 
 
 
-  <meta name="description" content="题目大意：在$x$轴的非负区域，有长度为$n$的路，需要在这条路上铺设管道；如果在某个位置是十字路口的话，需要将这个位置的管道高度铺设在$y = 2$的位置上面，而在非十字路口的位置，可以铺设在$y = 1$的位置，也可以铺设在$y = 1$的位置，而不同高度的情况下需要对应高度的管道架；设一单位的管道需要的费用是$a$，一单位管道架需要的费用是$b$，求铺设到终点所需的最小费用 被B题卡了快一个">
-<meta name="keywords" content="DP">
+  <meta name="description" content="前言： 博客停了很久没更，主要也是上一个学期一直摸鱼，没啥写的 然后开发的项目也一直放着，完成度比较高的就是课设和机器人的API，没什么好写的 之前打算用在MC建筑中使用的插件也是鸽了很久没动，因为那个东西除了我需要一个填充功能之外想不出其他的功能了 然后这个假期除了开发BilibiliVote之外还会改一下机器人API的前后端代码 而这一系列的博文仅仅在开发DanmakuVote过程中的一些记">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Codeforces1207-C Gas Pipeline">
-<meta property="og:url" content="http://decision01.cn/2019/08/23/Codeforces1207C/index.html">
+<meta property="og:title" content="Bukkit服务端插件开发（一）">
+<meta property="og:url" content="http://decision01.cn/2020/07/10/Bukkit服务端插件开发（一）/index.html">
 <meta property="og:site_name" content="Decision&#39;s Blog">
-<meta property="og:description" content="题目大意：在$x$轴的非负区域，有长度为$n$的路，需要在这条路上铺设管道；如果在某个位置是十字路口的话，需要将这个位置的管道高度铺设在$y = 2$的位置上面，而在非十字路口的位置，可以铺设在$y = 1$的位置，也可以铺设在$y = 1$的位置，而不同高度的情况下需要对应高度的管道架；设一单位的管道需要的费用是$a$，一单位管道架需要的费用是$b$，求铺设到终点所需的最小费用 被B题卡了快一个">
+<meta property="og:description" content="前言： 博客停了很久没更，主要也是上一个学期一直摸鱼，没啥写的 然后开发的项目也一直放着，完成度比较高的就是课设和机器人的API，没什么好写的 之前打算用在MC建筑中使用的插件也是鸽了很久没动，因为那个东西除了我需要一个填充功能之外想不出其他的功能了 然后这个假期除了开发BilibiliVote之外还会改一下机器人API的前后端代码 而这一系列的博文仅仅在开发DanmakuVote过程中的一些记">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-23T14:58:23.388Z">
+<meta property="og:updated_time" content="2020-07-09T16:20:20.891Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Codeforces1207-C Gas Pipeline">
-<meta name="twitter:description" content="题目大意：在$x$轴的非负区域，有长度为$n$的路，需要在这条路上铺设管道；如果在某个位置是十字路口的话，需要将这个位置的管道高度铺设在$y = 2$的位置上面，而在非十字路口的位置，可以铺设在$y = 1$的位置，也可以铺设在$y = 1$的位置，而不同高度的情况下需要对应高度的管道架；设一单位的管道需要的费用是$a$，一单位管道架需要的费用是$b$，求铺设到终点所需的最小费用 被B题卡了快一个">
+<meta name="twitter:title" content="Bukkit服务端插件开发（一）">
+<meta name="twitter:description" content="前言： 博客停了很久没更，主要也是上一个学期一直摸鱼，没啥写的 然后开发的项目也一直放着，完成度比较高的就是课设和机器人的API，没什么好写的 之前打算用在MC建筑中使用的插件也是鸽了很久没动，因为那个东西除了我需要一个填充功能之外想不出其他的功能了 然后这个假期除了开发BilibiliVote之外还会改一下机器人API的前后端代码 而这一系列的博文仅仅在开发DanmakuVote过程中的一些记">
 
 
 
@@ -118,7 +118,7 @@
 
 
 
-  <link rel="canonical" href="http://decision01.cn/2019/08/23/Codeforces1207C/">
+  <link rel="canonical" href="http://decision01.cn/2020/07/10/Bukkit服务端插件开发（一）/">
 
 
 
@@ -128,7 +128,7 @@
   };
 </script>
 
-  <title>Codeforces1207-C Gas Pipeline | Decision's Blog</title>
+  <title>Bukkit服务端插件开发（一） | Decision's Blog</title>
   
 
 
@@ -348,7 +348,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://decision01.cn/2019/08/23/Codeforces1207C/">
+    <link itemprop="mainEntityOfPage" href="http://decision01.cn/2020/07/10/Bukkit服务端插件开发（一）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Decision">
@@ -365,7 +365,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Codeforces1207-C Gas Pipeline
+          <h1 class="post-title" itemprop="name headline">Bukkit服务端插件开发（一）
 
               
             
@@ -391,7 +391,7 @@
                 
               
 
-              <time title="创建时间：2019-08-23 22:43:49 / 修改时间：22:58:23" itemprop="dateCreated datePublished" datetime="2019-08-23T22:43:49+08:00">2019-08-23</time>
+              <time title="创建时间：2020-07-10 00:15:27 / 修改时间：00:20:20" itemprop="dateCreated datePublished" datetime="2020-07-10T00:15:27+08:00">2020-07-10</time>
             
 
             
@@ -413,7 +413,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Dev/" itemprop="url" rel="index"><span itemprop="name">Dev</span></a></span>
 
                 
                 
@@ -432,8 +432,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/08/23/Codeforces1207C/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/08/23/Codeforces1207C/" itemprop="commentCount"></span>
+                <a href="/2020/07/10/Bukkit服务端插件开发（一）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/07/10/Bukkit服务端插件开发（一）/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -441,7 +441,7 @@
 
           
           
-            <span id="/2019/08/23/Codeforces1207C/" class="leancloud_visitors" data-flag-title="Codeforces1207-C Gas Pipeline">
+            <span id="/2020/07/10/Bukkit服务端插件开发（一）/" class="leancloud_visitors" data-flag-title="Bukkit服务端插件开发（一）">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -472,19 +472,61 @@
       
 
       
-        <p>题目大意：在$x$轴的非负区域，有长度为$n$的路，需要在这条路上铺设管道；如果在某个位置是十字路口的话，需要将这个位置的管道高度铺设在$y = 2$的位置上面，而在非十字路口的位置，可以铺设在$y = 1$的位置，也可以铺设在$y = 1$的位置，而不同高度的情况下需要对应高度的管道架；设一单位的管道需要的费用是$a$，一单位管道架需要的费用是$b$，求铺设到终点所需的最小费用</p>
-<p>被B题卡了快一个小时才看C题。。满足最优子结构和无后效性就是DP了<br>这次又是写出了C的时候没写出B呢。。。<br>设$f_{i,j}$为铺设到$i$位置的时候高度为j的最小花费<br>那么可以得到转移方程<br>在$s_i$为1的时候：</p>
-<script type="math/tex; mode=display">
-\begin{cases}
-f[i][0] = INF\\
-f[i][1] = min(f[i-1][0] + 2a,f[i-1][1] + a) + 2b\\
-\end{cases}</script><p>在$s_i$为0的时候：</p>
-<script type="math/tex; mode=display">
-\begin{cases}
-f[i][0] = min(f[i-1][1] + 2a,f[i-1][0] + a) + b\\
-f[i][1] = min(f[i-1][0] + 2a,f[i-1][1] + a) + 2b\\
-\end{cases}</script><p>时间复杂度：$O(n)$</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> T;</span><br><span class="line">ll n,a,b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> s[<span class="number">2</span> * maxn];</span><br><span class="line"></span><br><span class="line">ll dp[<span class="number">2</span> * maxn][<span class="number">3</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;T;</span><br><span class="line">    <span class="keyword">while</span>(T--) &#123;</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = dp[<span class="number">0</span>][<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">cin</span>&gt;&gt;n&gt;&gt;a&gt;&gt;b;</span><br><span class="line">        <span class="built_in">cin</span>&gt;&gt;s;</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">1</span>] = INF;</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = b;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(s[i - <span class="number">1</span>] == <span class="string">'1'</span>) &#123;</span><br><span class="line">                dp[i][<span class="number">0</span>] = INF;</span><br><span class="line">                dp[i][<span class="number">1</span>] = dp[i - <span class="number">1</span>][<span class="number">1</span>] + <span class="number">2</span> * b + a;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                dp[i][<span class="number">0</span>] = min(dp[i - <span class="number">1</span>][<span class="number">0</span>] + a,dp[i - <span class="number">1</span>][<span class="number">1</span>] + <span class="number">2</span> * a) + b;</span><br><span class="line">                dp[i][<span class="number">1</span>] = min(dp[i - <span class="number">1</span>][<span class="number">0</span>] + <span class="number">2</span> *a,dp[i - <span class="number">1</span>][<span class="number">1</span>] + a) + <span class="number">2</span> * b;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;dp[n][<span class="number">0</span>]&lt;&lt;<span class="string">"\n"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <blockquote>
+<p>前言：</p>
+<p>博客停了很久没更，主要也是上一个学期一直摸鱼，没啥写的</p>
+<p>然后开发的项目也一直放着，完成度比较高的就是课设和机器人的API，没什么好写的</p>
+<p>之前打算用在MC建筑中使用的插件也是鸽了很久没动，因为那个东西除了我需要一个填充功能之外想不出其他的功能了</p>
+<p>然后这个假期除了开发BilibiliVote之外还会改一下机器人API的前后端代码</p>
+<p>而这一系列的博文仅仅在开发DanmakuVote过程中的一些记录，后续或许会系统的把Bukkit相关的东西整理一下</p>
+<p>本项目仓库地址：<a href="https://github.com/Decision2016/BilibiliVote" target="_blank" rel="noopener">DanmakuVote</a></p>
+</blockquote>
+<h1 id="DanmakuVote基本构想"><a href="#DanmakuVote基本构想" class="headerlink" title="DanmakuVote基本构想"></a>DanmakuVote基本构想</h1><p>这个插件其实也是测试了一下土豆的HyperScape，然后看到有一个插件可以获取bilibili直播间弹幕发送到游戏中</p>
+<p>土豆的这个游戏里面有一个观众互动性比较高的功能，每局游戏可以让观众投票一个事件，然后票高的事件接下来会在游戏中发生</p>
+<p>那么结合bilibili直播间信息获取的一个接口，是不是可以考虑将这个功能在Minecraft中进行实现</p>
+<p>那么基本的一个思路就是这样：</p>
+<ul>
+<li>插件只有服务端，仅仅考虑直播间播主为腐竹（OP）的情况，当然后续开发中还可以进行扩展</li>
+<li>OP指定一个世界，用于插件的运行，相关的一些事件都发生在这个世界</li>
+<li>某些事件不需要指定世界，随机选取玩家进行事件的发生</li>
+<li>在直播间直播的情况下，间隔一段时间发起一个投票，在每个玩家的界面显示投票信息，同时服务端开始监听直播间弹幕信息</li>
+<li>观众可以在弹幕发送相关的指令，服务端插件开始收取并且统计指令，同时进行过滤</li>
+</ul>
+<p>而在游戏中发生的事件，可以分为环境事件和个人事件两种，这里先考虑全部编入程序中作为插件的一部分，在后续的开发过程中可以分离，作为插件的配置信息进行读取，或是直接由OP添加设置</p>
+<h1 id="基本环境的搭建"><a href="#基本环境的搭建" class="headerlink" title="基本环境的搭建"></a>基本环境的搭建</h1><p>这里就偷一下懒，工程的搭建比较轻松，在配置了Java环境之后，IDEA中有一个Minecraft的插件，安装后可以自动新建一个Bukkit工程，而不用自己开始配置。</p>
+<h1 id="Bukkit中的命令调用配置"><a href="#Bukkit中的命令调用配置" class="headerlink" title="Bukkit中的命令调用配置"></a>Bukkit中的命令调用配置</h1><h2 id="指令添加"><a href="#指令添加" class="headerlink" title="指令添加"></a>指令添加</h2><p>插件中涉及到命令的调用，在编写插件的相关函数之前，需要在<code>plugin.yml</code>文件中进行命令的注册，其形式如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">commands:</span><br><span class="line">	setid:</span><br><span class="line">		description: Set bilibili live id                         // 命令描述</span><br><span class="line">		usage: /setid [live id]                                   // 命令用法描述</span><br><span class="line">		permission: op                                            // 权限节点</span><br><span class="line">		permission-message: You don not have &lt;permission&gt;         // 用户没有权限时提示信息</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：yml文件使用两个空格作为制表符，这里为了方便使用了tab键，在实现代码中使用tab会导致错误</p>
+</blockquote>
+<h2 id="重写onCommand函数"><a href="#重写onCommand函数" class="headerlink" title="重写onCommand函数"></a>重写onCommand函数</h2><p>onCommand函数方法主体如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCommand</span><span class="params">(CommandSender sender, Command command, String label, String[] args)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<p><code>sender</code>：命令的发送者</p>
+<p><code>command</code>：命令的对象</p>
+<p><code>label</code>：命令发送者所发送的命令</p>
+<p><code>args</code>：命令后面所跟的参数</p>
+<p>在这个项目中，为了便于项目的维护，将每个命令分配到不同的类中进行实现，可以通过继承<code>CommandExecutor</code>进行实现</p>
+<p>在<code>onEnable</code>中可以进行命令的注册，使用继承<code>CommandExecutor</code>实现命令重写的时候，可以使用下面的方式进行命令注册</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Bukkit.getPluginCommand(<span class="string">"setid"</span>).setExecutor(<span class="keyword">new</span> VoteIdSetExecutor(<span class="keyword">this</span>));</span><br></pre></td></tr></table></figure>
+<p>而继承<code>CommandExecutor</code>的类可以通过下面的方式对<code>onCommand</code>函数进行实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VoteIdSetExecutor</span> <span class="keyword">implements</span> <span class="title">CommandExecutor</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> DanmakuVote plugin;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VoteIdSetExecutor</span><span class="params">(DanmakuVote plugin)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.plugin = plugin;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCommand</span><span class="params">(CommandSender sender, Command command, String label, String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// do something</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="直播间弹幕获取"><a href="#直播间弹幕获取" class="headerlink" title="直播间弹幕获取"></a>直播间弹幕获取</h1><p>直播间的弹幕监听可以使用socket连接bilibili的服务器进行监听</p>
+<p>详细见<a href="https://github.com/rayxuln/RaiixDMServer/blob/1.16.1/src/main/java/com/raymondlxtech/raiixdmserver/BiliBiliDMClient.java" target="_blank" rel="noopener">RaiixDMServer</a></p>
+<p>协议的说明后续有时间的情况下会进行编写，具体的实现也不是特别麻烦</p>
+<h1 id="配置文件读写"><a href="#配置文件读写" class="headerlink" title="配置文件读写"></a>配置文件读写</h1><h2 id="配置文件项"><a href="#配置文件项" class="headerlink" title="配置文件项"></a>配置文件项</h2><p>在src目录下创建<code>config.yml</code>文件，写入相关配置，作为在插件内的默认配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Bilibili:</span></span><br><span class="line"><span class="attr">  room_id:</span> <span class="string">RoomId</span></span><br><span class="line">  </span><br><span class="line"><span class="attr">Setting:</span></span><br><span class="line"><span class="attr">  world_name:</span></span><br></pre></td></tr></table></figure>
+<p>在插件被启用的时候，其生命周期中有一个<code>onEnable</code>函数会被调用，在这个函数中可以读取配置文件</p>
+<h1 id="事件定义"><a href="#事件定义" class="headerlink" title="事件定义"></a>事件定义</h1><p>投票事件可以分为<strong>世界事件</strong>以及<strong>玩家事件</strong></p>
+<h2 id="世界事件"><a href="#世界事件" class="headerlink" title="世界事件"></a>世界事件</h2><p>天气更改：修改指定世界的天气</p>
+<h2 id="玩家事件"><a href="#玩家事件" class="headerlink" title="玩家事件"></a>玩家事件</h2><p>怪物生成：随机选取玩家在其周围生成某种怪物</p>
+<p>玩家传送：随机选取玩家传送到附近某个坐标位置</p>
+<h1 id="20200707-20200709"><a href="#20200707-20200709" class="headerlink" title="20200707 - 20200709"></a>20200707 - 20200709</h1><ul>
+<li>完成对指定直播间弹幕的监听</li>
+<li>实现在插件事件开始投票时在用户侧边显示并且在聊天框进行显示</li>
+<li>投票机制的细化以及完善</li>
+</ul>
+
       
     </div>
 
@@ -507,7 +549,7 @@ f[i][1] = min(f[i-1][0] + 2a,f[i-1][1] + a) + 2b\\
       
         <div class="post-tags">
           
-            <a href="/tags/DP/" rel="tag"># DP</a>
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
         </div>
       
@@ -520,8 +562,8 @@ f[i][1] = min(f[i-1][0] + 2a,f[i-1][1] + a) + 2b\\
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/23/Codeforces1207B/" rel="next" title="Codeforces1207-B Square Filling">
-                <i class="fa fa-chevron-left"></i> Codeforces1207-B Square Filling
+              <a href="/2020/02/21/Windows-Api编程开发记录/" rel="next" title="Windows Api编程开发记录">
+                <i class="fa fa-chevron-left"></i> Windows Api编程开发记录
               </a>
             
           </div>
@@ -529,10 +571,6 @@ f[i][1] = min(f[i-1][0] + 2a,f[i-1][1] + a) + 2b\\
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/09/17/PE文件结构/" rel="prev" title="PE文件结构">
-                PE文件结构 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -580,8 +618,17 @@ f[i][1] = min(f[i-1][0] + 2a,f[i-1][1] + a) + 2b\\
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -774,6 +821,23 @@ f[i][1] = min(f[i-1][0] + 2a,f[i-1][1] + a) + 2b\\
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DanmakuVote基本构想"><span class="nav-number">1.</span> <span class="nav-text">DanmakuVote基本构想</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本环境的搭建"><span class="nav-number">2.</span> <span class="nav-text">基本环境的搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bukkit中的命令调用配置"><span class="nav-number">3.</span> <span class="nav-text">Bukkit中的命令调用配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#指令添加"><span class="nav-number">3.1.</span> <span class="nav-text">指令添加</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重写onCommand函数"><span class="nav-number">3.2.</span> <span class="nav-text">重写onCommand函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#直播间弹幕获取"><span class="nav-number">4.</span> <span class="nav-text">直播间弹幕获取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置文件读写"><span class="nav-number">5.</span> <span class="nav-text">配置文件读写</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件项"><span class="nav-number">5.1.</span> <span class="nav-text">配置文件项</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事件定义"><span class="nav-number">6.</span> <span class="nav-text">事件定义</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#世界事件"><span class="nav-number">6.1.</span> <span class="nav-text">世界事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#玩家事件"><span class="nav-number">6.2.</span> <span class="nav-text">玩家事件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#20200707-20200709"><span class="nav-number">7.</span> <span class="nav-text">20200707 - 20200709</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://decision01.cn/"/>
-  <updated>2020-07-25T14:37:31.831Z</updated>
+  <updated>2020-07-25T14:50:00.555Z</updated>
   <id>http://decision01.cn/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Bukkit服务端插件开发（三）</title>
+    <link href="http://decision01.cn/2020/07/25/Bukkit%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%89%EF%BC%89/"/>
+    <id>http://decision01.cn/2020/07/25/Bukkit服务端插件开发（三）/</id>
+    <published>2020-07-25T14:49:03.000Z</published>
+    <updated>2020-07-25T14:50:00.555Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Bukkit服务端插件开发（三）"><a href="#Bukkit服务端插件开发（三）" class="headerlink" title="Bukkit服务端插件开发（三）"></a>Bukkit服务端插件开发（三）</h1><blockquote><p>昨天才把Ver 1.0放出来，只实现了简单的功能还没进行细节的完善</p></blockquote><h2 id="子命令配置"><a href="#子命令配置" class="headerlink" title="子命令配置"></a>子命令配置</h2><p>将目前功能命令进行修改</p><p><code>/bvote setid [room_id]</code>：设置绑定房间id号</p><p><code>/bvote setworld</code>：设置当前世界为受影响世界</p><p><code>/bvote time [random|static] &lt;args&gt;</code>：设置间隔时间为随机或定时</p><p><code>/bvote switch</code>：设置插件状态</p><p>具体的实现：在看了在看了</p><h2 id="配置文件添加实体-事件"><a href="#配置文件添加实体-事件" class="headerlink" title="配置文件添加实体/事件"></a>配置文件添加实体/事件</h2><p>之前代码中的实体选择是直接写死了的，考虑一定的灵活性就需要通过配置文件进行实体的增删</p><p>考虑在配置文件中添加如下内容</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Monsters:</span></span><br><span class="line"><span class="bullet">-"creeper"</span></span><br><span class="line"><span class="bullet">-""</span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="attr">Animals:</span></span><br><span class="line"><span class="bullet">-"pig"</span></span><br><span class="line"><span class="string">_"cow"</span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure><p>通过写入指定字符串进行实体选择的添加，但是这样做带来的问题是代码实现的复杂</p><p>实体生成的代码是这样的</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MonsterPut</span> <span class="keyword">extends</span> <span class="title">WorldEvent</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">effect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Player player = randomChosePlayer();</span><br><span class="line">        Location location = player.getLocation();</span><br><span class="line">        Bukkit.getWorld(worldName).spawnEntity(location, RandomChooser.RandomMonsterChoose());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">RandomChooser</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> EntityType <span class="title">RandomMonsterChoose</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        EntityType[] MonsterArray = &#123;EntityType.ENDERMAN, EntityType.SPIDER, EntityType.CREEPER, EntityType.SKELETON&#125;;</span><br><span class="line">        Random random = <span class="keyword">new</span> Random();</span><br><span class="line">        <span class="keyword">return</span> MonsterArray[random.nextInt(MonsterArray.length)];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在这里是有实体的<code>Enum</code>进行实体的生成，需要通过接收字符串映射到<code>Enum</code>值</p><p>当然最简单的方法就是通过switch进行实现，这个作为最后的一个方案，现在先看看能不能有其他的方法进行替代</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Bukkit服务端插件开发（三）&quot;&gt;&lt;a href=&quot;#Bukkit服务端插件开发（三）&quot; class=&quot;headerlink&quot; title=&quot;Bukkit服务端插件开发（三）&quot;&gt;&lt;/a&gt;Bukkit服务端插件开发（三）&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;昨
+      
+    
+    </summary>
+    
+      <category term="Dev" scheme="http://decision01.cn/categories/Dev/"/>
+    
+    
+      <category term="Java" scheme="http://decision01.cn/tags/Java/"/>
+    
+  </entry>
   
   <entry>
     <title>Bukkit服务端插件开发（二）</title>
@@ -531,31 +557,6 @@
       <category term="ACM" scheme="http://decision01.cn/tags/ACM/"/>
     
       <category term="数据结构" scheme="http://decision01.cn/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Minecraft大型地图规划记录</title>
-    <link href="http://decision01.cn/2019/04/02/Minecraft%E5%A4%A7%E5%9E%8B%E5%9C%B0%E5%9B%BE%E8%A7%84%E5%88%92%E8%AE%B0%E5%BD%95/"/>
-    <id>http://decision01.cn/2019/04/02/Minecraft大型地图规划记录/</id>
-    <published>2019-04-02T13:34:24.000Z</published>
-    <updated>2019-04-02T13:45:07.005Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="初始实地规划"><a href="#初始实地规划" class="headerlink" title="初始实地规划"></a>初始实地规划</h4><p>UL:  27°20’6.05”北  105°15’18.66”东<br>DR: 27°16’29.70”北  105°20’6.26”东<br>实地面积：$6635.27 <em> 7914.32 m^2$<br>Minecraft内部方块：$12700</em>160000$<br>分块：$12<em>16$<br>分块面积：1058</em>1600<br>视角海拔高度：11.84公里<br>影像时间：$2018/12/3$<br><img src="./QQ截图20190329132606.jpg" alt="Alt text"></p><h4 id="区块一的建设"><a href="#区块一的建设" class="headerlink" title="区块一的建设"></a>区块一的建设</h4><p>选定区块(8000<em>8000 ~ 9000</em>9000)进行建设<br>首先在google earth上定位出重要点对应的位置，比例为1米对应2个方块<br><img src="./QQ截图20190402213157.jpg" alt="Alt text"></p><h5 id="河道的建设"><a href="#河道的建设" class="headerlink" title="河道的建设"></a>河道的建设</h5><p>之前我没有发现worldedit中的远程魔杖<code>/farwand</code>和选区移动<code>//shift &lt;数量&gt; [方向]</code>以及拓展选区<code>//expand &lt;数量&gt; [方向]</code>收缩选区<code>//contract &lt;数量&gt; [方向]</code>的指令，导致不规则选区的操作十分繁杂<br>那么现在只需要在<code>poly</code>模式下进行对应处理即可<br><img src="./2019-04-02_21.25.34.png" alt="Alt text"><br><img src="./2019-04-02_21.25.12.png" alt="Alt text"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h4 id=&quot;初始实地规划&quot;&gt;&lt;a href=&quot;#初始实地规划&quot; class=&quot;headerlink&quot; title=&quot;初始实地规划&quot;&gt;&lt;/a&gt;初始实地规划&lt;/h4&gt;&lt;p&gt;UL:  27°20’6.05”北  105°15’18.66”东&lt;br&gt;DR: 27°16’29.70”北
-      
-    
-    </summary>
-    
-      <category term="Minecraft" scheme="http://decision01.cn/categories/Minecraft/"/>
-    
-    
-      <category term="Minecraft" scheme="http://decision01.cn/tags/Minecraft/"/>
     
   </entry>
   

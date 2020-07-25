@@ -98,18 +98,18 @@
 
 
 
-  <meta name="description" content="锲子本来以为参加不了已经凉了的比赛，后面被学长拉进了坑然后四个人连着开发了十天，设计方案改了又改最后重新定了方向最后三天通宵两天才弄完。 一开始接触这个比赛是在10月份的时候被拉去跟着搞腾讯的云开发讲座，然后当时也想组队参加但是没有点子也就没怎么想了。 正式开始开发的时候才发现比赛所给的API还有一系列操作过于睿智，甚至图片切割的API都是用自己服务器实现。 得到了些什么 对JS的异步处理熟悉了一">
-<meta name="keywords" content="miniprogram">
+  <meta name="description" content="有点摸了，现在开始复习下学期考试然后每天只修一点bug，所以这一部分的内容不是很多  线程分离在进行插件的测试过程中，存在一个问题，输入指令/debugvote之后，记分牌能够正常工作 但是由于在这之前插件的运行是单个线程，在插件的相关程序运行的过程中需要等待程序运行结束 这就导致了在客户端看来能够正常移动，但是在这个过程中服务端却是在运行命令程序的 PS：突然想起来之前用一些插件的时候也会出现">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="记一次小程序开发">
-<meta property="og:url" content="http://decision01.cn/2019/12/05/一次小程序开发记录/index.html">
+<meta property="og:title" content="Bukkit服务端插件开发（二）">
+<meta property="og:url" content="http://decision01.cn/2020/07/25/Bukkit服务端插件开发（二）/index.html">
 <meta property="og:site_name" content="Decision&#39;s Blog">
-<meta property="og:description" content="锲子本来以为参加不了已经凉了的比赛，后面被学长拉进了坑然后四个人连着开发了十天，设计方案改了又改最后重新定了方向最后三天通宵两天才弄完。 一开始接触这个比赛是在10月份的时候被拉去跟着搞腾讯的云开发讲座，然后当时也想组队参加但是没有点子也就没怎么想了。 正式开始开发的时候才发现比赛所给的API还有一系列操作过于睿智，甚至图片切割的API都是用自己服务器实现。 得到了些什么 对JS的异步处理熟悉了一">
+<meta property="og:description" content="有点摸了，现在开始复习下学期考试然后每天只修一点bug，所以这一部分的内容不是很多  线程分离在进行插件的测试过程中，存在一个问题，输入指令/debugvote之后，记分牌能够正常工作 但是由于在这之前插件的运行是单个线程，在插件的相关程序运行的过程中需要等待程序运行结束 这就导致了在客户端看来能够正常移动，但是在这个过程中服务端却是在运行命令程序的 PS：突然想起来之前用一些插件的时候也会出现">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-05T16:31:20.616Z">
+<meta property="og:updated_time" content="2020-07-25T14:37:31.831Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="记一次小程序开发">
-<meta name="twitter:description" content="锲子本来以为参加不了已经凉了的比赛，后面被学长拉进了坑然后四个人连着开发了十天，设计方案改了又改最后重新定了方向最后三天通宵两天才弄完。 一开始接触这个比赛是在10月份的时候被拉去跟着搞腾讯的云开发讲座，然后当时也想组队参加但是没有点子也就没怎么想了。 正式开始开发的时候才发现比赛所给的API还有一系列操作过于睿智，甚至图片切割的API都是用自己服务器实现。 得到了些什么 对JS的异步处理熟悉了一">
+<meta name="twitter:title" content="Bukkit服务端插件开发（二）">
+<meta name="twitter:description" content="有点摸了，现在开始复习下学期考试然后每天只修一点bug，所以这一部分的内容不是很多  线程分离在进行插件的测试过程中，存在一个问题，输入指令/debugvote之后，记分牌能够正常工作 但是由于在这之前插件的运行是单个线程，在插件的相关程序运行的过程中需要等待程序运行结束 这就导致了在客户端看来能够正常移动，但是在这个过程中服务端却是在运行命令程序的 PS：突然想起来之前用一些插件的时候也会出现">
 
 
 
@@ -118,7 +118,7 @@
 
 
 
-  <link rel="canonical" href="http://decision01.cn/2019/12/05/一次小程序开发记录/">
+  <link rel="canonical" href="http://decision01.cn/2020/07/25/Bukkit服务端插件开发（二）/">
 
 
 
@@ -128,7 +128,7 @@
   };
 </script>
 
-  <title>记一次小程序开发 | Decision's Blog</title>
+  <title>Bukkit服务端插件开发（二） | Decision's Blog</title>
   
 
 
@@ -348,7 +348,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://decision01.cn/2019/12/05/一次小程序开发记录/">
+    <link itemprop="mainEntityOfPage" href="http://decision01.cn/2020/07/25/Bukkit服务端插件开发（二）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Decision">
@@ -365,7 +365,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">记一次小程序开发
+          <h1 class="post-title" itemprop="name headline">Bukkit服务端插件开发（二）
 
               
             
@@ -391,24 +391,12 @@
                 
               
 
-              <time title="创建时间：2019-12-05 21:24:13" itemprop="dateCreated datePublished" datetime="2019-12-05T21:24:13+08:00">2019-12-05</time>
+              <time title="创建时间：2020-07-25 22:36:41 / 修改时间：22:37:31" itemprop="dateCreated datePublished" datetime="2020-07-25T22:36:41+08:00">2020-07-25</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-02-06 00:31:20" itemprop="dateModified" datetime="2020-02-06T00:31:20+08:00">2020-02-06</time>
               
             
           </span>
@@ -444,8 +432,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/12/05/一次小程序开发记录/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/12/05/一次小程序开发记录/" itemprop="commentCount"></span>
+                <a href="/2020/07/25/Bukkit服务端插件开发（二）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/07/25/Bukkit服务端插件开发（二）/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -453,7 +441,7 @@
 
           
           
-            <span id="/2019/12/05/一次小程序开发记录/" class="leancloud_visitors" data-flag-title="记一次小程序开发">
+            <span id="/2020/07/25/Bukkit服务端插件开发（二）/" class="leancloud_visitors" data-flag-title="Bukkit服务端插件开发（二）">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -484,45 +472,55 @@
       
 
       
-        <h1 id="锲子"><a href="#锲子" class="headerlink" title="锲子"></a>锲子</h1><p>本来以为参加不了已经凉了的比赛，后面被学长拉进了坑然后四个人连着开发了十天，设计方案改了又改最后重新定了方向最后三天通宵两天才弄完。</p>
-<p>一开始接触这个比赛是在10月份的时候被拉去跟着搞腾讯的云开发讲座，然后当时也想组队参加但是没有点子也就没怎么想了。</p>
-<p>正式开始开发的时候才发现比赛所给的API还有一系列操作过于睿智，甚至图片切割的API都是用自己服务器实现。</p>
-<h1 id="得到了些什么"><a href="#得到了些什么" class="headerlink" title="得到了些什么"></a>得到了些什么</h1><ul>
-<li>对JS的异步处理熟悉了一些</li>
-<li>了解了一个应用程序大概的设计模式</li>
-<li>明白了在团队中交流的重要性</li>
-<li>了解了微信小程序的开发流程</li>
-<li>明白了自己所学过少</li>
-<li>接触到了一点python网络编程</li>
-<li>知道了在多人项目中使用git进行版本控制的重要性</li>
-<li>大概可以开始django + vue的博客项目了</li>
-<li><del>明白了互联网公司的996是怎么来的</del></li>
+        <blockquote>
+<p>有点摸了，现在开始复习下学期考试然后每天只修一点bug，所以这一部分的内容不是很多</p>
+</blockquote>
+<h1 id="线程分离"><a href="#线程分离" class="headerlink" title="线程分离"></a>线程分离</h1><p>在进行插件的测试过程中，存在一个问题，输入指令<code>/debugvote</code>之后，记分牌能够正常工作</p>
+<p>但是由于在这之前插件的运行是单个线程，在插件的相关程序运行的过程中需要等待程序运行结束</p>
+<p>这就导致了在客户端看来能够正常移动，但是在这个过程中服务端却是在运行命令程序的</p>
+<p>PS：突然想起来之前用一些插件的时候也会出现类似的问题不知道是不是也是这个原因</p>
+<p>Bukkit中提供了<code>org.bukkit.scheduler</code>中的相关类用来解决线程的问题，但是进行异步调用的时候，子线程中是不能调用Bukkit中提供的API的</p>
+<p>准确来说，是只能调用Bukkit中提供的线程安全的API</p>
+<blockquote>
+<p>关于线程安全的问题，在mcbbs上了解到关于MC本身的一些操作不是线程安全的，具体的函数还不是很清楚</p>
+<p>但是，在插件开发的过程中最好是将一些需要调用API的方法放到主线程中进行实现</p>
+</blockquote>
+<p>对于这个问题，可以通过在异步线程中调用Bukkit中的同步调用</p>
+<p>在项目中的实现如下：</p>
+<ul>
+<li>DanmakuListener中开启异步线程对弹幕进行监听</li>
 </ul>
-<h1 id="小记"><a href="#小记" class="headerlink" title="小记"></a>小记</h1><p>在一开始学长想的方案是做一个基于腾讯云人脸识别API的寻人平台，但是在开发了5天的时候发现这个项目对于找到人的一方用户是没有驱动力上传图片的</p>
-<p>于是后面换成开发一个寻宠平台，但是这个规划后面也凉了，因为在一次讨论分工过后突然发现我们的核心功能离AI越来越远</p>
-<p>在思考了半天（真的是半天）之后，另外一个学长想到可以做一个拍照签到小程序（这难道不是在害自己吗），虽然一开始作为一个备用方案，但是我们没有别的想法也就只能这样做了</p>
-<p>前面的一个工程被推翻了，但留下了一个可以继续使用的组件，然而后面也需要修改组件内部的内容</p>
-<p>留下可以用的瀑布流组件没有考虑通用性，对于不同的数据要有不同的显示方案，在时间不太多的情况下还是选择了通过条件判断显示不同样式</p>
-<p>在开发过程中最主要的是小程序中js的异步问题，特别是遇到服务器请求的时候，在服务器请求还没有回来的情况下就已经执行了下面的语句，导致出现bug</p>
-<h2 id="分到的任务"><a href="#分到的任务" class="headerlink" title="分到的任务"></a>分到的任务</h2><ul>
-<li>实现课程列表的展示页面和功能</li>
-<li>实现图片处理和人脸调用接口的结合</li>
-<li>实现课程详情页面和功能</li>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCommand</span><span class="params">(CommandSender sender, Command command, String label, String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (args.length &gt; <span class="number">0</span> || !(sender <span class="keyword">instanceof</span> Player)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    BukkitTask task = <span class="keyword">new</span> DanmakuListenTask(plugin).runTaskAsynchronously(plugin);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里是在接收到<code>debugvote</code>命令时运行的程序，开启了一个写好的监听任务异步线程</p>
+<p>在之前的实现中，直接在运行过程调用了Bukkit中的API，导致出现了相关的异常错误，下面对于相关的函数调用实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">objective.unregister();</span><br><span class="line"><span class="keyword">int</span> index = getResult();</span><br><span class="line">Bukkit.getScheduler().runTask(plugin, () -&gt; &#123;</span><br><span class="line">    <span class="comment">// 这里是在主线程中实现Bukkit api的调用，具体的实现原理不是很清楚</span></span><br><span class="line">    Bukkit.broadcastMessage(<span class="string">"观众选择了事件："</span> + events[index].getEventName());</span><br><span class="line">    Bukkit.broadcastMessage(<span class="string">"事件效果："</span> + events[index].getDescription());</span><br><span class="line">    events[index].effect();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>events[index].effect();</code>的调用是调用了事件的生效方法，让投票最多的事件在服务器世界中进行生效</p>
+<h1 id="随机时间进行投票"><a href="#随机时间进行投票" class="headerlink" title="随机时间进行投票"></a>随机时间进行投票</h1><p>随机时间的实现是比较容易的，直接调用<code>Random</code>类就可以实现</p>
+<p>比较麻烦需要考虑的地方是在一个任务线程结束后/开始前，进行开关状态的检测以及线程的检测</p>
+<p>在插件类<code>DanmakuVote</code>中设置一个变量<code>count</code>表示当前运行的任务线程数量，这个指只能为0或1</p>
+<p>使用<code>DanmakuTaskMonitor</code>类进行每一次延时任务的启动</p>
+<p>每一次任务结束就使用<code>DanmakuTaskMonitor</code>中的方法进行下一次任务的延时启动</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addLaterTask</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    FileConfiguration config = plugin.getConfig();</span><br><span class="line">    <span class="keyword">int</span> timeSpace;</span><br><span class="line">    <span class="keyword">if</span> (config.getBoolean(<span class="string">"Setting.random"</span>))</span><br><span class="line">        timeSpace = RandomChooser.RandomTimeChoose(config.getInt(<span class="string">"Setting.floor"</span>), config.getInt(<span class="string">"Setting.ceil"</span>));</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        timeSpace = config.getInt(<span class="string">"Setting.space"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (! plugin.getSwitchStatus()) <span class="keyword">return</span> ;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (plugin.addThreadCount()) &#123;</span><br><span class="line">        DanmakuListenTask task = <span class="keyword">new</span> DanmakuListenTask(plugin);</span><br><span class="line">        task.runTaskLaterAsynchronously(plugin, timeSpace * Constants.onSecond);</span><br><span class="line">        Bukkit.getLogger().info(String.format(<span class="string">"下一次投票任务定于%d秒后进行"</span>, timeSpace));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>plugin</code>的<code>addThreadCount()</code>方法返回一个布尔类型表示<code>count</code>的添加是否成功，同时，在插件任务开关为关的时候直接中断这一次执行</p>
+<p>在<code>Vote</code>的<code>runVote</code>方法的最后，将任务切换到主线程中进行运行，在这里<code>Bukkit.getScheduler().runTask</code>方法是一个异步的操作，不会形成阻塞，所以<code>monitor</code>进行任务的添加放到该部分进行执行，保证当前下一次会进行的投票任务只有一个</p>
+<blockquote>
+<p> 在这个地方，考虑增加一个<code>/bvote status</code>命令查看下一次执行任务的信息</p>
+</blockquote>
+<h1 id="20200711-20200723-Ver1-0"><a href="#20200711-20200723-Ver1-0" class="headerlink" title="20200711 - 20200723  Ver1.0"></a>20200711 - 20200723  Ver1.0</h1><ul>
+<li>解决由于单线程导致监听过程中服务器暂停的问题</li>
+<li>实现插件对指定世界/玩家的操作</li>
+<li>某些情况下天气的修改会失效</li>
+<li>随机时间以及固定时间进行弹幕投票的实现</li>
+<li>完善 <code>time random/static</code>指令</li>
+<li>对于服务器中没有玩家的情况下进行任务的跳过</li>
+<li>实现随机选取事件的代码</li>
+<li>动物/怪物的随机选取</li>
+<li>基本功能完善，bug调试完成，线程问题待处理</li>
+<li>存在<code>incorrect header check</code>问题</li>
+<li>弹幕接收较快的情况下，对于一些弹幕的解析存在问题(貌似是因为b站会对频繁刷的弹幕进行屏蔽)</li>
+<li>进行相关命令的构思与完善</li>
+<li>线程数量问题修正</li>
 </ul>
-<h2 id="一个花了较多时间修复的bug"><a href="#一个花了较多时间修复的bug" class="headerlink" title="一个花了较多时间修复的bug"></a>一个花了较多时间修复的bug</h2><p>在写调用云函数进行人脸识别返回刷新页面的过程中遇到了这样一个bug，一开始是回刷新4次是因为刷新的语句嵌套在了一个for循环里面</p>
-<p>修改了这个地方之后，人脸识别第一次成功了，但是没有刷新页面，在第二次进行识别的时候才会刷新签到情况</p>
-<p>当时查bug的时候一直以为是传入到组件里数据的问题，调了两个小时从5:30调到7:30一直没调出来</p>
-<p>后面才发现是因为在执行刷新之前有一个调用云函数的过程，但是云函数还没有返回就执行了刷新，所以每次刷新都是传入了上一次接收到的数据</p>
-<p>（还得再看看Promise相关的东西，但也是后话了</p>
-<h2 id="图片切割问题"><a href="#图片切割问题" class="headerlink" title="图片切割问题"></a>图片切割问题</h2><p>签到功能想要做到的是想要实现拍一张照片识别20人以上，这里有一个问题是腾讯云API一次只能返回识别十个人的信息</p>
-<p>然后聪明机智的两个学长就想到了一个办法，对于一张图片，首先识别原图，然后识别左边一半和右边一半，为了保证中间切割的地方人脸能被识别到，中间的一半也需要识别</p>
-<p>这里又是一个问题了，找不到可以用的nodejs库和api可以实现图片的切割，微信平台提供的智能裁剪api仅仅是把主体裁剪出来，达不到目的</p>
-<p>最后查找了一堆资料之后还是决定自己写一个裁剪程序放在服务器上进行调用（这里吹一句py的强大</p>
-<p>使用python先实现能接收GET和POST请求，这里只用到了POST请求，然后把接收到的base64图片编码转换为opencv mat进行裁剪，再转换为base64传回，自己实现了图片裁剪</p>
-<p>虽然轮子好用但是有时候还是得自己造轮子</p>
-<p>详细见：<a href="https://github.com/Decision2016/Crab" target="_blank" rel="noopener">Crab</a></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>第一次经历了一个开发过程，虽然时间周期不长但是也能大概感受到开发需要做什么。</p>
-<p>这次下来也算有了一个项目经历，希望后面还有机会经历更多的开发过程。</p>
 
       
     </div>
@@ -546,7 +544,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/miniprogram/" rel="tag"># miniprogram</a>
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
         </div>
       
@@ -559,8 +557,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/09/23/《汇编语言》学习笔记/" rel="next" title="《汇编语言》学习笔记">
-                <i class="fa fa-chevron-left"></i> 《汇编语言》学习笔记
+              <a href="/2020/07/10/Bukkit服务端插件开发（一）/" rel="next" title="Bukkit服务端插件开发（一）">
+                <i class="fa fa-chevron-left"></i> Bukkit服务端插件开发（一）
               </a>
             
           </div>
@@ -568,10 +566,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/01/17/celery任务队列学习/" rel="prev" title="celery任务队列学习">
-                celery任务队列学习 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -833,7 +827,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#锲子"><span class="nav-number">1.</span> <span class="nav-text">锲子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#得到了些什么"><span class="nav-number">2.</span> <span class="nav-text">得到了些什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小记"><span class="nav-number">3.</span> <span class="nav-text">小记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分到的任务"><span class="nav-number">3.1.</span> <span class="nav-text">分到的任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个花了较多时间修复的bug"><span class="nav-number">3.2.</span> <span class="nav-text">一个花了较多时间修复的bug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片切割问题"><span class="nav-number">3.3.</span> <span class="nav-text">图片切割问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线程分离"><span class="nav-number">1.</span> <span class="nav-text">线程分离</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随机时间进行投票"><span class="nav-number">2.</span> <span class="nav-text">随机时间进行投票</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#20200711-20200723-Ver1-0"><span class="nav-number">3.</span> <span class="nav-text">20200711 - 20200723  Ver1.0</span></a></li></ol></div>
             
 
           </div>
@@ -1152,6 +1146,46 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 

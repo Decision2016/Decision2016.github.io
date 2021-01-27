@@ -98,18 +98,18 @@
 
 
 
-  <meta name="description" content="有点摸了，现在开始复习下学期考试然后每天只修一点bug，所以这一部分的内容不是很多  线程分离在进行插件的测试过程中，存在一个问题，输入指令/debugvote之后，记分牌能够正常工作 但是由于在这之前插件的运行是单个线程，在插件的相关程序运行的过程中需要等待程序运行结束 这就导致了在客户端看来能够正常移动，但是在这个过程中服务端却是在运行命令程序的 PS：突然想起来之前用一些插件的时候也会出现">
-<meta name="keywords" content="Java">
+  <meta name="description" content="该博文用于记录一下Google二次验证的生成及验证过程，以便以后需要用的时候不用到处查资料× 密钥生成在文档中查询到二次验证密钥属于Base32编码，所以在服务端生成密钥时使用的是随机字符串通过Base32后得到的字符串截取前16个字符作为密钥，实际上只要是Base32编码字符串，不管长度都可以。为了保证安全性可以取更长的编码字符串。 实际上这一过程也可以直接放在客户端生成，但是写的时候还是直接放">
+<meta name="keywords" content="Pyhon Security">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Bukkit服务端插件开发（二）">
-<meta property="og:url" content="http://decision01.cn/2020/07/25/Bukkit服务端插件开发（二）/index.html">
+<meta property="og:title" content="Google二次验证">
+<meta property="og:url" content="http://decision01.cn/2021/01/27/Google二次验证/index.html">
 <meta property="og:site_name" content="Decision&#39;s Blog">
-<meta property="og:description" content="有点摸了，现在开始复习下学期考试然后每天只修一点bug，所以这一部分的内容不是很多  线程分离在进行插件的测试过程中，存在一个问题，输入指令/debugvote之后，记分牌能够正常工作 但是由于在这之前插件的运行是单个线程，在插件的相关程序运行的过程中需要等待程序运行结束 这就导致了在客户端看来能够正常移动，但是在这个过程中服务端却是在运行命令程序的 PS：突然想起来之前用一些插件的时候也会出现">
+<meta property="og:description" content="该博文用于记录一下Google二次验证的生成及验证过程，以便以后需要用的时候不用到处查资料× 密钥生成在文档中查询到二次验证密钥属于Base32编码，所以在服务端生成密钥时使用的是随机字符串通过Base32后得到的字符串截取前16个字符作为密钥，实际上只要是Base32编码字符串，不管长度都可以。为了保证安全性可以取更长的编码字符串。 实际上这一过程也可以直接放在客户端生成，但是写的时候还是直接放">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-08-08T02:51:22.728Z">
+<meta property="og:updated_time" content="2021-01-27T06:00:42.614Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Bukkit服务端插件开发（二）">
-<meta name="twitter:description" content="有点摸了，现在开始复习下学期考试然后每天只修一点bug，所以这一部分的内容不是很多  线程分离在进行插件的测试过程中，存在一个问题，输入指令/debugvote之后，记分牌能够正常工作 但是由于在这之前插件的运行是单个线程，在插件的相关程序运行的过程中需要等待程序运行结束 这就导致了在客户端看来能够正常移动，但是在这个过程中服务端却是在运行命令程序的 PS：突然想起来之前用一些插件的时候也会出现">
+<meta name="twitter:title" content="Google二次验证">
+<meta name="twitter:description" content="该博文用于记录一下Google二次验证的生成及验证过程，以便以后需要用的时候不用到处查资料× 密钥生成在文档中查询到二次验证密钥属于Base32编码，所以在服务端生成密钥时使用的是随机字符串通过Base32后得到的字符串截取前16个字符作为密钥，实际上只要是Base32编码字符串，不管长度都可以。为了保证安全性可以取更长的编码字符串。 实际上这一过程也可以直接放在客户端生成，但是写的时候还是直接放">
 
 
 
@@ -118,7 +118,7 @@
 
 
 
-  <link rel="canonical" href="http://decision01.cn/2020/07/25/Bukkit服务端插件开发（二）/">
+  <link rel="canonical" href="http://decision01.cn/2021/01/27/Google二次验证/">
 
 
 
@@ -128,7 +128,7 @@
   };
 </script>
 
-  <title>Bukkit服务端插件开发（二） | Decision's Blog</title>
+  <title>Google二次验证 | Decision's Blog</title>
   
 
 
@@ -348,7 +348,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://decision01.cn/2020/07/25/Bukkit服务端插件开发（二）/">
+    <link itemprop="mainEntityOfPage" href="http://decision01.cn/2021/01/27/Google二次验证/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Decision">
@@ -365,7 +365,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Bukkit服务端插件开发（二）
+          <h1 class="post-title" itemprop="name headline">Google二次验证
 
               
             
@@ -391,24 +391,12 @@
                 
               
 
-              <time title="创建时间：2020-07-25 22:36:41" itemprop="dateCreated datePublished" datetime="2020-07-25T22:36:41+08:00">2020-07-25</time>
+              <time title="创建时间：2021-01-27 13:59:33 / 修改时间：14:00:42" itemprop="dateCreated datePublished" datetime="2021-01-27T13:59:33+08:00">2021-01-27</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-08-08 10:51:22" itemprop="dateModified" datetime="2020-08-08T10:51:22+08:00">2020-08-08</time>
               
             
           </span>
@@ -444,8 +432,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2020/07/25/Bukkit服务端插件开发（二）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2020/07/25/Bukkit服务端插件开发（二）/" itemprop="commentCount"></span>
+                <a href="/2021/01/27/Google二次验证/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2021/01/27/Google二次验证/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -453,7 +441,7 @@
 
           
           
-            <span id="/2020/07/25/Bukkit服务端插件开发（二）/" class="leancloud_visitors" data-flag-title="Bukkit服务端插件开发（二）">
+            <span id="/2021/01/27/Google二次验证/" class="leancloud_visitors" data-flag-title="Google二次验证">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -484,55 +472,23 @@
       
 
       
-        <blockquote>
-<p>有点摸了，现在开始复习下学期考试然后每天只修一点bug，所以这一部分的内容不是很多</p>
-</blockquote>
-<h1 id="线程分离"><a href="#线程分离" class="headerlink" title="线程分离"></a>线程分离</h1><p>在进行插件的测试过程中，存在一个问题，输入指令<code>/debugvote</code>之后，记分牌能够正常工作</p>
-<p>但是由于在这之前插件的运行是单个线程，在插件的相关程序运行的过程中需要等待程序运行结束</p>
-<p>这就导致了在客户端看来能够正常移动，但是在这个过程中服务端却是在运行命令程序的</p>
-<p>PS：突然想起来之前用一些插件的时候也会出现类似的问题不知道是不是也是这个原因</p>
-<p>Bukkit中提供了<code>org.bukkit.scheduler</code>中的相关类用来解决线程的问题，但是进行异步调用的时候，子线程中是不能调用Bukkit中提供的API的</p>
-<p>准确来说，是只能调用Bukkit中提供的线程安全的API</p>
+        <p>该博文用于记录一下Google二次验证的生成及验证过程，以便以后需要用的时候不用到处查资料×</p>
+<h1 id="密钥生成"><a href="#密钥生成" class="headerlink" title="密钥生成"></a>密钥生成</h1><p>在文档中查询到二次验证密钥属于Base32编码，所以在服务端生成密钥时使用的是随机字符串通过Base32后得到的字符串截取前16个字符作为密钥，实际上只要是Base32编码字符串，不管长度都可以。为了保证安全性可以取更长的编码字符串。</p>
+<p>实际上这一过程也可以直接放在客户端生成，但是写的时候还是直接放在的服务端，主要也是为了通过进行字符串的混淆添加一些密钥信息到随机时间戳中保证一定的安全性</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_secret</span><span class="params">()</span>:</span></span><br><span class="line">    timestamp = int(time.time())</span><br><span class="line">    half = len(secretString) // <span class="number">2</span></span><br><span class="line">    import_str = secretString[:half] + str(timestamp) + secretString[half:]  <span class="comment">#添加其他信息到随机时间戳中</span></span><br><span class="line">    digest = hashlib.sha256(import_str.encode(<span class="string">'utf-8'</span>)).hexdigest()</span><br><span class="line">    base32code = base64.b32encode(bytes.fromhex(digest))</span><br><span class="line">    sec_code = bytes.decode(base32code[:<span class="number">16</span>])</span><br><span class="line">    <span class="keyword">return</span> sec_code</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>关于线程安全的问题，在mcbbs上了解到关于MC本身的一些操作不是线程安全的，具体的函数还不是很清楚</p>
-<p>但是，在插件开发的过程中最好是将一些需要调用API的方法放到主线程中进行实现</p>
+<p>通过密钥生成对应二维码：通过字符串<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;</span><br><span class="line">&gt; 文档给出的样例：</span><br><span class="line">&gt;</span><br><span class="line">&gt; ```otpauth://totp/Example:alice@google.com?secret=JBSWY3DPEHPK3PXP&amp;issuer=Example</span><br></pre></td></tr></table></figure></p>
 </blockquote>
-<p>对于这个问题，可以通过在异步线程中调用Bukkit中的同步调用</p>
-<p>在项目中的实现如下：</p>
-<ul>
-<li>DanmakuListener中开启异步线程对弹幕进行监听</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCommand</span><span class="params">(CommandSender sender, Command command, String label, String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (args.length &gt; <span class="number">0</span> || !(sender <span class="keyword">instanceof</span> Player)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    BukkitTask task = <span class="keyword">new</span> DanmakuListenTask(plugin).runTaskAsynchronously(plugin);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里是在接收到<code>debugvote</code>命令时运行的程序，开启了一个写好的监听任务异步线程</p>
-<p>在之前的实现中，直接在运行过程调用了Bukkit中的API，导致出现了相关的异常错误，下面对于相关的函数调用实现如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">objective.unregister();</span><br><span class="line"><span class="keyword">int</span> index = getResult();</span><br><span class="line">Bukkit.getScheduler().runTask(plugin, () -&gt; &#123;</span><br><span class="line">    <span class="comment">// 这里是在主线程中实现Bukkit api的调用，具体的实现原理不是很清楚</span></span><br><span class="line">    Bukkit.broadcastMessage(<span class="string">"观众选择了事件："</span> + events[index].getEventName());</span><br><span class="line">    Bukkit.broadcastMessage(<span class="string">"事件效果："</span> + events[index].getDescription());</span><br><span class="line">    events[index].effect();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p><code>events[index].effect();</code>的调用是调用了事件的生效方法，让投票最多的事件在服务器世界中进行生效</p>
-<h1 id="随机时间进行投票"><a href="#随机时间进行投票" class="headerlink" title="随机时间进行投票"></a>随机时间进行投票</h1><p>随机时间的实现是比较容易的，直接调用<code>Random</code>类就可以实现</p>
-<p>比较麻烦需要考虑的地方是在一个任务线程结束后/开始前，进行开关状态的检测以及线程的检测</p>
-<p>在插件类<code>DanmakuVote</code>中设置一个变量<code>count</code>表示当前运行的任务线程数量，这个指只能为0或1</p>
-<p>使用<code>DanmakuTaskMonitor</code>类进行每一次延时任务的启动</p>
-<p>每一次任务结束就使用<code>DanmakuTaskMonitor</code>中的方法进行下一次任务的延时启动</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addLaterTask</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    FileConfiguration config = plugin.getConfig();</span><br><span class="line">    <span class="keyword">int</span> timeSpace;</span><br><span class="line">    <span class="keyword">if</span> (config.getBoolean(<span class="string">"Setting.random"</span>))</span><br><span class="line">        timeSpace = RandomChooser.RandomTimeChoose(config.getInt(<span class="string">"Setting.floor"</span>), config.getInt(<span class="string">"Setting.ceil"</span>));</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        timeSpace = config.getInt(<span class="string">"Setting.space"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (! plugin.getSwitchStatus()) <span class="keyword">return</span> ;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (plugin.addThreadCount()) &#123;</span><br><span class="line">        DanmakuListenTask task = <span class="keyword">new</span> DanmakuListenTask(plugin);</span><br><span class="line">        task.runTaskLaterAsynchronously(plugin, timeSpace * Constants.onSecond);</span><br><span class="line">        Bukkit.getLogger().info(String.format(<span class="string">"下一次投票任务定于%d秒后进行"</span>, timeSpace));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>plugin</code>的<code>addThreadCount()</code>方法返回一个布尔类型表示<code>count</code>的添加是否成功，同时，在插件任务开关为关的时候直接中断这一次执行</p>
-<p>在<code>Vote</code>的<code>runVote</code>方法的最后，将任务切换到主线程中进行运行，在这里<code>Bukkit.getScheduler().runTask</code>方法是一个异步的操作，不会形成阻塞，所以<code>monitor</code>进行任务的添加放到该部分进行执行，保证当前下一次会进行的投票任务只有一个</p>
+<p>&gt;</p>
 <blockquote>
-<p> 在这个地方，考虑增加一个<code>/bvote status</code>命令查看下一次执行任务的信息</p>
+<p>除了这些基本的信息，还可以指定周期period以及验证码位数digits</p>
+<p><code>otpauth://totp/ACME%20Co:john.doe@email.com?secret=HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ&amp;issuer=ACME%20Co&amp;algorithm=SHA1&amp;digits=6&amp;period=30</code></p>
 </blockquote>
-<h1 id="20200711-20200723-Ver1-0"><a href="#20200711-20200723-Ver1-0" class="headerlink" title="20200711 - 20200723  Ver1.0"></a>20200711 - 20200723  Ver1.0</h1><ul>
-<li>解决由于单线程导致监听过程中服务器暂停的问题</li>
-<li>实现插件对指定世界/玩家的操作</li>
-<li>某些情况下天气的修改会失效</li>
-<li>随机时间以及固定时间进行弹幕投票的实现</li>
-<li>完善 <code>time random/static</code>指令</li>
-<li>对于服务器中没有玩家的情况下进行任务的跳过</li>
-<li>实现随机选取事件的代码</li>
-<li>动物/怪物的随机选取</li>
-<li>基本功能完善，bug调试完成，线程问题待处理</li>
-<li>存在<code>incorrect header check</code>问题</li>
-<li>弹幕接收较快的情况下，对于一些弹幕的解析存在问题(貌似是因为b站会对频繁刷的弹幕进行屏蔽)</li>
-<li>进行相关命令的构思与完善</li>
-<li>线程数量问题修正</li>
-</ul>
+<h1 id="验证码生成"><a href="#验证码生成" class="headerlink" title="验证码生成"></a>验证码生成</h1><p>验证码通过HMAC算法生成，其计算公式如下</p>
+<script type="math/tex; mode=display">
+HOTP(K,C) = Truncate(HMAC-SHA-1(K,C))</script><p>这里C是一个用于同步的计数器，在实际使用过程中通过秒级时间戳整除30得到一个每30s更新一次的计数器</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_hotp_token</span><span class="params">(secret, intervals_no)</span>:</span></span><br><span class="line">    key = base64.b32decode(normalize(secret), <span class="literal">True</span>)  <span class="comment"># True is to fold lower into uppercase</span></span><br><span class="line">    msg = struct.pack(<span class="string">"&gt;Q"</span>, intervals_no)</span><br><span class="line">    h = bytearray(hmac.new(key, msg, hashlib.sha1).digest())</span><br><span class="line">    o = h[<span class="number">19</span>] &amp; <span class="number">15</span></span><br><span class="line">    h = str((struct.unpack(<span class="string">"&gt;I"</span>, h[o:o + <span class="number">4</span>])[<span class="number">0</span>] &amp; <span class="number">0x7fffffff</span>) % <span class="number">1000000</span>)</span><br><span class="line">    <span class="keyword">return</span> prefix0(h)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_pin</span><span class="params">(secret_code)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> get_hotp_token(secret_code, intervals_no=int(time.time()) // <span class="number">30</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normalize</span><span class="params">(key)</span>:</span></span><br><span class="line">    k2 = key.strip().replace(<span class="string">' '</span>, <span class="string">''</span>)</span><br><span class="line">    <span class="keyword">if</span> len(k2) % <span class="number">8</span> != <span class="number">0</span>:</span><br><span class="line">        k2 += <span class="string">'='</span> * (<span class="number">8</span> - len(k2) % <span class="number">8</span>)</span><br><span class="line">    <span class="keyword">return</span> k2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prefix0</span><span class="params">(h)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> len(h) &lt; <span class="number">6</span>:</span><br><span class="line">        h = <span class="string">'0'</span> * (<span class="number">6</span> - len(h)) + h</span><br><span class="line">    <span class="keyword">return</span> h</span><br></pre></td></tr></table></figure>
+<p>实际使用时，由于存在传输延迟等问题，所以会选取一个生成区间T，生成$[-T, +T]$区间内的验证码，如果用户传输的验证码在里面则为验证成功</p>
 
       
     </div>
@@ -556,7 +512,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"># Java</a>
+            <a href="/tags/Pyhon-Security/" rel="tag"># Pyhon Security</a>
           
         </div>
       
@@ -569,8 +525,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/07/10/Bukkit服务端插件开发（一）/" rel="next" title="Bukkit服务端插件开发（一）">
-                <i class="fa fa-chevron-left"></i> Bukkit服务端插件开发（一）
+              <a href="/2020/07/25/Bukkit服务端插件开发（三）/" rel="next" title="Bukkit服务端插件开发（三）">
+                <i class="fa fa-chevron-left"></i> Bukkit服务端插件开发（三）
               </a>
             
           </div>
@@ -578,10 +534,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/07/25/Bukkit服务端插件开发（三）/" rel="prev" title="Bukkit服务端插件开发（三）">
-                Bukkit服务端插件开发（三） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -845,7 +797,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线程分离"><span class="nav-number">1.</span> <span class="nav-text">线程分离</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随机时间进行投票"><span class="nav-number">2.</span> <span class="nav-text">随机时间进行投票</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#20200711-20200723-Ver1-0"><span class="nav-number">3.</span> <span class="nav-text">20200711 - 20200723  Ver1.0</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#密钥生成"><span class="nav-number">1.</span> <span class="nav-text">密钥生成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#验证码生成"><span class="nav-number">2.</span> <span class="nav-text">验证码生成</span></a></li></ol></div>
             
 
           </div>

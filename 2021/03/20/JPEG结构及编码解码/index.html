@@ -1,0 +1,318 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JPEG结构及编码解码 | Decision`s blog</title><meta name="keywords" content="bin"><meta name="author" content="Decision"><meta name="copyright" content="Decision"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="为什么会想到看这个东西呢，因为选了个数据恢复的课不得不了解一下（早知道就应该选水点的实验课了） 或许后面还会造个轮子玩玩吧。。   JPEG文件格式JPEG文件通常以FFD8头部标识，以FFD9作为结束标识，在文件中以FF表示一个段的开头，后跟标识信息表示段的内容，再之后是两字节的数表示段的长度  编码过程色彩空间大多数JPEG算法的实现使用亮度和色度（YUV编码）而非RGB编码，因为人眼很难观察">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JPEG结构及编码解码">
+<meta property="og:url" content="http://decision01.cn/2021/03/20/JPEG%E7%BB%93%E6%9E%84%E5%8F%8A%E7%BC%96%E7%A0%81%E8%A7%A3%E7%A0%81/index.html">
+<meta property="og:site_name" content="Decision&#96;s blog">
+<meta property="og:description" content="为什么会想到看这个东西呢，因为选了个数据恢复的课不得不了解一下（早知道就应该选水点的实验课了） 或许后面还会造个轮子玩玩吧。。   JPEG文件格式JPEG文件通常以FFD8头部标识，以FFD9作为结束标识，在文件中以FF表示一个段的开头，后跟标识信息表示段的内容，再之后是两字节的数表示段的长度  编码过程色彩空间大多数JPEG算法的实现使用亮度和色度（YUV编码）而非RGB编码，因为人眼很难观察">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://decision01.cn/images/Backchannel-Lena-Final.jpg">
+<meta property="article:published_time" content="2021-03-20T09:07:28.000Z">
+<meta property="article:modified_time" content="2023-06-20T06:21:36.367Z">
+<meta property="article:author" content="Decision">
+<meta property="article:tag" content="bin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://decision01.cn/images/Backchannel-Lena-Final.jpg"><link rel="shortcut icon" href="/../images/favicon.png"><link rel="canonical" href="http://decision01.cn/2021/03/20/JPEG%E7%BB%93%E6%9E%84%E5%8F%8A%E7%BC%96%E7%A0%81%E8%A7%A3%E7%A0%81/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-06-20 14:21:36'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Decision`s blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://s.gravatar.com/avatar/d3c332e47b56134bab228c086c6578d5?s=250" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">36</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">34</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Decision`s blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">JPEG结构及编码解码</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-20T09:07:28.000Z" title="发表于 2021-03-20 17:07:28">2021-03-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-06-20T06:21:36.367Z" title="更新于 2023-06-20 14:21:36">2023-06-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Wiki/">Wiki</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><article class="post-content" id="article-container"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><div class="admonition note"><p>为什么会想到看这个东西呢，因为选了个数据恢复的课不得不了解一下（早知道就应该选水点的实验课了）</p>
+<p>或许后面还会造个轮子玩玩吧。。</p>
+</div>
+
+<h1 id="JPEG文件格式"><a href="#JPEG文件格式" class="headerlink" title="JPEG文件格式"></a>JPEG文件格式</h1><p>JPEG文件通常以<code>FFD8</code>头部标识，以<code>FFD9</code>作为结束标识，在文件中以FF表示一个段的开头，后跟标识信息表示段的内容，再之后是两字节的数表示段的长度</p>
+<p><img src="https://i.loli.net/2021/03/20/KFY4kLa7u1NBDpQ.png" alt="jpg段信息较为直观的展示，来源见参考文章"></p>
+<h1 id="编码过程"><a href="#编码过程" class="headerlink" title="编码过程"></a>编码过程</h1><h2 id="色彩空间"><a href="#色彩空间" class="headerlink" title="色彩空间"></a>色彩空间</h2><p>大多数JPEG算法的实现使用<strong>亮度</strong>和<strong>色度</strong>（YUV编码）而非RGB编码，因为人眼很难观察到高频亮度在很小的区域中的变化。RGB使用3个字节来存储颜色信息，而YUV也使用3个字节来存储，但是每个字节表示的信息和RGB相比是不同的。图片的编码流程如下</p>
+<p><img src="https://i.loli.net/2021/03/20/gvM7U1PpYEDZezr.png" alt="JPEG Encoding process"></p>
+<h2 id="离散变换和量化"><a href="#离散变换和量化" class="headerlink" title="离散变换和量化"></a>离散变换和量化</h2><p>JPEG在处理图像之前将图片划分为8x8的小块来进行处理（这样的小块被称为最小编码单元），在处理的时候需要将像素值的范围进行修改，使得值的范围在$[-127, 128]$之间，未进行处理的范围在$[0, 255]$，使得像素值以0为中心，便于利用离散余弦变换。离散余弦变换把离散的数据变成多个余弦信号的组合。</p>
+<h3 id="二维DCT变换"><a href="#二维DCT变换" class="headerlink" title="二维DCT变换"></a>二维DCT变换</h3><p>二维DCT的变换公式：<br>$$<br>F(u,v) = c(u)c(v)\sum_{i = 0}^{N - 1}\sum_{J = 0}^{N - 1}f(i, j)cos[\frac{(i + 0.5)\pi}{N}]cos[\frac{(j + 0.5)\pi}{N}]<br>$$<br>$$<br>c(x) =<br>\begin{cases}<br>\sqrt{\frac{1}{N}}, x = 0 \\<br>\sqrt{\frac{2}{N}}, x \neq 0 \\<br>\end{cases}<br>$$<br><del>看起来不太看得懂，但是主要注重怎么用就行了</del></p>
+<p>将上面的式子改为矩阵的形式，令$U(i, j) = c(i)cos[\frac{(j + 0.5)\pi}{N}]$，则$F = UAU^T$，DCT矩阵$U$在8x8的方阵中如下<br>$$<br>U=\frac{1}{2}\begin{bmatrix}<br>\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} \\<br>cos\frac{\pi}{16} &amp; cos\frac{3\pi}{16} &amp; cos\frac{5\pi}{16} &amp; cos\frac{7\pi}{16} &amp; cos\frac{9\pi}{16} &amp; cos\frac{11\pi}{16} &amp; cos\frac{13\pi}{16} &amp; cos\frac{15\pi}{16} \\<br>cos\frac{2\pi}{16} &amp; cos\frac{6\pi}{16} &amp; cos\frac{10\pi}{16} &amp; cos\frac{14\pi}{16} &amp; cos\frac{18\pi}{16} &amp; cos\frac{22\pi}{16} &amp; cos\frac{26\pi}{16} &amp; cos\frac{30\pi}{16} \\<br>cos\frac{3\pi}{16} &amp; cos\frac{9\pi}{16} &amp; cos\frac{15\pi}{16} &amp; cos\frac{21\pi}{16} &amp; cos\frac{27\pi}{16} &amp; cos\frac{33\pi}{16} &amp; cos\frac{39\pi}{16} &amp; cos\frac{45\pi}{16} \\<br>cos\frac{4\pi}{16} &amp; cos\frac{12\pi}{16} &amp; cos\frac{20\pi}{16} &amp; cos\frac{28\pi}{16} &amp; cos\frac{36\pi}{16} &amp; cos\frac{44\pi}{16} &amp; cos\frac{52\pi}{16} &amp; cos\frac{60\pi}{16} \\<br>cos\frac{5\pi}{16} &amp; cos\frac{15\pi}{16} &amp; cos\frac{25\pi}{16} &amp; cos\frac{35\pi}{16} &amp; cos\frac{45\pi}{16} &amp; cos\frac{55\pi}{16} &amp; cos\frac{65\pi}{16} &amp; cos\frac{75\pi}{16} \\<br>cos\frac{6\pi}{16} &amp; cos\frac{18\pi}{16} &amp; cos\frac{30\pi}{16} &amp; cos\frac{42\pi}{16} &amp; cos\frac{54\pi}{16} &amp; cos\frac{66\pi}{16} &amp; cos\frac{78\pi}{16} &amp; cos\frac{90\pi}{16} \\<br>cos\frac{7\pi}{16} &amp; cos\frac{21\pi}{16} &amp; cos\frac{35\pi}{16} &amp; cos\frac{49\pi}{16} &amp; cos\frac{63\pi}{16} &amp; cos\frac{77\pi}{16} &amp; cos\frac{91\pi}{16} &amp; cos\frac{105\pi}{16} \\<br>\end{bmatrix}<br>$$</p>
+<p>通过该矩阵进行相乘即可得到进行DCT处理后的信息矩阵</p>
+<h3 id="量化"><a href="#量化" class="headerlink" title="量化"></a>量化</h3><p>在得到DCT矩阵后通过量化表来进行量化，量化的过程很简单，通常是根据压缩的精细度使用不同的量化表，DCT矩阵和量化表矩阵中对应位置的值进行相处得到量化后的矩阵。</p>
+<h2 id="编码-amp-压缩"><a href="#编码-amp-压缩" class="headerlink" title="编码&amp;压缩"></a>编码&amp;压缩</h2><h3 id="Zig-Zag"><a href="#Zig-Zag" class="headerlink" title="Zig-Zag"></a>Zig-Zag</h3><p>在量化完成之后，高频的位置的矩阵信息通常就变成0了，所以为了方便压缩，通过Z形扫描，将这些为0的值连到一起</p>
+<p>例如：<br>$$<br>\begin{bmatrix}<br>15 &amp; 14 &amp; 10 &amp; 9 \\<br>13 &amp; 11 &amp; 8 &amp; 0  \\<br>12 &amp; 0 &amp; 0 &amp; 0   \\<br>0 &amp; 0 &amp; 0 &amp; 0<br>\end{bmatrix}<br>$$<br>在经过扫描后，变成了<br>$$<br>\begin{bmatrix}<br>15 &amp; 14 &amp; 13 &amp; 12 &amp;11 &amp; 10 &amp; 9 &amp; 8 &amp;0 &amp; …… &amp; 0<br>\end{bmatrix}<br>$$</p>
+<h3 id="行程编码和增量编码"><a href="#行程编码和增量编码" class="headerlink" title="行程编码和增量编码"></a>行程编码和增量编码</h3><p>行程编码其实是一种较为容易想出来的压缩编码方式（突然想起来这个好像以前听卡常狂魔wys讲过orz）</p>
+<p>行程编码简单来说就是统计当前信息连续出现多少次，并且记录次数<br>$$<br>\begin{bmatrix}<br>0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0<br>\end{bmatrix}<br>$$<br>在进行编码后就是<br>$$<br>\begin{bmatrix}<br>0 &amp; 8<br>\end{bmatrix}<br>$$<br>没记错的话那个时候听讲座还提到过这个压缩方式被哪家压缩软件的软件公司给申请了专利（？</p>
+<p>然后增量编码是通过与之前的字节进行比较增量变换进行编码的方式</p>
+<p>$$<br>\begin{bmatrix}<br>10 &amp; 11 &amp; 12 &amp; 13 &amp; 10 &amp; 9<br>\end{bmatrix}<br>$$</p>
+<p>在经过编码之后就是<br>$$<br>\begin{bmatrix}<br>10 &amp; 1 &amp; 2 &amp; 3 &amp; 0 &amp; -1<br>\end{bmatrix}<br>$$<br>在JPEG中，DCT系数矩阵中的值都相对于前面的DCT表中的DC值进行了增量编码，这样可以让后面的DC值都能够靠近0，便于后续进行哈夫曼编码。所以如果修改图像的第一个DC系数会导致整个图片发送很大的变动，而修改靠后的DC系数引起的变化比较小。</p>
+<blockquote>
+<p>In JPEG, every DC value in a DCT coefficient matrix is delta encoded relative to the DC value preceding it. This means that if you change the very first DCT coefficient of your image, the whole image will get screwed up but if you modify the first value of the last DCT matrix, only a very tiny part of your image will be affected. This is useful because the first DC value in your image is usually the most varied and by applying the Delta encoding we bring the rest of DC values close to 0 and that results in better compression in the next step of Huffman Encoding.</p>
+<p>​                                                                                        ——《Understanding and Decoding a JPEG Image using Python》</p>
+</blockquote>
+<h3 id="哈夫曼编码"><a href="#哈夫曼编码" class="headerlink" title="哈夫曼编码"></a>哈夫曼编码</h3><p>哈夫曼编码的实现这里不细说，JPEG里面通过哈夫曼编码压缩的方式将信息进一步压缩</p>
+<p>在经过DCT变换以及量化后得到的DCT系数矩阵中，第一个数为DC系数，其他的63个为AC系数</p>
+<p>对于亮度和色度需要进行不同的编码，而对应AC系数和DC系数也有不同的编码，所以一般来说一个彩色的JPEG图像中存在4个哈夫曼表</p>
+<p>写一下哈夫曼表在JPEG中的存储形式，随便选了一张图片，哈夫曼表段如下</p>
+<p><img src="https://i.loli.net/2021/03/20/e3QjxO1Eu9VoHfP.png" alt="image-20210320165408508"></p>
+<p>选取中间比较长的一段来进行说明</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Offset      0  1  2  3  4  5  6  7   8  9 10 11 12 13 14 15</span><br><span class="line"></span><br><span class="line">00000192                                                 FF                  </span><br><span class="line">00000208   C4 00 4B 10 00 02 02 01  03 02 03 06 04 02 07 06   ?K             </span><br><span class="line">00000224   05 03 01 09 00 01 02 11  03 04 12 21 05 31 13 41              ! 1 A</span><br><span class="line">00000240   51 06 22 61 71 81 91 07  14 32 42 52 A1 15 23 43   Q &quot;aq ? 2BR?#C</span><br><span class="line">00000256   B1 C1 D1 E1 33 44 62 72  82 92 16 24 34 53 F1 63   绷厌3Dbr倰 $4S馽</span><br><span class="line">00000272   83 F0 17 93 A2 25 73 C2  E2 45 54 55               凁 摙%s骡ETU</span><br></pre></td></tr></table></figure>
+
+<p><code>FF C4</code>表示哈夫曼表的开始，<code>00 4B</code>表示长度，随后跟的<code>10</code>表示类型，属于AC表的0号表</p>
+<blockquote>
+<p>哈夫曼表的表类型：</p>
+<p>高4位标识表示该表是AC交流表还是DC直流表，0表示DC，1表示AC</p>
+<p>低4位标识表示该表是0号表还是一号表</p>
+</blockquote>
+<p>主要看深蓝色部分和绿色部分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00 02 02 01 03 02 03 06 04 02 07 06 05 03 01 09</span><br></pre></td></tr></table></figure>
+
+<p>每个字节表示对应位数的码字的数量，例如位数为2、3、6、10的码字都有2个，而位数为3、16的码字都有1个等等，总的加起来就算后面剩余部分的长度（哈夫曼树的叶子节点的个数）</p>
+<p>剩余部分根据码字长度表来依次建立，得到哈夫曼编码表，这里写前面一小部分</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>码字长度</th>
+<th>码字</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>2</td>
+<td>00</td>
+<td>0x00</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>01</td>
+<td>0x01</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3</td>
+<td>100</td>
+<td>0x02</td>
+</tr>
+<tr>
+<td>4</td>
+<td>3</td>
+<td>101</td>
+<td>0x11</td>
+</tr>
+<tr>
+<td>……</td>
+<td>……</td>
+<td>……</td>
+<td>……</td>
+</tr>
+</tbody></table>
+<p>中间码字缺失的，在当前码字加1后，补0到最后进行补足</p>
+<h1 id="解码"><a href="#解码" class="headerlink" title="解码"></a>解码</h1><p>(咕咕咕)</p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a target="_blank" rel="noopener" href="https://yasoob.me/posts/understanding-and-writing-jpeg-decoder-in-python/#introduction">Understanding and Decoding a JPEG Image using Python</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/nemoyy/article/details/80896449">理解JPEG图像压缩算法,DCT变换</a></p>
+<p><a target="_blank" rel="noopener" href="https://koushtav.me/jpeg/tutorial/c++/decoder/2019/03/02/lets-write-a-simple-jpeg-library-part-2/#define-huffman-table-segment-dht">Let’s Write a Simple JPEG Library, Part-II: The Decoder</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Decision</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://decision01.cn/2021/03/20/JPEG%E7%BB%93%E6%9E%84%E5%8F%8A%E7%BC%96%E7%A0%81%E8%A7%A3%E7%A0%81/">http://decision01.cn/2021/03/20/JPEG%E7%BB%93%E6%9E%84%E5%8F%8A%E7%BC%96%E7%A0%81%E8%A7%A3%E7%A0%81/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://decision01.cn" target="_blank">Decision`s blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/bin/">bin</a></div><div class="post_share"><div class="social-share" data-image="/../images/Backchannel-Lena-Final.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/10/07/WPF%E7%AA%97%E5%8F%A3%E7%BD%AE%E5%BA%95/"><img class="prev-cover" src="/../images/WPF_Dashboard.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">WPF窗口置底</div></div></a></div><div class="next-post pull-right"><a href="/2021/03/13/%E6%9D%A5%E7%82%B9mysql%E2%80%94%E7%B4%A2%E5%BC%95/"><img class="next-cover" src="/../images/mysql-post-image.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">来点mysql—索引</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://s.gravatar.com/avatar/d3c332e47b56134bab228c086c6578d5?s=250" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Decision</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">36</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">34</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/decision2016" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:decision_2016@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://blog.csdn.net/decision2016" target="_blank" title="CSDN"><i class="fas fa-blog"></i></a><a class="social-icon" href="https://cn.etherscan.com/tx/0x92e7a22bf8a0ce8f021fe6c254fe50825b9e9b193b7401908ee58929c05d4ec3" target="_blank" title="Dream"><i class="fas fa-heart"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss"></i></a><a class="social-icon" href="ens://decision01.eth" target="_blank" title="ENS"><i class="fab fa-ethereum"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JPEG%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">JPEG文件格式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BC%96%E7%A0%81%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">编码过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4"><span class="toc-number">2.1.</span> <span class="toc-text">色彩空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A6%BB%E6%95%A3%E5%8F%98%E6%8D%A2%E5%92%8C%E9%87%8F%E5%8C%96"><span class="toc-number">2.2.</span> <span class="toc-text">离散变换和量化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E7%BB%B4DCT%E5%8F%98%E6%8D%A2"><span class="toc-number">2.2.1.</span> <span class="toc-text">二维DCT变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8F%E5%8C%96"><span class="toc-number">2.2.2.</span> <span class="toc-text">量化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E7%A0%81-amp-%E5%8E%8B%E7%BC%A9"><span class="toc-number">2.3.</span> <span class="toc-text">编码&amp;压缩</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Zig-Zag"><span class="toc-number">2.3.1.</span> <span class="toc-text">Zig-Zag</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%8C%E7%A8%8B%E7%BC%96%E7%A0%81%E5%92%8C%E5%A2%9E%E9%87%8F%E7%BC%96%E7%A0%81"><span class="toc-number">2.3.2.</span> <span class="toc-text">行程编码和增量编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81"><span class="toc-number">2.3.3.</span> <span class="toc-text">哈夫曼编码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E7%A0%81"><span class="toc-number">3.</span> <span class="toc-text">解码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="toc-number">4.</span> <span class="toc-text">参考文章</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/06/18/Golang-%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/" title="Golang 泛型编程"><img src="/../images/golang-cover-1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Golang 泛型编程"/></a><div class="content"><a class="title" href="/2023/06/18/Golang-%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/" title="Golang 泛型编程">Golang 泛型编程</a><time datetime="2023-06-18T08:02:33.000Z" title="发表于 2023-06-18 16:02:33">2023-06-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/26/BIP%E6%94%B9%E8%BF%9B%E3%80%81%E9%97%AA%E7%94%B5%E7%BD%91%E7%BB%9C%E4%B8%8ETrao/" title="BIP、闪电网络与 Trao"><img src="/../images/Bitcoin-Taproot-e.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BIP、闪电网络与 Trao"/></a><div class="content"><a class="title" href="/2023/05/26/BIP%E6%94%B9%E8%BF%9B%E3%80%81%E9%97%AA%E7%94%B5%E7%BD%91%E7%BB%9C%E4%B8%8ETrao/" title="BIP、闪电网络与 Trao">BIP、闪电网络与 Trao</a><time datetime="2023-05-26T07:19:07.000Z" title="发表于 2023-05-26 15:19:07">2023-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/02/%E5%AF%86%E7%A0%81%E7%B4%AF%E5%8A%A0%E5%99%A8/" title="密码累加器"><img src="/../images/Simpler-Cryptography.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="密码累加器"/></a><div class="content"><a class="title" href="/2023/01/02/%E5%AF%86%E7%A0%81%E7%B4%AF%E5%8A%A0%E5%99%A8/" title="密码累加器">密码累加器</a><time datetime="2023-01-02T14:12:49.000Z" title="发表于 2023-01-02 22:12:49">2023-01-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/27/Kademlia%E5%8D%8F%E8%AE%AE%E5%8F%8A%E5%B9%BF%E6%92%AD%E6%96%B9%E6%B3%95/" title="Kademlia协议及广播方法"><img src="/../images/0_JxFeZf2sLUghdW7H.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kademlia协议及广播方法"/></a><div class="content"><a class="title" href="/2022/09/27/Kademlia%E5%8D%8F%E8%AE%AE%E5%8F%8A%E5%B9%BF%E6%92%AD%E6%96%B9%E6%B3%95/" title="Kademlia协议及广播方法">Kademlia协议及广播方法</a><time datetime="2022-09-27T06:57:33.000Z" title="发表于 2022-09-27 14:57:33">2022-09-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/14/Sundaeswap-pool-feature/" title="Sundaeswap feature"><img src="/../images/Sundaeswap.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Sundaeswap feature"/></a><div class="content"><a class="title" href="/2022/08/14/Sundaeswap-pool-feature/" title="Sundaeswap feature">Sundaeswap feature</a><time datetime="2022-08-14T03:45:01.000Z" title="发表于 2022-08-14 11:45:01">2022-08-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2023 By Decision</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href=http://beian.miit.gov.cn/ target=_blank>黔ICP备19010318号-1</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'cUf5ViGX0WC6Py07aH4nm68S-MdYXbMMI',
+      appKey: 'SHhI9rHOdX3eD7ezCMFp0G9m',
+      placeholder: 'Just go go',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: true,
+      serverURLs: 'https://cuf5vigx.api.lncldglobal.com',
+      emojiCDN: 'https://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

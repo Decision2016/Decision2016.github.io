@@ -6,7 +6,7 @@
   <link href="http://decision01.cn/atom.xml" rel="self"/>
   
   <link href="http://decision01.cn/"/>
-  <updated>2023-06-20T06:21:36.367Z</updated>
+  <updated>2023-07-16T13:38:40.617Z</updated>
   <id>http://decision01.cn/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Json Web Token</title>
+    <link href="http://decision01.cn/2023/07/16/Json-Web-Token/"/>
+    <id>http://decision01.cn/2023/07/16/Json-Web-Token/</id>
+    <published>2023-07-16T13:35:55.000Z</published>
+    <updated>2023-07-16T13:38:40.617Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>Json Web Token (JWT) 是一个开放标准（RFC 7519），它符合设计 Restful API 时的<strong>无状态原则</strong>，每一次从客户端向服务器发出的请求都是独立的。</p><p>JWT 由三个部分组成：Header、Payload 和 Signature，它是一个长字符串，每个子串之间不存在换行符，一般的格式是<code>[Header].[Payload].[Signature]</code></p><p>其 <code>Header</code> 承载了两部分信息：类型和所使用的密码算法，例如</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;alg&quot;</span><span class="punctuation">:</span> <span class="string">&quot;HS256&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;typ&quot;</span><span class="punctuation">:</span> <span class="string">&quot;JWT</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure><p><code>Payload</code> 存放了实际需要传递的数据，JWT 中所规定的 7 个可选用的常规字段如下，负载默认是不会进行加密的，所以<strong>不可以用来存放秘密信息</strong></p><table><thead><tr><th>Field</th><th>Name</th><th>Desc</th></tr></thead><tbody><tr><td>iss</td><td>Issuer</td><td>签发人</td></tr><tr><td>exp</td><td>Expiration Time</td><td>过期时间</td></tr><tr><td>sub</td><td>Subject</td><td>主题</td></tr><tr><td>aud</td><td>Audience</td><td>受众</td></tr><tr><td>nbf</td><td>Not Before</td><td>生效时间</td></tr><tr><td>iat</td><td>Issued At</td><td>签发时间</td></tr><tr><td>jti</td><td>JWT ID</td><td>编号</td></tr></tbody></table><p><code>Signature</code> 是对前面两部分消息的签名，以避免数据被篡改，<strong>签名的密钥只有服务器知道</strong>，使用 <code>Header</code> 指定的签名算法来产生签名</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HAMAC-SHA256(base64(header) + &quot;.&quot; + base64(payload), secret)</span><br></pre></td></tr></table></figure><p>客户端在通过认证后接收服务器返回的 JWT，将其存放在 cookie 或 localStorage 中，此后客户端会在与服务器的交互中都携带 JWT 以表明自身身份</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css&quot;&gt;&lt;p&gt;Json Web Token (JWT) 是一个开放标准（RFC 7519）</summary>
+      
+    
+    
+    
+    <category term="Wiki" scheme="http://decision01.cn/categories/Wiki/"/>
+    
+    
+    <category term="cryptography" scheme="http://decision01.cn/tags/cryptography/"/>
+    
+  </entry>
   
   <entry>
     <title>Golang 泛型编程</title>
@@ -491,28 +515,6 @@
     
     
     <category term="java" scheme="http://decision01.cn/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Minecraft Forge服务器搭建</title>
-    <link href="http://decision01.cn/2020/02/06/Minecraft-Forge%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/"/>
-    <id>http://decision01.cn/2020/02/06/Minecraft-Forge%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/</id>
-    <published>2020-02-05T16:22:06.000Z</published>
-    <updated>2023-06-20T06:21:36.367Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>放一个Minecraft服务器搭建的博文，免得后面什么时候要用上又把过程忘了。。。</p><p>这个教程后半段是参考了网络上的教程，因为现在没有搭建的需要所以还没进行实际操作（逃</p><p>此处搭建服务器为linux服务器，minecraft版本为1.12.2</p><h1 id="安装MCSManager"><a href="#安装MCSManager" class="headerlink" title="安装MCSManager"></a>安装MCSManager</h1><p>MCSManager用于网页端管理mc服务器，不需要可以跳过这一步</p><p><a href="https://github.com/Suwings/MCSManager">MCSManager仓库</a></p><blockquote><p># 安装 Node 版本控制工具(若没有 wget,请安装它)<br>wget -qO- <a href="https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh">https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh</a> | bash<br># 关闭终端重新打开再执行以下命令<br># 项目支持 8.0 版本以上，这里使用11版本<br>nvm install 11.0.0<br>nvm use 11.0.0<br># 克隆仓库<br>git clone <a href="https://github.com/suwings/mcsmanager.git">https://github.com/suwings/mcsmanager.git</a><br># 进入目录<br>cd mcsmanager/<br># 安装依赖库<br>npm install<br># 启动面板<br>sudo npm start #或 sudo node app.js</p></blockquote><p>为了让网页端在后台运行，可以使用命令<code>npm install forever -g</code>下载</p><p>然后运行<code>forever start app.js</code>启动网页端在后台进行运行</p><h1 id="搭建服务器"><a href="#搭建服务器" class="headerlink" title="搭建服务器"></a>搭建服务器</h1><p>进入网页管理界面，进入<code>服务端管理-引导创建服务器</code>创建新目录，并配置服务器参数</p><p><img src="/.cn//02/06/Minecraft-Forge%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/QQ%E6%88%AA%E5%9B%BE20200216165526.png" alt="服务端创建界面"></p><p>(这里默认已经安装了Java8)</p><p>在<a href="https://mcversions.net/download/1.12.2">https://mcversions.net/download/1.12.2</a>下载服务端（ubuntu下使用wget命令直接下载到服务器），将下载好的服务端放入创建好的新目录</p><p>也可以在服务器管理中的文件管理进行服务端的上传</p><p>还需要在forge官网<a href="https://files.minecraftforge.net/">https://files.minecraftforge.net/</a>下载对应版本的installer，也放到之前的目录中</p><p>运行命令<code>java -jar [installer文件名] --install</code>,运行完后会多出来universal版本和新的server版本</p><p>这个命令会下载一些依赖库，需要一点时间，也可以上传本地游戏libraries文件夹到服务器文件夹</p><p>在依赖库下载安装后或者上传依赖库之后</p><p>将服务器参数中的服务端文件夹修改为<code>[minecraft服务端版本]-server.jar</code></p><p><img src="/.cn//02/06/Minecraft-Forge%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/QQ%E6%88%AA%E5%9B%BE20200216182800.png" alt="服务端文件名设置"></p><p>最后启动服务端，可以看到目录中多出来mod文件夹用于存放mod</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css&quot;&gt;&lt;p&gt;放一个Minecraft服务器搭建的博文，免得后面什么时候要用上又把过程忘了</summary>
-      
-    
-    
-    
-    
-    <category term="server" scheme="http://decision01.cn/tags/server/"/>
     
   </entry>
   

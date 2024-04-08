@@ -1,0 +1,320 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>《汇编语言》学习笔记 | Decision`s blog</title><meta name="keywords" content="assemble"><meta name="author" content="Decision"><meta name="copyright" content="Decision"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="寄存器(reg)： CPU中存储数据的器件 在8086CPU中，有14个寄存器，可以分为8个通用寄存器、1个指令指针寄存器、1个标志寄存器以及4个段寄存器  通用寄存器：用于传送和暂存数据，也可参与算术逻辑运算，并保存运算结果。AH&amp;AL &#x3D; AX (accumulator):累加寄存器，主要是在进行运算的时候存放操作数，同时所有的I&#x2F;O指令都使用这一寄存器与外界设备传送数据BH&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《汇编语言》学习笔记">
+<meta property="og:url" content="http://decision01.com/post/6e5385d8.html">
+<meta property="og:site_name" content="Decision&#96;s blog">
+<meta property="og:description" content="寄存器(reg)： CPU中存储数据的器件 在8086CPU中，有14个寄存器，可以分为8个通用寄存器、1个指令指针寄存器、1个标志寄存器以及4个段寄存器  通用寄存器：用于传送和暂存数据，也可参与算术逻辑运算，并保存运算结果。AH&amp;AL &#x3D; AX (accumulator):累加寄存器，主要是在进行运算的时候存放操作数，同时所有的I&#x2F;O指令都使用这一寄存器与外界设备传送数据BH&amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picsum.photos/seed/assemblee/700/400">
+<meta property="article:published_time" content="2019-09-23T12:00:02.000Z">
+<meta property="article:modified_time" content="2023-06-20T06:21:36.370Z">
+<meta property="article:author" content="Decision">
+<meta property="article:tag" content="assemble">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picsum.photos/seed/assemblee/700/400"><link rel="shortcut icon" href="/../images/favicon.png"><link rel="canonical" href="http://decision01.com/post/6e5385d8"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-XW1NY371N2"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XW1NY371N2');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-06-20 14:21:36'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Decision`s blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://s.gravatar.com/avatar/d3c332e47b56134bab228c086c6578d5?s=250" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 相册</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Decision`s blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 相册</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">《汇编语言》学习笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-09-23T12:00:02.000Z" title="发表于 2019-09-23 20:00:02">2019-09-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-06-20T06:21:36.370Z" title="更新于 2023-06-20 14:21:36">2023-06-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Reverse/">Reverse</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><article class="post-content" id="article-container"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h4 id="寄存器-reg-：-CPU中存储数据的器件"><a href="#寄存器-reg-：-CPU中存储数据的器件" class="headerlink" title="寄存器(reg)： CPU中存储数据的器件"></a>寄存器(reg)： CPU中存储数据的器件</h4><blockquote>
+<p>在8086CPU中，有14个寄存器，可以分为8个通用寄存器、1个指令指针寄存器、1个标志寄存器以及4个段寄存器</p>
+</blockquote>
+<h5 id="通用寄存器：用于传送和暂存数据，也可参与算术逻辑运算，并保存运算结果。"><a href="#通用寄存器：用于传送和暂存数据，也可参与算术逻辑运算，并保存运算结果。" class="headerlink" title="通用寄存器：用于传送和暂存数据，也可参与算术逻辑运算，并保存运算结果。"></a>通用寄存器：用于传送和暂存数据，也可参与算术逻辑运算，并保存运算结果。</h5><p>AH&amp;AL = AX (accumulator):累加寄存器，主要是在进行运算的时候存放<strong>操作数</strong>，同时<strong>所有的I/O指令都使用这一寄存器与外界设备传送数据</strong><br>BH&amp;BL = BX (basic):基址寄存器，用于地址的索引<br>CH&amp;CL = CX (count):计数寄存器，用于计数，在移位操作以及循环(loop)时作为隐含的<strong>计数器</strong><br>DH&amp;DL = DX(data):数据寄存器，用于数据传递。在书中以8086CPU为例，如果是要用32位的数作为被除数时，通过使用DX与AX存放数据，DX放高16位，AX放低16位<br>SP(Stack Pointer):堆栈指针，与SS配合使用，可指向目前的<strong>堆栈</strong>位置（也就是当前栈顶的偏移地址）<br>BP(Base Pointer):基址指针寄存器，可用作SS的一个<strong>相对基址</strong>位置<br>SI(Source Index):源变址寄存器，可用来存放<strong>相对于DS段之源变址指针</strong>，主要用于对内存单元操作时与DS一起表示DS:SI处的内存单元<br>DI(Destination Index):目的变址寄存器，可用来存放<strong>相对于ES 段之目的变址指针</strong>，主要用于对内存单元操作时与DS一起表示DS:DI处的内存单元</p>
+<blockquote>
+<p>SI和DI寄存器不可以分为两个8位的寄存器使用<br>在没有寄存器参与的指令中，应该使用指令<code>X ptr</code>参与以指明要操作的内存单元的大小为<code>byte</code>大小或<code>word</code>大小，否则CPU无法指定要访问的单元是字单元还是字节单元</p>
+</blockquote>
+<h5 id="指针指令寄存器：用于控制程序中指令的执行顺序"><a href="#指针指令寄存器：用于控制程序中指令的执行顺序" class="headerlink" title="指针指令寄存器：用于控制程序中指令的执行顺序"></a>指针指令寄存器：用于控制程序中指令的执行顺序</h5><p>IP：指向段内指令的偏移量，<strong>在8086机中，CPU将CS:IP指向的内容当作指令执行</strong>。</p>
+<h5 id="标志寄存器"><a href="#标志寄存器" class="headerlink" title="标志寄存器"></a>标志寄存器</h5><p>PSW：也可称作flag寄存器，16位的存放条件标志、控制标志寄存器，在0、2、4、6、7、8、9、10、11位上分别对应了CF、PF、AF、ZF、SF、TF、IF、DF、OF标志</p>
+<blockquote>
+<p>CF(Carry Flag)：记录了运算结果给的最高有效位向更高位的进位值，或从更高位的借位值<br>PF(Parity Flag)：记录相关的指令执行后结果的所有bit位中的1的个数是否是偶数，若是偶数则对应为1<br>AF(Auxiliary Carry Flag)：<br>ZF(Zero Flag)：零标志，记录在相关指令执行后结果是否为0，结果为0时(ZF)=1<br>SF(Sign Flag)：记录相关指令执行后结果是否为负，如果是负则对应为1，可以理解为它记录了结果的最高位符号位<br>TF(Trap Flag)：<br>IF(Interrupt-enable Flag)：<br>DF(Direction Flag)：控制每次操作之后SI和DI的增减，(DF) = 1时两者递增，反之递减<br>OF(Overflow Flag)：溢出标记位，相加操作移除</p>
+</blockquote>
+<h5 id="段寄存器-sreg-：对内存的分段管理而设置"><a href="#段寄存器-sreg-：对内存的分段管理而设置" class="headerlink" title="段寄存器(sreg)：对内存的分段管理而设置"></a>段寄存器(sreg)：对内存的分段管理而设置</h5><p>CS(Code Segment):代码段寄存器<br>DS(Data Segment):数据段寄存器，在mov操作仅仅指定偏移地址的情况下，默认<strong>内存单元段地址</strong>由该寄存器存储<br>SS(Stack Segment):堆栈段寄存器，存放<strong>栈顶的段地址</strong><br>ES(Extra Segment):附加段寄存器</p>
+<ul>
+<li>在8086机中，不能通过mov指令对CS:IP的值进行修改，但是可以通过<code>jmp ax</code>指令进行类似<code>mov IP,ax</code>的操作；不仅是不能对CS:IP进行修改，在8086CPU中，由于硬件设计问题，mov不支持将数据<strong>直接送入</strong>段寄存器的操作。</li>
+</ul>
+<p>在访问内存单元的时候，可以使用<code>段寄存器:[偏移地址]</code>的形式对内存单元访问</p>
+<h4 id="字节和字"><a href="#字节和字" class="headerlink" title="字节和字"></a>字节和字</h4><ul>
+<li>字节：记为<code>byte</code>，一个字节由8个bit位组成，存在8位寄存器中</li>
+<li>字：记为<code>word</code>，由两个字节组成</li>
+</ul>
+<p>当一个字存储在16位寄存器中的时候，假设在AX寄存器中，则AH存放高8位，AL存放低8位</p>
+<h4 id="汇编指令"><a href="#汇编指令" class="headerlink" title="汇编指令"></a>汇编指令</h4><h5 id="mov"><a href="#mov" class="headerlink" title="mov"></a>mov</h5><p><code>mov 寄存器,数据</code>：将数据直接送入寄存器中（在未指明段时一般是指通用寄存器）<br><code>mov 寄存器,寄存器</code>：将一个寄存器中的数据送到另外一个寄存器<br><code>mov 寄存器,内存单元</code>：将指定内存单元的数据送入寄存器，可以使用类似<code>mov ax,[0]</code>的形式，在方括号中的值或者数字是相对与DS数据段里面的偏移地址<br><code>mov 内存单元,寄存器</code>：将寄存器里面的数据送入内存单元<br><code>mov 段寄存器,内存单元</code>：将指定内存单元的数据送入段寄存器<br><code>mov 内存单元,段寄存器</code>：将指定段寄存器的数据送入内存单元<br><code>mov 段寄存器,寄存器</code>：将寄存器里面的数据送到段寄存器，前面说的是不能用<code>mov</code>指令将数据直接送入，但是可以通过先把数据存入寄存器，再从通用寄存器转移到段寄存器<br><code>mov 段寄存器,寄存器</code>：将段寄存器里面的数据送到寄存器，因为8086CPU内部有寄存器到段寄存器的通路，反之也可以</p>
+<blockquote>
+<p><code>add</code>和<code>sub</code>指令与<code>mov</code>一样，有两个操作对象，其形式与<code>mov</code>指令类似<br>[address]表示一个偏移地址为address的内存单元，在进行mov操作的时候段地址默认为DS寄存器中的地址<br>同时[address]也可以用[bx]的形式，偏移地址在bx寄存器中</p>
+</blockquote>
+<h5 id="add-amp-sub"><a href="#add-amp-sub" class="headerlink" title="add &amp; sub"></a>add &amp; sub</h5><p><code>add 操作对象1,操作对象2</code>：把操作对象1和操作对象2的和放入操作对象1中，与<code>mov</code>指令的形式类似<br><code>sub 操作对象1,操作对象2</code>：操作对象1减去操作对象2的值放入操作对象1中，同上</p>
+<h5 id="inc-amp-dec"><a href="#inc-amp-dec" class="headerlink" title="inc &amp; dec"></a>inc &amp; dec</h5><p><code>inc 操作对象</code>：将操作对象的值自加1<br><code>dec 操作对象</code>：将操作对象的值自减1</p>
+<h5 id="div-amp-mul"><a href="#div-amp-mul" class="headerlink" title="div &amp; mul"></a>div &amp; mul</h5><p>div指令的除数在reg或者内存单元中，被除数默认放在AX和DX中<br><code>div reg(内存单元)</code>：用在reg或者内存单元中的除数去除被除数，得到的商存放在AL中，余数放在AH中，如果除数是16位，则AX存储除法操作的商，DX存储除法的余数<br>mul指令要求两个相乘的数位数必须相同，如果都是8位，一个默认放在AL中，另外一个放在8位reg或者内存单元中；如果都是16位，一个放在AX中，另外一个放在16位reg或者内存单元中<br><code>mul reg(内存单元)</code>：8位乘法的结果默认放在AX中，16位乘法的结果的高位放在DX中，低位放在AX中</p>
+<h5 id="push-amp-pop"><a href="#push-amp-pop" class="headerlink" title="push &amp; pop"></a>push &amp; pop</h5><p><code>push</code>和<code>pop</code>主要是进行对栈的操作，在8086CPU中<strong>以字为单位</strong>进行操作<br><code>push 寄存器</code>：首先SP = SP - 2，然后将寄存器中的数据存放到SS:SP指向的内存单元（因为栈是从高地址向低地址方向增长）<br><code>pop 寄存器</code>：将SS:SP的数据存放到寄存器中，然后SP = SP + 2，进行pop操作后，之前SS:SP指向的内存单元数据还存在，但是现在已经不在栈中</p>
+<p>除了对寄存器的操作，这两个指令还可以使用<code>push 段寄存器</code>、<code>push 内存单元</code>、<code>pop 段寄存器</code>、<code>pop 内存单元</code>的指令进行对栈的操作</p>
+<ul>
+<li>在8086CPU中，不会保证对栈的操作不好越界，在栈满的时候进行<code>push</code>和栈空的时候<code>pop</code>都会导致栈顶超界的问题，只能在编程过程中根据要存入的数据大小来安排栈的大小；</li>
+<li>编写汇编程序的过程中，可以通过先声明对应的数据，然后让SS:SP指向数据的地址，然后使用这一部分空间当作栈</li>
+</ul>
+<h5 id="loop：循环"><a href="#loop：循环" class="headerlink" title="loop：循环"></a>loop：循环</h5><p><code>loop 标号</code>：令cx寄存器中的值自减1，然后判断是否为0，为0时结束循环然后向下执行程序，否则跳转到标号的位置执行程序</p>
+<blockquote>
+<p>loop对应章节（P104）知识点：汇编程序中，数据不能以字母开头，在字母前要加一个0</p>
+</blockquote>
+<h5 id="dw-define-word-amp-db-define-byte"><a href="#dw-define-word-amp-db-define-byte" class="headerlink" title="dw(define word) &amp; db(define byte)"></a>dw(define word) &amp; db(define byte)</h5><p><code>dw(db) data1,data2,.....</code>：主要用于定义字型数据和字节型数据<br><code>db &#39;(string)&#39;</code>：定义字符串类型，字符串的存储是存对应的ASCII码<br><code>dd data</code>：（double word）定义双字类型数据</p>
+<blockquote>
+<p>字符的转换：<br>大写字母 + 20H = 小写字母<br>小写字母 - 20H = 大写字母</p>
+</blockquote>
+<h5 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h5><p><code>and 操作对象1,操作对象2</code>：将操作对象1和操作对象2进行按位与运算后放入操作对象1中<br><code>or 操作对象1,操作对象2</code>：将操作对象1和操作对象2进行按位或运算后放入操作对象1中<br><code>xor 操作对象1,操作对象2</code>：将操作对象1和操作对象2进行按位异或运算后放入操作对象1中<br><code>not 操作对象</code>：将操作对象按位取反<br><code>shl(shr) 操作对象</code>：将操作对象逻辑左（右）移一位，直接在右（左）边补一个0<br><code>sal(sar) 操作对象</code>：将操作对象算数左（右）移一位，直接在右（左）边补一个0，但是与逻辑移位操作不同的是，最高位的符号位保存不变，也就是说保留了算术中的符号</p>
+<blockquote>
+<p>移位操作的最高位会被移入PSW寄存器的CF位中</p>
+</blockquote>
+<h5 id="jmp：无条件跳转"><a href="#jmp：无条件跳转" class="headerlink" title="jmp：无条件跳转"></a>jmp：无条件跳转</h5><p><code>jmp reg(idata)</code>：段内转移，将偏移地址（IP）修改为idata或者reg内所存的地址<br><code>jmp address1:address2</code>：直接修改CS为address1，IP为address2，实现段间转移<br><code>jmp short ptr 标号</code>：(IP) = (IP) + 8位偏移量，段内短转移<br><code>jmp near ptr 标号</code>：(IP) = (IP) + 16位偏移量，段内近转移<br><code>jmp far ptr 标号</code>：实现段间转移，也称为远转移，同时修改段地址和偏移地址<br><code>jmp word ptr 内存单元地址</code>：实现段内转移，修改(IP)为内存单元中存放的偏移量<br><code>jmp dword ptr 内存单元地址</code>：实现段间转移，将(CS)修改为内存单元地址的高地址，(IP)修改为内存单元地址的低地址，即(CS) = (内存单元地址) + 2、(IP) = (内存单元地址)<br>在编译器将指令转换为指令码时，会通过汇编指令中的标号计算出位移量以实现跳转</p>
+<h5 id="offset：取得标号的偏移地址"><a href="#offset：取得标号的偏移地址" class="headerlink" title="offset：取得标号的偏移地址"></a>offset：取得标号的偏移地址</h5><h5 id="jcxz：有条件转移指令"><a href="#jcxz：有条件转移指令" class="headerlink" title="jcxz：有条件转移指令"></a>jcxz：有条件转移指令</h5><p><code>jcxz 标号</code>：如果(cx) = 0，转移到标号除执行<br>相当于:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if((cx) == 0) jmp short 标号</span><br></pre></td></tr></table></figure>
+
+<h5 id="ret-amp-retf"><a href="#ret-amp-retf" class="headerlink" title="ret  &amp; retf"></a>ret  &amp; retf</h5><p>主要用于实现(CS:IP)的跳转<br><code>ret</code>：将(IP)修改为栈顶的字，相当于<code>pop IP</code><br><code>retf</code>：将(IP)修改为(SS:SP)的字、将(CS)修改为(SS:SP + 2)的字，相当于<code>pop IP</code>然后<code>pop CS</code></p>
+<h5 id="call"><a href="#call" class="headerlink" title="call"></a>call</h5><p><code>call 标号</code>：将当前的(IP)压入栈，然后跳转到标号位置，相当于：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">push IP</span><br><span class="line">jmp near ptr 标号</span><br></pre></td></tr></table></figure>
+<p><code>call far ptr 标号</code>：实现段间跳转，先把CS、IP依次压栈，然后跳转到标号位置，相当于：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">push CS</span><br><span class="line">push IP</span><br><span class="line">jmp far ptr 标号</span><br></pre></td></tr></table></figure>
+<p><code>call reg</code>：将当前的(IP)压入栈，然后IP修改为reg中存储的偏移地址，相当于：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">push IP</span><br><span class="line">jmp reg</span><br></pre></td></tr></table></figure>
+<p><code>call word ptr 内存单元</code>：与上面类似，先把(IP)压栈，然后(IP)修改为内存单元中存储的偏移地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">push IP</span><br><span class="line">jmp word ptr 内存单元地址</span><br></pre></td></tr></table></figure>
+<p><code>call dword ptr 内存单元</code>：先把CS、IP依次压栈，然后(CS)、(IP)依次修改为内存单元地址中的两个字</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">push CS</span><br><span class="line">push IP</span><br><span class="line">jmp dword ptr 内存单元地址</span><br></pre></td></tr></table></figure>
+
+<h5 id="dup"><a href="#dup" class="headerlink" title="dup"></a>dup</h5><p><code>db(dw) X dup (Y)</code>：将Y重复定义X次</p>
+<h5 id="cmp"><a href="#cmp" class="headerlink" title="cmp"></a>cmp</h5><p>比较指令，相当于<code>sub</code><br><code>cmp 操作对象1，操作对象2</code>：计算操作结果1 - 操作结果2，根据结果对标志寄存器进行设置<br><code>je 地址</code>：对于cmp指令的结果，如果两数相等就转移<br><code>jne 地址</code>：对于cmp指令的结果，如果两数不相等就转移<br><code>jb 地址</code>：低于则转移<br><code>jnb 地址</code>：不低于则转移<br><code>ja 地址</code>：高于则转移<br><code>jna 地址</code>：不高于则转移</p>
+<h5 id="movsb-amp-movsw"><a href="#movsb-amp-movsw" class="headerlink" title="movsb &amp; movsw"></a>movsb &amp; movsw</h5><p><code>movsb</code>：将DS:SI指向的内存单元中的字节送入ES:DI中，根据DF位使SI和DI递增或递减<br><code>movsw</code>：将DS:SI指向的内存单元中的字送入ES:DI中，根据DF位使SI和DI递增或递减</p>
+<h5 id="rep"><a href="#rep" class="headerlink" title="rep"></a>rep</h5><p>一般是配合<code>movsb</code>和<code>movsw</code>一起使用<br><code>rep movsb(sw)</code>：根据CX的值，实现CX个字符的传送</p>
+<h5 id="cls-amp-std"><a href="#cls-amp-std" class="headerlink" title="cls &amp; std"></a>cls &amp; std</h5><p><code>cls</code>：（Clear Direct Flag）将标志寄存器的DF位置0<br><code>std</code>：（Set Direct Flag）将标志寄存器的DF位置0</p>
+<h5 id="pushf-amp-popf"><a href="#pushf-amp-popf" class="headerlink" title="pushf &amp; popf"></a>pushf &amp; popf</h5><p><code>pushf</code>：将标志寄存器的数据<br><code>popf</code>：从栈顶弹出数据送入标志寄存器</p>
+<h4 id="汇编程序"><a href="#汇编程序" class="headerlink" title="汇编程序"></a>汇编程序</h4><p>一个简单的汇编语言源程序：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">assume cs:codesg</span><br><span class="line"></span><br><span class="line">codesg segment</span><br><span class="line">		mov ax,0123H</span><br><span class="line">		mov bx,0456H</span><br><span class="line">		add ax,bx</span><br><span class="line">		add ax,ax</span><br><span class="line">		</span><br><span class="line">		mov ax,4C00h</span><br><span class="line">		int 21H</span><br><span class="line">codesg ends</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h5 id="伪指令"><a href="#伪指令" class="headerlink" title="伪指令"></a>伪指令</h5><p>汇编语言源程序中，有<strong>汇编指令</strong>和<strong>伪指令</strong>两种，下面三个指令是伪指令<br><code>段名 segment</code>：与<code>段名 ends</code>是成对使用的伪指令，定义一个段，同时需要有一个名称来标识<br><code>段名 ends</code>：标识一个段的结束<br><code>end [标号]</code>：汇编程序的结束标记，在编译器遇到<code>end</code>指令的时候，就会停止对程序的编译，同时还可以加一个标号在后面通知编译器程序的入口<br><code>assume 段寄存器:段名,[段寄存器:段名],...</code>：用于使某一个段寄存器和程序终端某一个段关联</p>
+<blockquote>
+<p>对assume伪指令的深入了解：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40627648/article/details/84063124">Link</a></p>
+</blockquote>
+<h5 id="标号"><a href="#标号" class="headerlink" title="标号"></a>标号</h5><p>在伪指令中，使用某个名称作为段的一个标号，汇编过程中编译、连接程序处理为一个段的段地址<br>标号仅仅是指定了某个标号对应的指令行，并没有嵌套程序的作用，如果没有跳转，程序会继续往下运行</p>
+<h5 id="程序返回：一个程序结束后将CPU的控制器交还给它得以运行的程序的过程"><a href="#程序返回：一个程序结束后将CPU的控制器交还给它得以运行的程序的过程" class="headerlink" title="程序返回：一个程序结束后将CPU的控制器交还给它得以运行的程序的过程"></a>程序返回：一个程序结束后将CPU的控制器交还给它得以运行的程序的过程</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov ax,4C00h</span><br><span class="line">int 21H</span><br></pre></td></tr></table></figure>
+<p>这一段汇编指令所实现的功能就是程序返回，在程序结束运行后，放回到command中，CPU继续执行command</p>
+<blockquote>
+<p>程序返回的两个指令的原理：</p>
+</blockquote>
+<h5 id="编译-amp-连接：P83-与-P85"><a href="#编译-amp-连接：P83-与-P85" class="headerlink" title="编译 &amp; 连接：P83 与 P85"></a>编译 &amp; 连接：P83 与 P85</h5><h5 id="彩色字符显示缓冲区"><a href="#彩色字符显示缓冲区" class="headerlink" title="彩色字符显示缓冲区"></a>彩色字符显示缓冲区</h5><ul>
+<li>显示缓冲区的内存地址是<code>B8000H - BFFFFH</code></li>
+<li>00 - 01 单元对应显示器的第1列，02 - 03 单元对应显示器的第2列，依次类推</li>
+<li>显示缓冲区的偶地址存放字符的ASCII码，奇地址存放字符的颜色属性</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Decision</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://decision01.com/post/6e5385d8.html">http://decision01.com/post/6e5385d8.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://decision01.com" target="_blank">Decision`s blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/assemble/">assemble</a></div><div class="post_share"><div class="social-share" data-image="https://picsum.photos/seed/assemblee/700/400" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/4218bae5.html"><img class="prev-cover" src="https://picsum.photos/seed/miniprogramaaa/700/400" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">记一次小程序开发</div></div></a></div><div class="next-post pull-right"><a href="/post/9b326320.html"><img class="next-cover" src="https://picsum.photos/seed/re/700/400" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">逆向工程学习--Acid burn</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://s.gravatar.com/avatar/d3c332e47b56134bab228c086c6578d5?s=250" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Decision</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/decision2016" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://blog.csdn.net/decision2016" target="_blank" title="CSDN"><i class="fas fa-blog"></i></a><a class="social-icon" href="https://cn.etherscan.com/tx/0x92e7a22bf8a0ce8f021fe6c254fe50825b9e9b193b7401908ee58929c05d4ec3" target="_blank" title="Dream"><i class="fas fa-heart"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss"></i></a><a class="social-icon" href="https://orcid.org/0000-0002-5094-7468" target="_blank" title="ORCID"><i class="fab fa-orcid"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8-reg-%EF%BC%9A-CPU%E4%B8%AD%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE%E7%9A%84%E5%99%A8%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">寄存器(reg)： CPU中存储数据的器件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E5%AF%84%E5%AD%98%E5%99%A8%EF%BC%9A%E7%94%A8%E4%BA%8E%E4%BC%A0%E9%80%81%E5%92%8C%E6%9A%82%E5%AD%98%E6%95%B0%E6%8D%AE%EF%BC%8C%E4%B9%9F%E5%8F%AF%E5%8F%82%E4%B8%8E%E7%AE%97%E6%9C%AF%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%EF%BC%8C%E5%B9%B6%E4%BF%9D%E5%AD%98%E8%BF%90%E7%AE%97%E7%BB%93%E6%9E%9C%E3%80%82"><span class="toc-number">1.1.</span> <span class="toc-text">通用寄存器：用于传送和暂存数据，也可参与算术逻辑运算，并保存运算结果。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E6%8C%87%E4%BB%A4%E5%AF%84%E5%AD%98%E5%99%A8%EF%BC%9A%E7%94%A8%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%A8%8B%E5%BA%8F%E4%B8%AD%E6%8C%87%E4%BB%A4%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="toc-number">1.2.</span> <span class="toc-text">指针指令寄存器：用于控制程序中指令的执行顺序</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A0%87%E5%BF%97%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text">标志寄存器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AE%B5%E5%AF%84%E5%AD%98%E5%99%A8-sreg-%EF%BC%9A%E5%AF%B9%E5%86%85%E5%AD%98%E7%9A%84%E5%88%86%E6%AE%B5%E7%AE%A1%E7%90%86%E8%80%8C%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.4.</span> <span class="toc-text">段寄存器(sreg)：对内存的分段管理而设置</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E8%8A%82%E5%92%8C%E5%AD%97"><span class="toc-number">2.</span> <span class="toc-text">字节和字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4"><span class="toc-number">3.</span> <span class="toc-text">汇编指令</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#mov"><span class="toc-number">3.1.</span> <span class="toc-text">mov</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#add-amp-sub"><span class="toc-number">3.2.</span> <span class="toc-text">add &amp; sub</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#inc-amp-dec"><span class="toc-number">3.3.</span> <span class="toc-text">inc &amp; dec</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#div-amp-mul"><span class="toc-number">3.4.</span> <span class="toc-text">div &amp; mul</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#push-amp-pop"><span class="toc-number">3.5.</span> <span class="toc-text">push &amp; pop</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#loop%EF%BC%9A%E5%BE%AA%E7%8E%AF"><span class="toc-number">3.6.</span> <span class="toc-text">loop：循环</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#dw-define-word-amp-db-define-byte"><span class="toc-number">3.7.</span> <span class="toc-text">dw(define word) &amp; db(define byte)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%8D%E8%BF%90%E7%AE%97"><span class="toc-number">3.8.</span> <span class="toc-text">位运算</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#jmp%EF%BC%9A%E6%97%A0%E6%9D%A1%E4%BB%B6%E8%B7%B3%E8%BD%AC"><span class="toc-number">3.9.</span> <span class="toc-text">jmp：无条件跳转</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#offset%EF%BC%9A%E5%8F%96%E5%BE%97%E6%A0%87%E5%8F%B7%E7%9A%84%E5%81%8F%E7%A7%BB%E5%9C%B0%E5%9D%80"><span class="toc-number">3.10.</span> <span class="toc-text">offset：取得标号的偏移地址</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#jcxz%EF%BC%9A%E6%9C%89%E6%9D%A1%E4%BB%B6%E8%BD%AC%E7%A7%BB%E6%8C%87%E4%BB%A4"><span class="toc-number">3.11.</span> <span class="toc-text">jcxz：有条件转移指令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ret-amp-retf"><span class="toc-number">3.12.</span> <span class="toc-text">ret  &amp; retf</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#call"><span class="toc-number">3.13.</span> <span class="toc-text">call</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#dup"><span class="toc-number">3.14.</span> <span class="toc-text">dup</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#cmp"><span class="toc-number">3.15.</span> <span class="toc-text">cmp</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#movsb-amp-movsw"><span class="toc-number">3.16.</span> <span class="toc-text">movsb &amp; movsw</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#rep"><span class="toc-number">3.17.</span> <span class="toc-text">rep</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#cls-amp-std"><span class="toc-number">3.18.</span> <span class="toc-text">cls &amp; std</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#pushf-amp-popf"><span class="toc-number">3.19.</span> <span class="toc-text">pushf &amp; popf</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B1%87%E7%BC%96%E7%A8%8B%E5%BA%8F"><span class="toc-number">4.</span> <span class="toc-text">汇编程序</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BC%AA%E6%8C%87%E4%BB%A4"><span class="toc-number">4.1.</span> <span class="toc-text">伪指令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A0%87%E5%8F%B7"><span class="toc-number">4.2.</span> <span class="toc-text">标号</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E8%BF%94%E5%9B%9E%EF%BC%9A%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9D%9F%E5%90%8E%E5%B0%86CPU%E7%9A%84%E6%8E%A7%E5%88%B6%E5%99%A8%E4%BA%A4%E8%BF%98%E7%BB%99%E5%AE%83%E5%BE%97%E4%BB%A5%E8%BF%90%E8%A1%8C%E7%9A%84%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-number">4.3.</span> <span class="toc-text">程序返回：一个程序结束后将CPU的控制器交还给它得以运行的程序的过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BC%96%E8%AF%91-amp-%E8%BF%9E%E6%8E%A5%EF%BC%9AP83-%E4%B8%8E-P85"><span class="toc-number">4.4.</span> <span class="toc-text">编译 &amp; 连接：P83 与 P85</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BD%A9%E8%89%B2%E5%AD%97%E7%AC%A6%E6%98%BE%E7%A4%BA%E7%BC%93%E5%86%B2%E5%8C%BA"><span class="toc-number">4.5.</span> <span class="toc-text">彩色字符显示缓冲区</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/c19159ae.html" title="btcd：Golang 下的交易构建"><img src="/../images/bitcoin-txs.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="btcd：Golang 下的交易构建"/></a><div class="content"><a class="title" href="/post/c19159ae.html" title="btcd：Golang 下的交易构建">btcd：Golang 下的交易构建</a><time datetime="2024-04-08T06:01:32.000Z" title="发表于 2024-04-08 14:01:32">2024-04-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/822fd34d.html" title="go-libp2p 踩坑记"><img src="/../images/libp2p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="go-libp2p 踩坑记"/></a><div class="content"><a class="title" href="/post/822fd34d.html" title="go-libp2p 踩坑记">go-libp2p 踩坑记</a><time datetime="2023-11-04T09:06:08.000Z" title="发表于 2023-11-04 17:06:08">2023-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/cc6b7110.html" title="Prometheus 指标监控"><img src="/../images/prometheus.avif" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Prometheus 指标监控"/></a><div class="content"><a class="title" href="/post/cc6b7110.html" title="Prometheus 指标监控">Prometheus 指标监控</a><time datetime="2023-08-01T07:57:27.000Z" title="发表于 2023-08-01 15:57:27">2023-08-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/9f5baac8.html" title="Json Web Token"><img src="/../images/jwt.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Json Web Token"/></a><div class="content"><a class="title" href="/post/9f5baac8.html" title="Json Web Token">Json Web Token</a><time datetime="2023-07-16T13:35:55.000Z" title="发表于 2023-07-16 21:35:55">2023-07-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/26091937.html" title="Golang 泛型编程"><img src="/../images/golang-cover-1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Golang 泛型编程"/></a><div class="content"><a class="title" href="/post/26091937.html" title="Golang 泛型编程">Golang 泛型编程</a><time datetime="2023-06-18T08:02:33.000Z" title="发表于 2023-06-18 16:02:33">2023-06-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Decision</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'cUf5ViGX0WC6Py07aH4nm68S-MdYXbMMI',
+      appKey: 'SHhI9rHOdX3eD7ezCMFp0G9m',
+      placeholder: 'Just go go',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: true,
+      serverURLs: 'https://cuf5vigx.api.lncldglobal.com',
+      emojiCDN: 'https://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

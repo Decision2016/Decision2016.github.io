@@ -1,0 +1,306 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>《Carving Orphaned JPEG File Fragments》阅读笔记 | Decision`s blog</title><meta name="keywords" content="research,binary"><meta name="author" content="Decision"><meta name="copyright" content="Decision"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="接前面JPEG编码解码的文章:JPEG结构及编码解码 许久之后的现在导师扔了篇论文来让我康康里面的技术有哪些地方比较新颖   在缺失元文件的磁盘中恢复数据存在的两个问题：  无法在存储器中连续地展开文件数据 文件为了便于快速和轻量的存储，会被格式化地存储到二进制中  文章内容Abstract文件雕刻技术可以在缺失元数据的存储器中恢复文件，当数据被编码和压缩后，对文件的雕刻需要编码和压缩的相关信息（">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Carving Orphaned JPEG File Fragments》阅读笔记">
+<meta property="og:url" content="http://decision01.com/post/43168d0.html">
+<meta property="og:site_name" content="Decision&#96;s blog">
+<meta property="og:description" content="接前面JPEG编码解码的文章:JPEG结构及编码解码 许久之后的现在导师扔了篇论文来让我康康里面的技术有哪些地方比较新颖   在缺失元文件的磁盘中恢复数据存在的两个问题：  无法在存储器中连续地展开文件数据 文件为了便于快速和轻量的存储，会被格式化地存储到二进制中  文章内容Abstract文件雕刻技术可以在缺失元数据的存储器中恢复文件，当数据被编码和压缩后，对文件的雕刻需要编码和压缩的相关信息（">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://decision01.com/images/d59g2uz-69aac946-30ca-4a79-815c-95683dcb0b16.jpg">
+<meta property="article:published_time" content="2021-11-09T07:58:48.000Z">
+<meta property="article:modified_time" content="2023-06-20T06:21:36.370Z">
+<meta property="article:author" content="Decision">
+<meta property="article:tag" content="research">
+<meta property="article:tag" content="binary">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://decision01.com/images/d59g2uz-69aac946-30ca-4a79-815c-95683dcb0b16.jpg"><link rel="shortcut icon" href="/../images/favicon.png"><link rel="canonical" href="http://decision01.com/post/43168d0"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-XW1NY371N2"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XW1NY371N2');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-06-20 14:21:36'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Decision`s blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://s.gravatar.com/avatar/d3c332e47b56134bab228c086c6578d5?s=250" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 相册</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Decision`s blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 相册</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">《Carving Orphaned JPEG File Fragments》阅读笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-11-09T07:58:48.000Z" title="发表于 2021-11-09 15:58:48">2021-11-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-06-20T06:21:36.370Z" title="更新于 2023-06-20 14:21:36">2023-06-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Research/">Research</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><article class="post-content" id="article-container"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><div class="admonition note"><p>接前面JPEG编码解码的文章:<a target="_blank" rel="noopener" href="https://decision01.cn/2021/03/20/JPEG%E7%BB%93%E6%9E%84%E5%8F%8A%E7%BC%96%E7%A0%81%E8%A7%A3%E7%A0%81/">JPEG结构及编码解码</a></p>
+<p>许久之后的现在导师扔了篇论文来让我康康里面的技术有哪些地方比较新颖</p>
+</div>
+
+<p>在缺失元文件的磁盘中恢复数据存在的两个问题：</p>
+<ul>
+<li>无法在存储器中连续地展开文件数据</li>
+<li>文件为了便于快速和轻量的存储，会被格式化地存储到二进制中</li>
+</ul>
+<h1 id="文章内容"><a href="#文章内容" class="headerlink" title="文章内容"></a>文章内容</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>文件雕刻技术可以在缺失元数据的存储器中恢复文件，当数据被编码和压缩后，对文件的雕刻需要编码和压缩的相关信息（元数据）</p>
+<p>文章检测了大量的JPEG图片头以识别它们的结构特征，并运用这一信息实现需要两个步骤的新技术。</p>
+<ul>
+<li><p>解压不完整的文件数据，以获得一个<strong>空间域的描述</strong></p>
+</li>
+<li><p>然后依据这个在空间域的数据中，还原得到一个感官上有意义的图像（即得到正常的图片）</p>
+</li>
+</ul>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>随着越来越多的数据的产生以及被存储到数不尽的设备中，对于在设备错误或遗失情况下的文件数据恢复技术的需求开始增长。所有的设备通过将文件打散为不通过的小块来存储到设备上，对于较为老式的存储设备，这一小块的大小为0.5Kb，而到最新的设备，大小会是64Kb。而在访问这些数据的时候需要根据元数据将这些块连成一个链表，以取得文件的数据。由此，对于一个文件的恢复存在的挑战（challenge）有：</p>
+<ul>
+<li>由于分块存储的原因，无法连续地展开文件数据用来进行恢复</li>
+<li>数据会被进行编码、压缩到二进制中进行存储，以最大化的节省空间（压缩）</li>
+</ul>
+<p>碎片文件雕刻问题受到了人们的研究兴趣，并且具有一定数量的技术来进行解决。这些技术尝试在解码JPEG图像的同时识别出碎片点。在解码失败或者开始产生错误时候将对应的位置识别为一个碎片点，而这些技术通过多次合并新的数据块和已经识别的数据块来恢复和验证数据。但是目前最前沿的技术中，<strong>都默认文件头是存在的</strong>，如果一个文件是部分存在，但是文件头被删除了，现有的技术则不能对该文件进行恢复。</p>
+<p>文章会指出恢复孤立的JPEG碎片的具有挑战性的问题，文章实现的最为根本的方法是为碎片文件重建一个文件头。JPEG图像通常是由数码相机创建，所以通过检查大量的Flick图像分享网站上的大量图片来获取得到编码信息。</p>
+<ul>
+<li>下一节中提供了基于该角度和所描述的挑战给出了恢复一个碎片文件头部的概述</li>
+<li>在第三节中提供了在Flickr数据集中的发现以及它们如何用于重建文件头</li>
+<li>第四节描述了文章提出的文件雕刻技术的每一步</li>
+<li>最后一节通过实现的效果来总结该文章</li>
+</ul>
+<h2 id="Craving-Challengs"><a href="#Craving-Challengs" class="headerlink" title="Craving Challengs"></a>Craving Challengs</h2><p>JPEG标准定义了四个压缩模式：无损、基线（baseline）、渐进式、阶梯式。</p>
+<p>在baseline模式中，通过从上到下扫描图像以顺序存储图像数据，并且这种模式需要在JPEG标准中作为一种基本的能力进行一致的实现。而与之相反的是，渐进式模式通过多次扫描来船速图像数据，阶梯模式允许图像在不同分辨率的机器上显示。而baseline模式是最为广泛被使用的压缩模式，该模式最为简单并且需要较少的计算资源。</p>
+<p>JFIF定义了一种被称为YCbCr的用于编码色彩信息的标准色彩空间，Y（luminance）接近于图像的明度数据，CrCb则接近于图像的色度数据。</p>
+<p>JPEG文件数据包含两类segments，标记段包含关于这个图像的基本信息，而数据段包含了图像的编码数据</p>
+<p>所有的JPEG图像被作为一系列图像块进行存储，而这些图像块的大小具有8x8、8x16、16x8以及16x16像素四种，这样的最小图像块（MCU）中具有确定数量的来自于每个颜色组件的块。而在每个MCU中的颜色组件数量取决于在编码时的子采样过程。</p>
+<p>设计一种自动雕刻孤立碎片的方式需要解决两个问题：</p>
+<ul>
+<li>碎片数据需要解压缩，而解压缩需要正确识别压缩方式、压缩参数和子采样配置。但是在删除文件中进行解码需要在一些任意的位开始解压缩数据流，而这样可能会导致和哈夫曼编码不一致。</li>
+<li>另外一个需要克服的挑战是正确地渲染一部分图像数据，而这需要能够正确通过已经恢复的数据猜测缺失的参数例如宽度和量化表</li>
+</ul>
+<p><strong>很显然的是，解码文件碎片数据最为具有挑战性的是需要尝试大量可能的压缩设置。而最为起到决定性的是选取哈夫曼表。</strong>但是由于现有的图片可能被在相同的相机中进行裁剪，或者是被相同的图像编辑工具编辑，又或者是在相同的网站上下载。所有可以通过这些信息来猜测可能的编码信息，在检查了大量的图像后得到的信息可以用于进行这些参数的补充。</p>
+<h2 id="JPEG-Encoding-Setting-Statistics"><a href="#JPEG-Encoding-Setting-Statistics" class="headerlink" title="JPEG Encoding Setting Statistics"></a>JPEG Encoding Setting Statistics</h2><p>为了实现可靠的对JPEG编码的统计，编写了一个来自Flickr所有数码相机和模型的图像的列表。为了保证编码能够反映图像捕获设备的设置，而不是由编辑工具重新编辑过的图像，对接口抓取的图像进行了过滤，最后得到767916张图像。而后面为了去掉通过编辑软件编辑的图像，又通过ExIF数据信息筛去了一部分图像，最后剩余460643张图像。</p>
+<p>对图像检查后，有5963套哈夫曼表，而每一套哈夫曼表有四个不同的表用于编码亮度中的AC和DC，以及色度。然而有98.61%的图像的哈夫曼表是同一套，其他的5962套哈夫曼表用于编码其他的6425张图像。而类似得到信息还有 ：子采样方式、图像尺寸、Restart Markers、DCT表信息</p>
+<h2 id="Fragment-Carver"><a href="#Fragment-Carver" class="headerlink" title="Fragment Carver"></a>Fragment Carver</h2><p>为了技术的通用性，考虑得到的图像碎片都没有头部数据或者任何的标记，例如开始或结束扫描标记，该技术的步骤如下：</p>
+<ul>
+<li>在只有部分的比特流中检测字节边界，用于区分被编码的图像数据</li>
+<li>选取一套哈夫曼表用于解码，由于标准的哈夫曼表是较为常用的，所以目前仅考虑选取标准的哈夫曼表</li>
+<li>通过选取的哈夫曼表用于三种可能的MCU结构，如果都不可行的话换下一个可能的比特位开始，直到能够成功解码</li>
+<li>使用常见的DCT表对解码的MCU进行反量化，而这一步骤通过对图像块分析得到宽度</li>
+</ul>
+<h3 id="Decoding-the-Bitstream"><a href="#Decoding-the-Bitstream" class="headerlink" title="Decoding the Bitstream"></a>Decoding the Bitstream</h3><p>在任意一个比特位置开始解码需要两个条件：</p>
+<ul>
+<li>MCU的哪一个组件需要解码，这决定了使用哪一个哈夫曼表来解码</li>
+<li>codeword的对齐</li>
+</ul>
+<p>字节边界查找：由于0xFF作为JPEG图像的第一个标识，在检查到该数据的时候，将其视为开始的标志。为了避免混乱，一个0xFF后面必须跟着0x00，这表明这个0x00是可以忽略的。</p>
+<p>而0xFF01到0xFFCF以及0xFFD8到0xFFFF是不会出现在已编码的数据中的，所以这些字节出现的位置应该排除在字节边界外。</p>
+<p>实现同步：一个解码器如果正确地从任意字节开始解码得到代码字（codeword），则被称为是同步成功的。而哈夫曼编码的自同步属性保证它的弹性较好，在添加、删除比特后也可以解码成功。所以如果比特流中存在错误的话，会导致在解码的数据不正确。而在Fig.7中展示了数据流的部分数据丢失后，解码得到的数据不正确的例子。</p>
+<p>在任何的同步设置下，正确解码数据块的能力依赖于EOB标记的出现。在45w张图像数据中，8x8的数据块有94.11%是在EOB位置结束编码的。尽管EOB标准出现的频率比较高，但是对于解码器来说也可能在没有EOB标志的情况下进入同步。在这样的情况下，和可能解码器会解码到8x8的MCU溢出或者出现非法的代码字的情况下才会停止，这也意味着同步失败。</p>
+<blockquote>
+<p>这里其实也是之前挑战课上个做检测的一个想法：依照提取的哈夫曼表从文件头开始进行解码，如果遇到溢出以及非法的情况说明该处的比特流不正确。但是最重要的不能成功的原因就在于：哈夫曼表的容错性太高了，并不能完全的检测得到错误的边界。</p>
+</blockquote>
+<p>而由于这样的情况出现，解决的方法也就是丢掉当前解码的数据，重新建立同步直到遇到EOB标志。</p>
+<h3 id="Identifying-the-MCU-Structure"><a href="#Identifying-the-MCU-Structure" class="headerlink" title="Identifying the MCU Structure"></a>Identifying the MCU Structure</h3><p>为了得到子采样方式，通过解码尝试三种结构来进行识别。这依赖于正确的子采样方式能够很快地进行同步，并且能够正确地恢复块的数据。</p>
+<p>（待续）</p>
+<h1 id="较为新颖的地方"><a href="#较为新颖的地方" class="headerlink" title="较为新颖的地方"></a>较为新颖的地方</h1><ul>
+<li>在解码后根据MCU的亮度和颜色来对比上一个MCU的边界</li>
+<li>使用不同的方式检测解码师范正确</li>
+<li>检查图片宽度，保证能够恢复后正常显示</li>
+</ul>
+<h1 id="文章链接"><a href="#文章链接" class="headerlink" title="文章链接"></a>文章链接</h1><p><a target="_blank" rel="noopener" href="https://www.researchgate.net/publication/275044127_Carving_Orphaned_JPEG_File_Fragments">Carving Orphaned JPEG File Fragments</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Decision</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://decision01.com/post/43168d0.html">http://decision01.com/post/43168d0.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://decision01.com" target="_blank">Decision`s blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/research/">research</a><a class="post-meta__tags" href="/tags/binary/">binary</a></div><div class="post_share"><div class="social-share" data-image="/../images/d59g2uz-69aac946-30ca-4a79-815c-95683dcb0b16.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/b30aad48.html"><img class="prev-cover" src="/../images/random.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">可验证随机函数</div></div></a></div><div class="next-post pull-right"><a href="/post/7bdd625.html"><img class="next-cover" src="/../images/WPF_Dashboard.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">WPF窗口置底</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://s.gravatar.com/avatar/d3c332e47b56134bab228c086c6578d5?s=250" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Decision</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/decision2016" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://blog.csdn.net/decision2016" target="_blank" title="CSDN"><i class="fas fa-blog"></i></a><a class="social-icon" href="https://cn.etherscan.com/tx/0x92e7a22bf8a0ce8f021fe6c254fe50825b9e9b193b7401908ee58929c05d4ec3" target="_blank" title="Dream"><i class="fas fa-heart"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss"></i></a><a class="social-icon" href="https://orcid.org/0000-0002-5094-7468" target="_blank" title="ORCID"><i class="fab fa-orcid"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E5%86%85%E5%AE%B9"><span class="toc-number">1.</span> <span class="toc-text">文章内容</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstract"><span class="toc-number">1.1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.2.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Craving-Challengs"><span class="toc-number">1.3.</span> <span class="toc-text">Craving Challengs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JPEG-Encoding-Setting-Statistics"><span class="toc-number">1.4.</span> <span class="toc-text">JPEG Encoding Setting Statistics</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fragment-Carver"><span class="toc-number">1.5.</span> <span class="toc-text">Fragment Carver</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Decoding-the-Bitstream"><span class="toc-number">1.5.1.</span> <span class="toc-text">Decoding the Bitstream</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Identifying-the-MCU-Structure"><span class="toc-number">1.5.2.</span> <span class="toc-text">Identifying the MCU Structure</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BE%83%E4%B8%BA%E6%96%B0%E9%A2%96%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-number">2.</span> <span class="toc-text">较为新颖的地方</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">文章链接</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/c19159ae.html" title="btcd：Golang 下的交易构建"><img src="/../images/bitcoin-txs.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="btcd：Golang 下的交易构建"/></a><div class="content"><a class="title" href="/post/c19159ae.html" title="btcd：Golang 下的交易构建">btcd：Golang 下的交易构建</a><time datetime="2024-04-08T06:01:32.000Z" title="发表于 2024-04-08 14:01:32">2024-04-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/822fd34d.html" title="go-libp2p 踩坑记"><img src="/../images/libp2p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="go-libp2p 踩坑记"/></a><div class="content"><a class="title" href="/post/822fd34d.html" title="go-libp2p 踩坑记">go-libp2p 踩坑记</a><time datetime="2023-11-04T09:06:08.000Z" title="发表于 2023-11-04 17:06:08">2023-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/cc6b7110.html" title="Prometheus 指标监控"><img src="/../images/prometheus.avif" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Prometheus 指标监控"/></a><div class="content"><a class="title" href="/post/cc6b7110.html" title="Prometheus 指标监控">Prometheus 指标监控</a><time datetime="2023-08-01T07:57:27.000Z" title="发表于 2023-08-01 15:57:27">2023-08-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/9f5baac8.html" title="Json Web Token"><img src="/../images/jwt.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Json Web Token"/></a><div class="content"><a class="title" href="/post/9f5baac8.html" title="Json Web Token">Json Web Token</a><time datetime="2023-07-16T13:35:55.000Z" title="发表于 2023-07-16 21:35:55">2023-07-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/26091937.html" title="Golang 泛型编程"><img src="/../images/golang-cover-1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Golang 泛型编程"/></a><div class="content"><a class="title" href="/post/26091937.html" title="Golang 泛型编程">Golang 泛型编程</a><time datetime="2023-06-18T08:02:33.000Z" title="发表于 2023-06-18 16:02:33">2023-06-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Decision</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'cUf5ViGX0WC6Py07aH4nm68S-MdYXbMMI',
+      appKey: 'SHhI9rHOdX3eD7ezCMFp0G9m',
+      placeholder: 'Just go go',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: true,
+      serverURLs: 'https://cuf5vigx.api.lncldglobal.com',
+      emojiCDN: 'https://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

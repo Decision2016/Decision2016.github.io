@@ -1,0 +1,309 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>celery任务队列学习 | Decision`s blog</title><meta name="keywords" content="celery,django"><meta name="author" content="Decision"><meta name="copyright" content="Decision"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="学习celery是为了后面写一个抢票系统，先咕咕咕一下。。   本文主要实现在Django中使用celery，安装模块为django-celery celery redis  Celery的基本架构（此处是一堆废话）  Celery的架构有三个部分：消息中间件、任务执行单元、任务结果存储  消息中间件（Broker）：任务调度队列，接收任务并将任务存入队列。Celery不提供队列任务，本文使用R">
+<meta property="og:type" content="article">
+<meta property="og:title" content="celery任务队列学习">
+<meta property="og:url" content="http://decision01.com/post/c10bf565.html">
+<meta property="og:site_name" content="Decision&#96;s blog">
+<meta property="og:description" content="学习celery是为了后面写一个抢票系统，先咕咕咕一下。。   本文主要实现在Django中使用celery，安装模块为django-celery celery redis  Celery的基本架构（此处是一堆废话）  Celery的架构有三个部分：消息中间件、任务执行单元、任务结果存储  消息中间件（Broker）：任务调度队列，接收任务并将任务存入队列。Celery不提供队列任务，本文使用R">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://decision01.com/images/20201016155710.png">
+<meta property="article:published_time" content="2020-01-17T13:18:46.000Z">
+<meta property="article:modified_time" content="2023-06-20T06:21:36.370Z">
+<meta property="article:author" content="Decision">
+<meta property="article:tag" content="celery">
+<meta property="article:tag" content="django">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://decision01.com/images/20201016155710.png"><link rel="shortcut icon" href="/../images/favicon.png"><link rel="canonical" href="http://decision01.com/post/c10bf565"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-XW1NY371N2"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XW1NY371N2');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-06-20 14:21:36'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Decision`s blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://s.gravatar.com/avatar/d3c332e47b56134bab228c086c6578d5?s=250" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 相册</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Decision`s blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 相册</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">celery任务队列学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-01-17T13:18:46.000Z" title="发表于 2020-01-17 21:18:46">2020-01-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-06-20T06:21:36.370Z" title="更新于 2023-06-20 14:21:36">2023-06-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Wiki/">Wiki</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><article class="post-content" id="article-container"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p><del>学习celery是为了后面写一个抢票系统，先咕咕咕一下。。</del></p>
+</blockquote>
+<blockquote>
+<p>本文主要实现在Django中使用celery，安装模块为<code>django-celery</code> <code>celery</code> <code>redis</code></p>
+</blockquote>
+<h2 id="Celery的基本架构"><a href="#Celery的基本架构" class="headerlink" title="Celery的基本架构"></a>Celery的基本架构</h2><p><del>（此处是一堆废话）</del></p>
+<blockquote>
+<p>Celery的架构有三个部分：<strong>消息中间件</strong>、<strong>任务执行单元</strong>、<strong>任务结果存储</strong></p>
+<ul>
+<li>消息中间件（Broker）：任务调度队列，接收任务并将任务存入队列。Celery不提供队列任务，本文使用RabbitMQ（因为我配置的redis一直没法让celery连接上）</li>
+<li>任务执行单元（Worker）：任务执行处理单元，它实时监视消息队列，获取队列中调度的任务并执行。</li>
+<li>任务结果存储：用于存储任务的执行结果，以供查询</li>
+</ul>
+</blockquote>
+<h2 id="Django中celery的配置"><a href="#Django中celery的配置" class="headerlink" title="Django中celery的配置"></a>Django中celery的配置</h2><p>首先配置环境，python环境安装<code>celery</code> <code>django-celery</code>，本地配置  <code>RabbitMQ</code>数据库，我本地建的项目名为<code>CeleryTest</code></p>
+<p>项目基本目录结构:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">CeleryTest</span><br><span class="line">├── app</span><br><span class="line">│ ├── __init__.py</span><br><span class="line">│ ├── admin.py</span><br><span class="line">│ ├── apps.py</span><br><span class="line">│ ├── models.py</span><br><span class="line">│ ├── tasks.py</span><br><span class="line">│ ├── tests.py</span><br><span class="line">│ ├── views.py</span><br><span class="line">├── CeleryTest</span><br><span class="line">│ ├── __init__.py</span><br><span class="line">│ ├── asgi.py</span><br><span class="line">│ ├── celery.py</span><br><span class="line">│ ├── settings.py</span><br><span class="line">│ ├── urls.py</span><br><span class="line">│ ├── wsgi.py</span><br><span class="line">├── templates</span><br><span class="line">└── manage.py</span><br></pre></td></tr></table></figure>
+
+<h3 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h3><p>在上面的目录结构中，<code>tasks.py</code>自行创建，用于写入任务程序让celery注册，<code>celery.py</code>也是自行创建，用于配置celery相关的东西</p>
+<p>先修改<code>settings.py</code>中的配置，文件部分修改如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> djcelery</span><br><span class="line">djcelery.setup_loader()</span><br><span class="line"></span><br><span class="line">BROKER_URL= <span class="string">&#x27;amqp://guest@localhost//&#x27;</span>                 <span class="comment"># Broker的地址，可以自行修改</span></span><br><span class="line">CELERY_RESULT_BACKEND = <span class="string">&#x27;amqp://guest@localhost//&#x27;</span></span><br><span class="line">CELERYBEAT_SCHEDULER = <span class="string">&#x27;djcelery.schedulers.DatabaseScheduler&#x27;</span></span><br><span class="line"></span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    <span class="string">&#x27;django.contrib.admin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.auth&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.contenttypes&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.sessions&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.messages&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.staticfiles&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;app&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;djcelery&#x27;</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>主要配置Broker和Backend的地址，并将模块导入django</p>
+<p>然后编写celery的配置文件<code>celery.py</code> ，需要详细的说明到官方文档查看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from __future__ import absolute_import, unicode_literals</span><br><span class="line">import os</span><br><span class="line">from celery import Celery</span><br><span class="line">from django.conf import settings</span><br><span class="line"></span><br><span class="line">os.environ.setdefault(&#x27;DJANGO_SETTINGS_MODULE&#x27;, &#x27;CeleryTest.settings&#x27;)</span><br><span class="line"></span><br><span class="line">app = Celery(&#x27;CeleryTest&#x27;)</span><br><span class="line"></span><br><span class="line">app.config_from_object(&#x27;django.conf:settings&#x27;)</span><br><span class="line"></span><br><span class="line">app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)</span><br></pre></td></tr></table></figure>
+
+<p>然后修改同一目录下的<code>__init__.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> absolute_import, unicode_literals</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> .celery <span class="keyword">import</span> app <span class="keyword">as</span> celery_app</span><br><span class="line"></span><br><span class="line">__all__ = (<span class="string">&#x27;celery_app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>到这里，基本的配置已经完成了</p>
+<h3 id="任务函数"><a href="#任务函数" class="headerlink" title="任务函数"></a>任务函数</h3><p>在<code>app</code>目录下的<code>tasks.py</code>中写入任务函数，这里简单写了一个加法运算的函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> celery <span class="keyword">import</span> task</span><br><span class="line"></span><br><span class="line"><span class="meta">@task</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">x, y</span>):</span><br><span class="line">    <span class="keyword">return</span> x + y</span><br></pre></td></tr></table></figure>
+
+<p>除了<code>@task</code>装饰器外，还有<code>@share_task</code>，用于在没有具体的Celery实例的情况下创建任务</p>
+<h3 id="运行项目"><a href="#运行项目" class="headerlink" title="运行项目"></a>运行项目</h3><p>这里运行项目需要首先运行<code>django</code>项目，然后运行用于监控任务变化的任务调度器<code>celery beat</code>，最后启动<code>worker</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python manage.py runserver</span><br><span class="line">python manage.py celery beat</span><br><span class="line">python manage.py celery worker -l debug</span><br></pre></td></tr></table></figure>
+
+<p>（建议启动多个控制台分别运行）</p>
+<p>到这里，<code>celery</code>的配置完成了，然后可以在django后台管理页面中添加任务，就能自动运行，这里不做示例了</p>
+<h2 id="在Django中实现定时Celery任务"><a href="#在Django中实现定时Celery任务" class="headerlink" title="在Django中实现定时Celery任务"></a>在Django中实现定时Celery任务</h2><p>这个的学习我一开始是打算做一个学校讲坛的抢票系统，但是大一的时候已经刷满了所以一直咕咕咕</p>
+<blockquote>
+<p>系统的需求是这样的：讲坛会在微信上发布预告，并一些讲坛会有抢票的二维码，二维码扫描后会进入抢票地址。一般来说会定一个时间比如周六12:00开始抢票，那么就会在这个时间开放一个表单进行填写，先到者得。然而这个基本的抢票过程的程序我已经实现了，但是我觉得这样还不是特别的完美，因为虽然它存储了时间，但是依然需要定时去请求这个抢票网站上的一个连接以激发网站进行请求，这是特别麻烦的。而且我用这个自己写的抢票系统就抢到过一张×。所以想用celery来实现一个定时的任务，用户在输入抢票网址，后台的爬虫拉取了抢票信息后，会添加任务到任务队列，然后定时执行。</p>
+</blockquote>
+<p>在网络上找了很久，都没有找到相关的可以动态添加定时任务的实现，所以自己看一下怎么整一个</p>
+<p>在一篇文章里面它实现了通过向<code>djcelery</code>这个数据库的<code>periodictask</code>表中添加一个带有<code>crontab</code>的任务，但是我看了一下，<code>django-celery</code>中的<code>crontab</code>的格式是这样的<code>m/h/d/dM/MY</code>，也就是说这样其实是一个周期任务，不能保证在某一天执行后不再一次执行。</p>
+<p>但是到这里想到了一个办法，用户每次添加一个抢票信息，那么就添加这个任务，在任务执行完了之后在表中删除这个任务，但是这个做法的实现还需要看一下celery执行的一些细节才能实现</p>
+<p>然后可以考虑Celery中的任务延时，在注册了一个task之后，在调用task的时候可以使用方法<code>apply_async</code>，输入参数以及等待时间以调用task</p>
+<blockquote>
+<p><code>apply_async</code>支持的参数</p>
+<p><code>countdonw</code>: 等待一段时间后执行</p>
+<p><code>eta</code>： 定义任务开始时间（UTC时间）</p>
+<p><code>expires</code>： 设置超时时间</p>
+<p><code>retry</code>： 任务失败后是否重试</p>
+<p><code>retry_policy</code> ： 重试的策略，可以为<code>max_retries</code>：最大重试次数、<code>interval_start</code>:重试等待的时间间隔秒数、<code>interval_step</code>: 每次重试让重试间隔增加的秒数、<code>interval_max</code>: 重试间隔最大的秒数</p>
+</blockquote>
+<p>使用这个方法可以便捷地实现定时任务，该方法会返回一个celery任务的id。以为你之前之前的关注点都是关注在数据库中添加周期任务进行实现，没有查到可以使用这个方法直接实现任务的定时。假设用户在提交了一个任务请求时，可以使用下面的代码来实现任务：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> utils.bases <span class="keyword">import</span> BaseAPIView</span><br><span class="line"><span class="keyword">from</span> utils.handle <span class="keyword">import</span> get_goal_data</span><br><span class="line"><span class="keyword">from</span> .tasks <span class="keyword">import</span> ticket_task</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> TaskInfo</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LectureGoalAPI</span>(<span class="title class_ inherited__">BaseAPIView</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self, request</span>):</span><br><span class="line">        user = request.user</span><br><span class="line">        data = request.data</span><br><span class="line"></span><br><span class="line">        task_data = get_goal_data(data[<span class="string">&#x27;goal_url&#x27;</span>])</span><br><span class="line"></span><br><span class="line">        goal = TaskInfo.<span class="built_in">object</span>.create(stu_name=data[<span class="string">&#x27;stu_name&#x27;</span>],</span><br><span class="line">                                      stu_id=data[<span class="string">&#x27;stu_id&#x27;</span>],</span><br><span class="line">                                      task_url=data[<span class="string">&#x27;goal_url&#x27;</span>],</span><br><span class="line">                                      task_time=task_data[<span class="string">&#x27;time&#x27;</span>],</span><br><span class="line">                                      lecture_name=task_data[<span class="string">&#x27;title&#x27;</span>])</span><br><span class="line"></span><br><span class="line">        celery_task = ticket_task.apply_async(args=goal, eta=task_data[<span class="string">&#x27;time&#x27;</span>])</span><br><span class="line">        goal.celery_id = <span class="built_in">str</span>(celery_task)</span><br><span class="line">        goal.save()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> self.success(<span class="string">&#x27;Task Added Successful&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这里部分函数的实现被封装了，仅仅展示在使用<code>apply_async</code>实现定时任务的过程，后续会将系统的完整代码放到github上（如果我能完成的话）</p>
+<p>这里还缺少一个获取任务执行状态的过程，但是实现的方式就比较多了，比如在用户请求列表的时候根据celery的id获取任务状态（这样可能比较耗时），还可以将对数据库内状态的修改在task中实现。</p>
+<blockquote>
+<p>一点题外话：</p>
+<p>在没有考虑使用Celery的时候所设计的系统的定时任务实现是比较抵消且极不稳定的，我使用了一个在14年那个时候比较流行的QQ空间秒赞系统的方法。写一个<code>request</code>页面，使用监控去定时访问这个页面，激发系统去执行一些操作。而这个操作的过程就比较麻烦，很多时候这样执行还不是很稳定。但是以前那些用php写的秒赞系统使用这个方法比较的稳定，不太清楚怎么做到的。也因为到了大学后php用的比较少，也没有去研究这些东西的实现，现在写一个网站系统都是习惯使用<code>Django</code> + <code>Vue.js</code>，或许以后有兴趣的话还会学习一些别的框架。</p>
+</blockquote>
+<h2 id="可能遇到的报错"><a href="#可能遇到的报错" class="headerlink" title="可能遇到的报错"></a>可能遇到的报错</h2><h3 id="beat启动错误"><a href="#beat启动错误" class="headerlink" title="beat启动错误"></a><code>beat</code>启动错误</h3><p>在运行<code>python manage.py celery beat</code>的时候出现<code>AttributeError: &#39;DatabaseFeatures&#39; object has no attribute &#39;autocommits_when_autocommit_is_off</code>错误</p>
+<p>貌似是包内代码出现的问题，在<code>djcelery</code>的<code>db</code>文件中删除52行位置的if判断即可正常运行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># if connection.features.autocommits_when_autocommit_is_off:</span></span><br><span class="line">    <span class="comment"># ignore stupid warnings and errors</span></span><br><span class="line">    <span class="comment"># yield</span></span><br><span class="line"><span class="comment"># else:</span></span><br><span class="line"><span class="keyword">with</span> transaction.atomic(using):</span><br><span class="line">    <span class="keyword">yield</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7a869a73b92f">在 Django 项目中使用 Celery</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/robertx/p/10841129.html">celery异步,延时任务, 周期任务</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/bbwangj/article/details/89312355">Django+Django-Celery+Celery的整合实战</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Decision</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://decision01.com/post/c10bf565.html">http://decision01.com/post/c10bf565.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://decision01.com" target="_blank">Decision`s blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/celery/">celery</a><a class="post-meta__tags" href="/tags/django/">django</a></div><div class="post_share"><div class="social-share" data-image="/../images/20201016155710.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/7275d121.html"><img class="prev-cover" src="/../images/forgeai.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Minecraft Forge服务器搭建</div></div></a></div><div class="next-post pull-right"><a href="/post/4218bae5.html"><img class="next-cover" src="https://picsum.photos/seed/miniprogramaaa/700/400" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">记一次小程序开发</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://s.gravatar.com/avatar/d3c332e47b56134bab228c086c6578d5?s=250" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Decision</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/decision2016" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://blog.csdn.net/decision2016" target="_blank" title="CSDN"><i class="fas fa-blog"></i></a><a class="social-icon" href="https://cn.etherscan.com/tx/0x92e7a22bf8a0ce8f021fe6c254fe50825b9e9b193b7401908ee58929c05d4ec3" target="_blank" title="Dream"><i class="fas fa-heart"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss"></i></a><a class="social-icon" href="https://orcid.org/0000-0002-5094-7468" target="_blank" title="ORCID"><i class="fab fa-orcid"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Celery%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">Celery的基本架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Django%E4%B8%ADcelery%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">Django中celery的配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE"><span class="toc-number">2.1.</span> <span class="toc-text">基本配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E5%87%BD%E6%95%B0"><span class="toc-number">2.2.</span> <span class="toc-text">任务函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.3.</span> <span class="toc-text">运行项目</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8Django%E4%B8%AD%E5%AE%9E%E7%8E%B0%E5%AE%9A%E6%97%B6Celery%E4%BB%BB%E5%8A%A1"><span class="toc-number">3.</span> <span class="toc-text">在Django中实现定时Celery任务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E9%81%87%E5%88%B0%E7%9A%84%E6%8A%A5%E9%94%99"><span class="toc-number">4.</span> <span class="toc-text">可能遇到的报错</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#beat%E5%90%AF%E5%8A%A8%E9%94%99%E8%AF%AF"><span class="toc-number">4.1.</span> <span class="toc-text">beat启动错误</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="toc-number">5.</span> <span class="toc-text">参考文章</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/c19159ae.html" title="btcd：Golang 下的交易构建"><img src="/../images/bitcoin-txs.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="btcd：Golang 下的交易构建"/></a><div class="content"><a class="title" href="/post/c19159ae.html" title="btcd：Golang 下的交易构建">btcd：Golang 下的交易构建</a><time datetime="2024-04-08T06:01:32.000Z" title="发表于 2024-04-08 14:01:32">2024-04-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/822fd34d.html" title="go-libp2p 踩坑记"><img src="/../images/libp2p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="go-libp2p 踩坑记"/></a><div class="content"><a class="title" href="/post/822fd34d.html" title="go-libp2p 踩坑记">go-libp2p 踩坑记</a><time datetime="2023-11-04T09:06:08.000Z" title="发表于 2023-11-04 17:06:08">2023-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/cc6b7110.html" title="Prometheus 指标监控"><img src="/../images/prometheus.avif" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Prometheus 指标监控"/></a><div class="content"><a class="title" href="/post/cc6b7110.html" title="Prometheus 指标监控">Prometheus 指标监控</a><time datetime="2023-08-01T07:57:27.000Z" title="发表于 2023-08-01 15:57:27">2023-08-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/9f5baac8.html" title="Json Web Token"><img src="/../images/jwt.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Json Web Token"/></a><div class="content"><a class="title" href="/post/9f5baac8.html" title="Json Web Token">Json Web Token</a><time datetime="2023-07-16T13:35:55.000Z" title="发表于 2023-07-16 21:35:55">2023-07-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/26091937.html" title="Golang 泛型编程"><img src="/../images/golang-cover-1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Golang 泛型编程"/></a><div class="content"><a class="title" href="/post/26091937.html" title="Golang 泛型编程">Golang 泛型编程</a><time datetime="2023-06-18T08:02:33.000Z" title="发表于 2023-06-18 16:02:33">2023-06-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Decision</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'cUf5ViGX0WC6Py07aH4nm68S-MdYXbMMI',
+      appKey: 'SHhI9rHOdX3eD7ezCMFp0G9m',
+      placeholder: 'Just go go',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: true,
+      serverURLs: 'https://cuf5vigx.api.lncldglobal.com',
+      emojiCDN: 'https://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

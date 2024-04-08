@@ -1,4 +1,4 @@
-http://decision01.com/2024/04/08/btcd-Golang-%E8%AF%AD%E8%A8%80%E4%B8%8B%E7%9A%84%E4%BA%A4%E6%98%93%E6%9E%84%E5%BB%BA/
+http://decision01.com/2024/04/08/btcd-Golang-%E4%B8%8B%E7%9A%84%E4%BA%A4%E6%98%93%E6%9E%84%E5%BB%BA/
 http://decision01.com/2023/11/04/go-libp2p-%E8%B8%A9%E5%9D%91%E8%AE%B0/
 http://decision01.com/2023/08/01/Prometheus-%E6%8C%87%E6%A0%87%E7%9B%91%E6%8E%A7/
 http://decision01.com/2023/07/16/Json-Web-Token/

@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>来点mysql—索引 | Decision`s blog</title><meta name="keywords" content="database"><meta name="author" content="Decision"><meta name="copyright" content="Decision"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本篇博文记录学习mysql的一些笔记（学习数据库+准备面试 较为抽象的地方不会有很细地记录，可能存在理解不是很精确的地方 然后之前虽然用过数据库但是sql语句也不太会，还是必须要学的（         索引索引（是Mysql中也叫做键）是存储引擎中用于快速找到记录的一种数据结构 1SELECT first_name FROM sakila.actor WHERE actor_id &#x3D; 5;  该">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>来点mysql—索引 | Decision`s blog</title><meta name="keywords" content="database"><meta name="author" content="Decision"><meta name="copyright" content="Decision"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本篇博文记录学习mysql的一些笔记（学习数据库+准备面试 较为抽象的地方不会有很细地记录，可能存在理解不是很精确的地方 然后之前虽然用过数据库但是sql语句也不太会，还是必须要学的（     索引索引（是Mysql中也叫做键）是存储引擎中用于快速找到记录的一种数据结构 1SELECT first_name FROM sakila.actor WHERE actor_id &#x3D; 5;  该语句用于">
 <meta property="og:type" content="article">
 <meta property="og:title" content="来点mysql—索引">
 <meta property="og:url" content="http://decision01.com/post/3399997e.html">
 <meta property="og:site_name" content="Decision&#96;s blog">
-<meta property="og:description" content="本篇博文记录学习mysql的一些笔记（学习数据库+准备面试 较为抽象的地方不会有很细地记录，可能存在理解不是很精确的地方 然后之前虽然用过数据库但是sql语句也不太会，还是必须要学的（         索引索引（是Mysql中也叫做键）是存储引擎中用于快速找到记录的一种数据结构 1SELECT first_name FROM sakila.actor WHERE actor_id &#x3D; 5;  该">
+<meta property="og:description" content="本篇博文记录学习mysql的一些笔记（学习数据库+准备面试 较为抽象的地方不会有很细地记录，可能存在理解不是很精确的地方 然后之前虽然用过数据库但是sql语句也不太会，还是必须要学的（     索引索引（是Mysql中也叫做键）是存储引擎中用于快速找到记录的一种数据结构 1SELECT first_name FROM sakila.actor WHERE actor_id &#x3D; 5;  该语句用于">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://decision01.com/images/mysql-post-image.jpg">
 <meta property="article:published_time" content="2021-03-13T10:59:10.000Z">
@@ -151,7 +151,7 @@ gtag('config', 'G-XW1NY371N2');
 </ul>
 </div>
 
-    
+
 <h1 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h1><p>索引（是Mysql中也叫做键）是存储引擎中用于快速找到记录的一种数据结构</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT first_name FROM sakila.actor WHERE actor_id = 5;</span><br></pre></td></tr></table></figure>
 

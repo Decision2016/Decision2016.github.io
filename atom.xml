@@ -6,7 +6,7 @@
   <link href="http://decision01.com/atom.xml" rel="self"/>
   
   <link href="http://decision01.com/"/>
-  <updated>2024-04-29T14:30:02.596Z</updated>
+  <updated>2024-05-21T16:17:28.253Z</updated>
   <id>http://decision01.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>新时代淘金：加密货币牛熊一轮游</title>
+    <link href="http://decision01.com/post/58adb9d4.html"/>
+    <id>http://decision01.com/post/58adb9d4.html</id>
+    <published>2024-05-21T16:02:50.000Z</published>
+    <updated>2024-05-21T16:17:28.253Z</updated>
+    
+    <content type="html"><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">  <script id="hbeData" type="hbeData" data-hmacdigest="acca044e54b7d59dfc00854d72d853d7f591e23e6085dd5fa56568981de1a11c">0515815a90f71d2e69c573efde1c8119e11756a259a45a05da84968fe21b60f5ebb9d9e79c495841ecd37137e644752b95910b7ad710a4a1a30f4e9bd9e53449e2f0849a09ddde8725219cc521b247b6f79d99004148cc4fbc3b90ac2df3385eb30d4523ed1fb5a6544da48a70173f5a50cf57081ad0413fb3ae59f62a723abc1b7ca2a32940aa705a8a08dec51a474b</script>  <div class="hbe hbe-content">    <div class="hbe hbe-input hbe-input-default">      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>      </label>    </div>  </div></div><script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+    
+    
+    <summary type="html">Here&#39;s something encrypted, password is required to continue reading.</summary>
+    
+    
+    
+    <category term="杂记" scheme="http://decision01.com/categories/%E6%9D%82%E8%AE%B0/"/>
+    
+    
+    <category term="blockchain" scheme="http://decision01.com/tags/blockchain/"/>
+    
+  </entry>
   
   <entry>
     <title>BIP-340/1：Schnorr 签名与 MAST</title>
@@ -498,31 +519,6 @@
     
     
     <category term="bin" scheme="http://decision01.com/tags/bin/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>来点mysql—索引</title>
-    <link href="http://decision01.com/post/3399997e.html"/>
-    <id>http://decision01.com/post/3399997e.html</id>
-    <published>2021-03-13T10:59:10.000Z</published>
-    <updated>2024-04-08T08:03:49.047Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><div class="admonition note"><ul><li>本篇博文记录学习mysql的一些笔记（学习数据库+准备面试</li><li>较为抽象的地方不会有很细地记录，可能存在理解不是很精确的地方</li><li>然后之前虽然用过数据库但是sql语句也不太会，还是必须要学的（</li></ul></div><h1 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h1><p>索引（是Mysql中也叫做键）是存储引擎中用于快速找到记录的一种数据结构</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT first_name FROM sakila.actor WHERE actor_id = 5;</span><br></pre></td></tr></table></figure><p>该语句用于在<code>actor_id</code>列上建立的索引查找值为5的行，然后返回所有包含该值的数据行</p><p>索引分为<strong>单索引</strong>和<strong>组合索引</strong>，单列索引中一个索引只包含一个列，而组合索引中一个索引可以包含多个列（在多个列中创建的单索引并不能提高查询性能）</p><blockquote><p>索引提高了查询速度，但是会降低更新表的速度，因为在更新表的时候也需要对索引文件进行更新</p></blockquote><p>在创建了索引之后，查询会根据语句情况选择使用索引以提高查询效率，快速定位数据，不用扫描表中给定查询的每一行</p><h1 id="B-Tree"><a href="#B-Tree" class="headerlink" title="B-Tree"></a>B-Tree</h1><p>M阶的B树，每个节点最多有M个子节点，非叶子节点具有至少$ceil(m/2)$个子节点</p><p>B树的根节点拥有的子节点数量和上限的内部节点相同，如果根节点不是唯一节点，至少有两个子节点</p><p>于是有B树的节点特征：</p><ul><li>$2\le Count_{root}\le M$</li><li>$ceil(M/2) \le Count_{internal} \le M$</li><li>$1\le Count_{Ele_{root}} \le M-1$</li><li>$(ceil(M/2) - 1) \le Count_{Ele_{noroot}} \le M -1$</li></ul><p>B树在进行数据插入、删除的过程中依次检查是否满足条件，自动调整指向子页的指针和指向下一个叶子页的指针来实现树的平衡</p><p>B树索引存在的限制：</p><ul><li>如果不是按照索引的最左列查找，则无法使用索引</li><li>不能跳过索引中的列</li><li>如果查询中有某个列的范围查询，则右边所有列都无法使用索引优化查找</li></ul><h1 id="哈希索引"><a href="#哈希索引" class="headerlink" title="哈希索引"></a>哈希索引</h1><p>哈希索引基于哈希表来实现，只有精确匹配索引中所有列的查询才有效，对于每行数据记录一个哈希码</p><p>哈希索引的查找方式比较快，但是存在限制：</p><ul><li>哈希索引只包含哈希值和行指针，不存储字段值，不能使用索引中的值来避免读取行</li><li>哈希索引数据并不是按照索引值顺序存储的，所以无法用于排序</li><li>不支持索引匹配查找</li><li>只能支持等值比较查找</li></ul><p>创建自定义哈希索引：在B树的基础上创建一个伪哈希索引，使用哈希值而不是<strong>键本身</strong>来进行索引查找，需要在WHERE子句中使用哈希函数得到对应的哈希值</p><h1 id="索引策略"><a href="#索引策略" class="headerlink" title="索引策略"></a>索引策略</h1><h2 id="独立的列"><a href="#独立的列" class="headerlink" title="独立的列"></a>独立的列</h2><p>在查询的列不是独立的列的情况下，Mysql就不会使用索引来进行查询，其次索引列不能是表达式的一部分或函数的参数</p><p><a href="https://leetcode-cn.com/problems/big-countries/">Leetcode-0595 大的国家</a></p><p>在这里，对于单列来说，使用OR没有任何的问题，但在涉及到多个列的情况下，如果选择了某个列属性之后，就会对另外一个进行全扫描。简单来说，在InnoDB中使用OR会导致索引失效。</p><p>而索引列不能是表达式的一部分，如下的sql语句无法正常解析</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT actor_id FROM sakila.actor WHERE actor_id + 1 = 5;</span><br></pre></td></tr></table></figure><p>在使用中应该养成简化WHERE条件的习惯：将索引列单独放在比较符号的一侧</p><h2 id="前缀索引和索引选择性"><a href="#前缀索引和索引选择性" class="headerlink" title="前缀索引和索引选择性"></a>前缀索引和索引选择性</h2><p>需要索引过长的字符串的情况下，会让索引变得大且慢</p><p>在这一情况下可以索引开始的一部分字符，大大节约索引空间，但是也会降低索引的选择性（不重复的索引值和数据表的记录总数比值）</p><p>而对于BLOB、TEXT、VARCHAR类型的列必须使用前缀索引，Mysql不允许索引这些列的完整长度</p><p>前缀索引的诀窍在于要选择足够长的前缀以保证较高的选择性，但是又不能太长（便于节省空间），前缀应该保证选择性接近索引整个列</p><blockquote><p>决定最适合的前缀长度的方法：</p><p>找到最常见的值的列表，然后和最常见的前缀列表进行比较</p><p>逐渐增加前缀的长度，使得前缀的选择性接近完整列的选择性</p></blockquote><p>假设通过查找得到了最适合的前缀长度，可以添加前缀索引</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE TABLE_NAME ADD KEY (COLUMN_NAME(PRE_LENGTH));</span><br></pre></td></tr></table></figure><p>ps. mysql无法使用前缀索引做<code>ORDER BY</code>和<code>GROUP BY</code>，也无法做业务覆盖扫描</p><h3 id="多列索引"><a href="#多列索引" class="headerlink" title="多列索引"></a>多列索引</h3><p>在Mysql5.0和更新版本中引入了”索引合并“的策略，一定程度上可以使用表上的多个单列索引来定位指定的行</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT col1, col2 FROM table Where col1 = &quot;test1&quot; OR col2 = &quot;test2&quot;; </span><br></pre></td></tr></table></figure><p>该条语句会使用全表查询，而不会使用索引，需要改写为<code>UNION</code>的形式</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT col1, col2 FROM table WHERE col1 = &quot;test1&quot; </span><br><span class="line">UNION ALL</span><br><span class="line">SELECT col1, col2 FROM table WHERE col2 = &quot;test2&quot;</span><br><span class="line">AND col2 &lt;&gt; 1;</span><br></pre></td></tr></table></figure><p>而在Mysql5.0和更新版本中，可以同时使用两个单列索引进行扫描，并且将结果进行合并，其算法有三个变种：<code>OR</code>条件的联合，<code>AND</code>条件的相交以及结合两种情况的联合及相交</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css&quot;&gt;&lt;div class=&quot;admonition note&quot;&gt;&lt;ul&gt;
-&lt;li&gt;本篇博</summary>
-      
-    
-    
-    
-    <category term="Wiki" scheme="http://decision01.com/categories/Wiki/"/>
-    
-    
-    <category term="database" scheme="http://decision01.com/tags/database/"/>
     
   </entry>
   

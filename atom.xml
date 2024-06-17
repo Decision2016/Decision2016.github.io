@@ -6,7 +6,7 @@
   <link href="http://decision01.com/atom.xml" rel="self"/>
   
   <link href="http://decision01.com/"/>
-  <updated>2024-05-27T17:11:39.267Z</updated>
+  <updated>2024-06-17T14:50:11.067Z</updated>
   <id>http://decision01.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>甘孜州五日游记</title>
+    <link href="http://decision01.com/post/b5ca29f5.html"/>
+    <id>http://decision01.com/post/b5ca29f5.html</id>
+    <published>2024-06-17T14:43:31.000Z</published>
+    <updated>2024-06-17T14:50:11.067Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>（先开坑，写是要写的 = = ）</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css&quot;&gt;&lt;p&gt;（先开坑，写是要写的 = = ）&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    <category term="杂记" scheme="http://decision01.com/categories/%E6%9D%82%E8%AE%B0/"/>
+    
+    
+    <category term="游记" scheme="http://decision01.com/tags/%E6%B8%B8%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>新时代淘金：数字货币牛熊一轮游</title>
@@ -495,30 +520,6 @@
     <category term="c#" scheme="http://decision01.com/tags/c/"/>
     
     <category term="windows UI" scheme="http://decision01.com/tags/windows-UI/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JPEG结构及编码解码</title>
-    <link href="http://decision01.com/post/e407e7f0.html"/>
-    <id>http://decision01.com/post/e407e7f0.html</id>
-    <published>2021-03-20T09:07:28.000Z</published>
-    <updated>2024-04-08T08:03:49.040Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><div class="admonition note"><p>为什么会想到看这个东西呢，因为选了个数据恢复的课不得不了解一下（早知道就应该选水点的实验课了）</p><p>或许后面还会造个轮子玩玩吧。。</p></div><h1 id="JPEG文件格式"><a href="#JPEG文件格式" class="headerlink" title="JPEG文件格式"></a>JPEG文件格式</h1><p>JPEG文件通常以<code>FFD8</code>头部标识，以<code>FFD9</code>作为结束标识，在文件中以FF表示一个段的开头，后跟标识信息表示段的内容，再之后是两字节的数表示段的长度</p><p><img src="https://i.loli.net/2021/03/20/KFY4kLa7u1NBDpQ.png" alt="jpg段信息较为直观的展示，来源见参考文章"></p><h1 id="编码过程"><a href="#编码过程" class="headerlink" title="编码过程"></a>编码过程</h1><h2 id="色彩空间"><a href="#色彩空间" class="headerlink" title="色彩空间"></a>色彩空间</h2><p>大多数JPEG算法的实现使用<strong>亮度</strong>和<strong>色度</strong>（YUV编码）而非RGB编码，因为人眼很难观察到高频亮度在很小的区域中的变化。RGB使用3个字节来存储颜色信息，而YUV也使用3个字节来存储，但是每个字节表示的信息和RGB相比是不同的。图片的编码流程如下</p><p><img src="https://i.loli.net/2021/03/20/gvM7U1PpYEDZezr.png" alt="JPEG Encoding process"></p><h2 id="离散变换和量化"><a href="#离散变换和量化" class="headerlink" title="离散变换和量化"></a>离散变换和量化</h2><p>JPEG在处理图像之前将图片划分为8x8的小块来进行处理（这样的小块被称为最小编码单元），在处理的时候需要将像素值的范围进行修改，使得值的范围在$[-127, 128]$之间，未进行处理的范围在$[0, 255]$，使得像素值以0为中心，便于利用离散余弦变换。离散余弦变换把离散的数据变成多个余弦信号的组合。</p><h3 id="二维DCT变换"><a href="#二维DCT变换" class="headerlink" title="二维DCT变换"></a>二维DCT变换</h3><p>二维DCT的变换公式：<br>$$<br>F(u,v) = c(u)c(v)\sum_{i = 0}^{N - 1}\sum_{J = 0}^{N - 1}f(i, j)cos[\frac{(i + 0.5)\pi}{N}]cos[\frac{(j + 0.5)\pi}{N}]<br>$$<br>$$<br>c(x) =<br>\begin{cases}<br>\sqrt{\frac{1}{N}}, x = 0 \\\<br>\sqrt{\frac{2}{N}}, x \neq 0 \\\<br>\end{cases}<br>$$<br><del>看起来不太看得懂，但是主要注重怎么用就行了</del></p><p>将上面的式子改为矩阵的形式，令$U(i, j) = c(i)cos[\frac{(j + 0.5)\pi}{N}]$，则$F = UAU^T$，DCT矩阵$U$在8x8的方阵中如下<br>$$<br>U=\frac{1}{2}\begin{bmatrix}<br>\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} \\\<br>cos\frac{\pi}{16} &amp; cos\frac{3\pi}{16} &amp; cos\frac{5\pi}{16} &amp; cos\frac{7\pi}{16} &amp; cos\frac{9\pi}{16} &amp; cos\frac{11\pi}{16} &amp; cos\frac{13\pi}{16} &amp; cos\frac{15\pi}{16} \\\<br>cos\frac{2\pi}{16} &amp; cos\frac{6\pi}{16} &amp; cos\frac{10\pi}{16} &amp; cos\frac{14\pi}{16} &amp; cos\frac{18\pi}{16} &amp; cos\frac{22\pi}{16} &amp; cos\frac{26\pi}{16} &amp; cos\frac{30\pi}{16} \\\<br>cos\frac{3\pi}{16} &amp; cos\frac{9\pi}{16} &amp; cos\frac{15\pi}{16} &amp; cos\frac{21\pi}{16} &amp; cos\frac{27\pi}{16} &amp; cos\frac{33\pi}{16} &amp; cos\frac{39\pi}{16} &amp; cos\frac{45\pi}{16} \\\<br>cos\frac{4\pi}{16} &amp; cos\frac{12\pi}{16} &amp; cos\frac{20\pi}{16} &amp; cos\frac{28\pi}{16} &amp; cos\frac{36\pi}{16} &amp; cos\frac{44\pi}{16} &amp; cos\frac{52\pi}{16} &amp; cos\frac{60\pi}{16} \\\<br>cos\frac{5\pi}{16} &amp; cos\frac{15\pi}{16} &amp; cos\frac{25\pi}{16} &amp; cos\frac{35\pi}{16} &amp; cos\frac{45\pi}{16} &amp; cos\frac{55\pi}{16} &amp; cos\frac{65\pi}{16} &amp; cos\frac{75\pi}{16} \\\<br>cos\frac{6\pi}{16} &amp; cos\frac{18\pi}{16} &amp; cos\frac{30\pi}{16} &amp; cos\frac{42\pi}{16} &amp; cos\frac{54\pi}{16} &amp; cos\frac{66\pi}{16} &amp; cos\frac{78\pi}{16} &amp; cos\frac{90\pi}{16} \\\<br>cos\frac{7\pi}{16} &amp; cos\frac{21\pi}{16} &amp; cos\frac{35\pi}{16} &amp; cos\frac{49\pi}{16} &amp; cos\frac{63\pi}{16} &amp; cos\frac{77\pi}{16} &amp; cos\frac{91\pi}{16} &amp; cos\frac{105\pi}{16} \\\<br>\end{bmatrix}<br>$$</p><p>通过该矩阵进行相乘即可得到进行DCT处理后的信息矩阵</p><h3 id="量化"><a href="#量化" class="headerlink" title="量化"></a>量化</h3><p>在得到DCT矩阵后通过量化表来进行量化，量化的过程很简单，通常是根据压缩的精细度使用不同的量化表，DCT矩阵和量化表矩阵中对应位置的值进行相处得到量化后的矩阵。</p><h2 id="编码-amp-压缩"><a href="#编码-amp-压缩" class="headerlink" title="编码&amp;压缩"></a>编码&amp;压缩</h2><h3 id="Zig-Zag"><a href="#Zig-Zag" class="headerlink" title="Zig-Zag"></a>Zig-Zag</h3><p>在量化完成之后，高频的位置的矩阵信息通常就变成0了，所以为了方便压缩，通过Z形扫描，将这些为0的值连到一起</p><p>例如：<br>$$<br>\begin{bmatrix}<br>15 &amp; 14 &amp; 10 &amp; 9 \\\<br>13 &amp; 11 &amp; 8 &amp; 0  \\\<br>12 &amp; 0 &amp; 0 &amp; 0   \\\<br>0 &amp; 0 &amp; 0 &amp; 0<br>\end{bmatrix}<br>$$<br>在经过扫描后，变成了<br>$$<br>\begin{bmatrix}<br>15 &amp; 14 &amp; 13 &amp; 12 &amp;11 &amp; 10 &amp; 9 &amp; 8 &amp;0 &amp; …… &amp; 0<br>\end{bmatrix}<br>$$</p><h3 id="行程编码和增量编码"><a href="#行程编码和增量编码" class="headerlink" title="行程编码和增量编码"></a>行程编码和增量编码</h3><p>行程编码其实是一种较为容易想出来的压缩编码方式（突然想起来这个好像以前听卡常狂魔wys讲过orz）</p><p>行程编码简单来说就是统计当前信息连续出现多少次，并且记录次数<br>$$<br>\begin{bmatrix}<br>0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0<br>\end{bmatrix}<br>$$<br>在进行编码后就是<br>$$<br>\begin{bmatrix}<br>0 &amp; 8<br>\end{bmatrix}<br>$$<br>没记错的话那个时候听讲座还提到过这个压缩方式被哪家压缩软件的软件公司给申请了专利（？</p><p>然后增量编码是通过与之前的字节进行比较增量变换进行编码的方式</p><p>$$<br>\begin{bmatrix}<br>10 &amp; 11 &amp; 12 &amp; 13 &amp; 10 &amp; 9<br>\end{bmatrix}<br>$$</p><p>在经过编码之后就是<br>$$<br>\begin{bmatrix}<br>10 &amp; 1 &amp; 2 &amp; 3 &amp; 0 &amp; -1<br>\end{bmatrix}<br>$$<br>在JPEG中，DCT系数矩阵中的值都相对于前面的DCT表中的DC值进行了增量编码，这样可以让后面的DC值都能够靠近0，便于后续进行哈夫曼编码。所以如果修改图像的第一个DC系数会导致整个图片发送很大的变动，而修改靠后的DC系数引起的变化比较小。</p><blockquote><p>In JPEG, every DC value in a DCT coefficient matrix is delta encoded relative to the DC value preceding it. This means that if you change the very first DCT coefficient of your image, the whole image will get screwed up but if you modify the first value of the last DCT matrix, only a very tiny part of your image will be affected. This is useful because the first DC value in your image is usually the most varied and by applying the Delta encoding we bring the rest of DC values close to 0 and that results in better compression in the next step of Huffman Encoding.</p><p>​                                                                                        ——《Understanding and Decoding a JPEG Image using Python》</p></blockquote><h3 id="哈夫曼编码"><a href="#哈夫曼编码" class="headerlink" title="哈夫曼编码"></a>哈夫曼编码</h3><p>哈夫曼编码的实现这里不细说，JPEG里面通过哈夫曼编码压缩的方式将信息进一步压缩</p><p>在经过DCT变换以及量化后得到的DCT系数矩阵中，第一个数为DC系数，其他的63个为AC系数</p><p>对于亮度和色度需要进行不同的编码，而对应AC系数和DC系数也有不同的编码，所以一般来说一个彩色的JPEG图像中存在4个哈夫曼表</p><p>写一下哈夫曼表在JPEG中的存储形式，随便选了一张图片，哈夫曼表段如下</p><p><img src="https://i.loli.net/2021/03/20/e3QjxO1Eu9VoHfP.png" alt="image-20210320165408508"></p><p>选取中间比较长的一段来进行说明</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Offset      0  1  2  3  4  5  6  7   8  9 10 11 12 13 14 15</span><br><span class="line"></span><br><span class="line">00000192                                                 FF                  </span><br><span class="line">00000208   C4 00 4B 10 00 02 02 01  03 02 03 06 04 02 07 06   ?K             </span><br><span class="line">00000224   05 03 01 09 00 01 02 11  03 04 12 21 05 31 13 41              ! 1 A</span><br><span class="line">00000240   51 06 22 61 71 81 91 07  14 32 42 52 A1 15 23 43   Q &quot;aq ? 2BR?#C</span><br><span class="line">00000256   B1 C1 D1 E1 33 44 62 72  82 92 16 24 34 53 F1 63   绷厌3Dbr倰 $4S馽</span><br><span class="line">00000272   83 F0 17 93 A2 25 73 C2  E2 45 54 55               凁 摙%s骡ETU</span><br></pre></td></tr></table></figure><p><code>FF C4</code>表示哈夫曼表的开始，<code>00 4B</code>表示长度，随后跟的<code>10</code>表示类型，属于AC表的0号表</p><blockquote><p>哈夫曼表的表类型：</p><p>高4位标识表示该表是AC交流表还是DC直流表，0表示DC，1表示AC</p><p>低4位标识表示该表是0号表还是一号表</p></blockquote><p>主要看深蓝色部分和绿色部分</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00 02 02 01 03 02 03 06 04 02 07 06 05 03 01 09</span><br></pre></td></tr></table></figure><p>每个字节表示对应位数的码字的数量，例如位数为2、3、6、10的码字都有2个，而位数为3、16的码字都有1个等等，总的加起来就算后面剩余部分的长度（哈夫曼树的叶子节点的个数）</p><p>剩余部分根据码字长度表来依次建立，得到哈夫曼编码表，这里写前面一小部分</p><table><thead><tr><th>序号</th><th>码字长度</th><th>码字</th><th>值</th></tr></thead><tbody><tr><td>1</td><td>2</td><td>00</td><td>0x00</td></tr><tr><td>2</td><td>2</td><td>01</td><td>0x01</td></tr><tr><td>3</td><td>3</td><td>100</td><td>0x02</td></tr><tr><td>4</td><td>3</td><td>101</td><td>0x11</td></tr><tr><td>……</td><td>……</td><td>……</td><td>……</td></tr></tbody></table><p>中间码字缺失的，在当前码字加1后，补0到最后进行补足</p><h1 id="解码"><a href="#解码" class="headerlink" title="解码"></a>解码</h1><p>(咕咕咕)</p><h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="https://yasoob.me/posts/understanding-and-writing-jpeg-decoder-in-python/#introduction">Understanding and Decoding a JPEG Image using Python</a></p><p><a href="https://blog.csdn.net/nemoyy/article/details/80896449">理解JPEG图像压缩算法,DCT变换</a></p><p><a href="https://koushtav.me/jpeg/tutorial/c++/decoder/2019/03/02/lets-write-a-simple-jpeg-library-part-2/#define-huffman-table-segment-dht">Let’s Write a Simple JPEG Library, Part-II: The Decoder</a></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css&quot;&gt;&lt;div class=&quot;admonition note&quot;&gt;&lt;p&gt;为什么会想到看这个</summary>
-      
-    
-    
-    
-    <category term="Wiki" scheme="http://decision01.com/categories/Wiki/"/>
-    
-    
-    <category term="bin" scheme="http://decision01.com/tags/bin/"/>
     
   </entry>
   

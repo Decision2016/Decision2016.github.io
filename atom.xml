@@ -3,11 +3,11 @@
   <title>Decision`s blog</title>
   
   
-  <link href="http://decision01.com/atom.xml" rel="self"/>
+  <link href="https://decision01.com/atom.xml" rel="self"/>
   
-  <link href="http://decision01.com/"/>
+  <link href="https://decision01.com/"/>
   <updated>2024-09-10T05:30:07.969Z</updated>
-  <id>http://decision01.com/</id>
+  <id>https://decision01.com/</id>
   
   <author>
     <name>Decision</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>P2P 网络自引导技术</title>
-    <link href="http://decision01.com/post/b699c560.html"/>
-    <id>http://decision01.com/post/b699c560.html</id>
+    <link href="https://decision01.com/post/b699c560.html"/>
+    <id>https://decision01.com/post/b699c560.html</id>
     <published>2024-09-10T05:18:02.000Z</published>
     <updated>2024-09-10T05:30:07.969Z</updated>
     
@@ -33,17 +33,17 @@
     
     
     
-    <category term="Research" scheme="http://decision01.com/categories/Research/"/>
+    <category term="Research" scheme="https://decision01.com/categories/Research/"/>
     
     
-    <category term="distributed network" scheme="http://decision01.com/tags/distributed-network/"/>
+    <category term="distributed network" scheme="https://decision01.com/tags/distributed-network/"/>
     
   </entry>
   
   <entry>
     <title>甘孜州五日游记</title>
-    <link href="http://decision01.com/post/b5ca29f5.html"/>
-    <id>http://decision01.com/post/b5ca29f5.html</id>
+    <link href="https://decision01.com/post/b5ca29f5.html"/>
+    <id>https://decision01.com/post/b5ca29f5.html</id>
     <published>2024-06-17T14:43:31.000Z</published>
     <updated>2024-08-19T05:46:03.353Z</updated>
     
@@ -57,17 +57,17 @@
     
     
     
-    <category term="杂记" scheme="http://decision01.com/categories/%E6%9D%82%E8%AE%B0/"/>
+    <category term="杂记" scheme="https://decision01.com/categories/%E6%9D%82%E8%AE%B0/"/>
     
     
-    <category term="游记" scheme="http://decision01.com/tags/%E6%B8%B8%E8%AE%B0/"/>
+    <category term="游记" scheme="https://decision01.com/tags/%E6%B8%B8%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>新时代淘金：数字货币牛熊一轮游</title>
-    <link href="http://decision01.com/post/58adb9d4.html"/>
-    <id>http://decision01.com/post/58adb9d4.html</id>
+    <link href="https://decision01.com/post/58adb9d4.html"/>
+    <id>https://decision01.com/post/58adb9d4.html</id>
     <published>2024-05-21T16:02:50.000Z</published>
     <updated>2024-05-27T17:11:39.267Z</updated>
     
@@ -78,17 +78,17 @@
     
     
     
-    <category term="杂记" scheme="http://decision01.com/categories/%E6%9D%82%E8%AE%B0/"/>
+    <category term="杂记" scheme="https://decision01.com/categories/%E6%9D%82%E8%AE%B0/"/>
     
     
-    <category term="blockchain" scheme="http://decision01.com/tags/blockchain/"/>
+    <category term="blockchain" scheme="https://decision01.com/tags/blockchain/"/>
     
   </entry>
   
   <entry>
     <title>BIP-340/1：Schnorr 签名与 MAST</title>
-    <link href="http://decision01.com/post/b45dd1b1.html"/>
-    <id>http://decision01.com/post/b45dd1b1.html</id>
+    <link href="https://decision01.com/post/b45dd1b1.html"/>
+    <id>https://decision01.com/post/b45dd1b1.html</id>
     <published>2024-04-08T16:15:09.000Z</published>
     <updated>2024-04-29T14:30:02.596Z</updated>
     
@@ -102,21 +102,21 @@
     
     
     
-    <category term="Wiki" scheme="http://decision01.com/categories/Wiki/"/>
+    <category term="Wiki" scheme="https://decision01.com/categories/Wiki/"/>
     
     
-    <category term="blockchain" scheme="http://decision01.com/tags/blockchain/"/>
+    <category term="blockchain" scheme="https://decision01.com/tags/blockchain/"/>
     
-    <category term="bitcoin" scheme="http://decision01.com/tags/bitcoin/"/>
+    <category term="bitcoin" scheme="https://decision01.com/tags/bitcoin/"/>
     
-    <category term="cryptography" scheme="http://decision01.com/tags/cryptography/"/>
+    <category term="cryptography" scheme="https://decision01.com/tags/cryptography/"/>
     
   </entry>
   
   <entry>
     <title>Bitcoin 支付方式及地址类型</title>
-    <link href="http://decision01.com/post/8a19da7d.html"/>
-    <id>http://decision01.com/post/8a19da7d.html</id>
+    <link href="https://decision01.com/post/8a19da7d.html"/>
+    <id>https://decision01.com/post/8a19da7d.html</id>
     <published>2024-04-08T12:16:05.000Z</published>
     <updated>2024-04-29T14:31:07.550Z</updated>
     
@@ -130,19 +130,19 @@
     
     
     
-    <category term="Dev" scheme="http://decision01.com/categories/Dev/"/>
+    <category term="Dev" scheme="https://decision01.com/categories/Dev/"/>
     
     
-    <category term="blockchain" scheme="http://decision01.com/tags/blockchain/"/>
+    <category term="blockchain" scheme="https://decision01.com/tags/blockchain/"/>
     
-    <category term="bitcoin" scheme="http://decision01.com/tags/bitcoin/"/>
+    <category term="bitcoin" scheme="https://decision01.com/tags/bitcoin/"/>
     
   </entry>
   
   <entry>
     <title>btcd：Golang 下的交易构建</title>
-    <link href="http://decision01.com/post/c19159ae.html"/>
-    <id>http://decision01.com/post/c19159ae.html</id>
+    <link href="https://decision01.com/post/c19159ae.html"/>
+    <id>https://decision01.com/post/c19159ae.html</id>
     <published>2024-04-08T06:01:32.000Z</published>
     <updated>2024-09-20T06:29:11.418Z</updated>
     
@@ -156,19 +156,19 @@
     
     
     
-    <category term="Dev" scheme="http://decision01.com/categories/Dev/"/>
+    <category term="Dev" scheme="https://decision01.com/categories/Dev/"/>
     
     
-    <category term="blockchain" scheme="http://decision01.com/tags/blockchain/"/>
+    <category term="blockchain" scheme="https://decision01.com/tags/blockchain/"/>
     
-    <category term="bitcoin" scheme="http://decision01.com/tags/bitcoin/"/>
+    <category term="bitcoin" scheme="https://decision01.com/tags/bitcoin/"/>
     
   </entry>
   
   <entry>
     <title>go-libp2p 踩坑记</title>
-    <link href="http://decision01.com/post/822fd34d.html"/>
-    <id>http://decision01.com/post/822fd34d.html</id>
+    <link href="https://decision01.com/post/822fd34d.html"/>
+    <id>https://decision01.com/post/822fd34d.html</id>
     <published>2023-11-04T09:06:08.000Z</published>
     <updated>2024-04-08T08:03:49.045Z</updated>
     
@@ -182,19 +182,19 @@
     
     
     
-    <category term="Dev" scheme="http://decision01.com/categories/Dev/"/>
+    <category term="Dev" scheme="https://decision01.com/categories/Dev/"/>
     
     
-    <category term="golang" scheme="http://decision01.com/tags/golang/"/>
+    <category term="golang" scheme="https://decision01.com/tags/golang/"/>
     
-    <category term="go-libp2p" scheme="http://decision01.com/tags/go-libp2p/"/>
+    <category term="go-libp2p" scheme="https://decision01.com/tags/go-libp2p/"/>
     
   </entry>
   
   <entry>
     <title>Prometheus 指标监控</title>
-    <link href="http://decision01.com/post/cc6b7110.html"/>
-    <id>http://decision01.com/post/cc6b7110.html</id>
+    <link href="https://decision01.com/post/cc6b7110.html"/>
+    <id>https://decision01.com/post/cc6b7110.html</id>
     <published>2023-08-01T07:57:27.000Z</published>
     <updated>2024-04-08T08:03:49.041Z</updated>
     
@@ -208,19 +208,19 @@
     
     
     
-    <category term="Dev" scheme="http://decision01.com/categories/Dev/"/>
+    <category term="Dev" scheme="https://decision01.com/categories/Dev/"/>
     
     
-    <category term="golang" scheme="http://decision01.com/tags/golang/"/>
+    <category term="golang" scheme="https://decision01.com/tags/golang/"/>
     
-    <category term="metrics" scheme="http://decision01.com/tags/metrics/"/>
+    <category term="metrics" scheme="https://decision01.com/tags/metrics/"/>
     
   </entry>
   
   <entry>
     <title>Json Web Token</title>
-    <link href="http://decision01.com/post/9f5baac8.html"/>
-    <id>http://decision01.com/post/9f5baac8.html</id>
+    <link href="https://decision01.com/post/9f5baac8.html"/>
+    <id>https://decision01.com/post/9f5baac8.html</id>
     <published>2023-07-16T13:35:55.000Z</published>
     <updated>2024-04-08T08:03:49.040Z</updated>
     
@@ -234,17 +234,17 @@
     
     
     
-    <category term="Wiki" scheme="http://decision01.com/categories/Wiki/"/>
+    <category term="Wiki" scheme="https://decision01.com/categories/Wiki/"/>
     
     
-    <category term="cryptography" scheme="http://decision01.com/tags/cryptography/"/>
+    <category term="cryptography" scheme="https://decision01.com/tags/cryptography/"/>
     
   </entry>
   
   <entry>
     <title>Golang 泛型编程</title>
-    <link href="http://decision01.com/post/26091937.html"/>
-    <id>http://decision01.com/post/26091937.html</id>
+    <link href="https://decision01.com/post/26091937.html"/>
+    <id>https://decision01.com/post/26091937.html</id>
     <published>2023-06-18T08:02:33.000Z</published>
     <updated>2024-04-08T08:03:49.039Z</updated>
     
@@ -259,19 +259,19 @@
     
     
     
-    <category term="Dev" scheme="http://decision01.com/categories/Dev/"/>
+    <category term="Dev" scheme="https://decision01.com/categories/Dev/"/>
     
     
-    <category term="golang" scheme="http://decision01.com/tags/golang/"/>
+    <category term="golang" scheme="https://decision01.com/tags/golang/"/>
     
-    <category term="generic" scheme="http://decision01.com/tags/generic/"/>
+    <category term="generic" scheme="https://decision01.com/tags/generic/"/>
     
   </entry>
   
   <entry>
     <title>BIP、闪电网络与 Trao</title>
-    <link href="http://decision01.com/post/4f925910.html"/>
-    <id>http://decision01.com/post/4f925910.html</id>
+    <link href="https://decision01.com/post/4f925910.html"/>
+    <id>https://decision01.com/post/4f925910.html</id>
     <published>2023-05-26T07:19:07.000Z</published>
     <updated>2024-04-08T14:56:25.270Z</updated>
     
@@ -285,19 +285,19 @@
     
     
     
-    <category term="Wiki" scheme="http://decision01.com/categories/Wiki/"/>
+    <category term="Wiki" scheme="https://decision01.com/categories/Wiki/"/>
     
     
-    <category term="blockchain" scheme="http://decision01.com/tags/blockchain/"/>
+    <category term="blockchain" scheme="https://decision01.com/tags/blockchain/"/>
     
-    <category term="bitcoin" scheme="http://decision01.com/tags/bitcoin/"/>
+    <category term="bitcoin" scheme="https://decision01.com/tags/bitcoin/"/>
     
   </entry>
   
   <entry>
     <title>密码累加器</title>
-    <link href="http://decision01.com/post/ae4d471f.html"/>
-    <id>http://decision01.com/post/ae4d471f.html</id>
+    <link href="https://decision01.com/post/ae4d471f.html"/>
+    <id>https://decision01.com/post/ae4d471f.html</id>
     <published>2023-01-02T14:12:49.000Z</published>
     <updated>2024-04-08T08:03:49.046Z</updated>
     
@@ -313,17 +313,17 @@
     
     
     
-    <category term="Research" scheme="http://decision01.com/categories/Research/"/>
+    <category term="Research" scheme="https://decision01.com/categories/Research/"/>
     
     
-    <category term="cryptography" scheme="http://decision01.com/tags/cryptography/"/>
+    <category term="cryptography" scheme="https://decision01.com/tags/cryptography/"/>
     
   </entry>
   
   <entry>
     <title>Kademlia协议及广播方法</title>
-    <link href="http://decision01.com/post/db10e69d.html"/>
-    <id>http://decision01.com/post/db10e69d.html</id>
+    <link href="https://decision01.com/post/db10e69d.html"/>
+    <id>https://decision01.com/post/db10e69d.html</id>
     <published>2022-09-27T06:57:33.000Z</published>
     <updated>2024-09-10T22:48:20.719Z</updated>
     
@@ -337,17 +337,17 @@
     
     
     
-    <category term="Research" scheme="http://decision01.com/categories/Research/"/>
+    <category term="Research" scheme="https://decision01.com/categories/Research/"/>
     
     
-    <category term="distributed network" scheme="http://decision01.com/tags/distributed-network/"/>
+    <category term="distributed network" scheme="https://decision01.com/tags/distributed-network/"/>
     
   </entry>
   
   <entry>
     <title>Sundaeswap feature</title>
-    <link href="http://decision01.com/post/6ba030b7.html"/>
-    <id>http://decision01.com/post/6ba030b7.html</id>
+    <link href="https://decision01.com/post/6ba030b7.html"/>
+    <id>https://decision01.com/post/6ba030b7.html</id>
     <published>2022-08-14T03:45:01.000Z</published>
     <updated>2024-04-08T08:03:49.041Z</updated>
     
@@ -361,19 +361,19 @@
     
     
     
-    <category term="Wiki" scheme="http://decision01.com/categories/Wiki/"/>
+    <category term="Wiki" scheme="https://decision01.com/categories/Wiki/"/>
     
     
-    <category term="blockchain" scheme="http://decision01.com/tags/blockchain/"/>
+    <category term="blockchain" scheme="https://decision01.com/tags/blockchain/"/>
     
-    <category term="dex" scheme="http://decision01.com/tags/dex/"/>
+    <category term="dex" scheme="https://decision01.com/tags/dex/"/>
     
   </entry>
   
   <entry>
     <title>毕业行·甘肃</title>
-    <link href="http://decision01.com/post/3d984fbf.html"/>
-    <id>http://decision01.com/post/3d984fbf.html</id>
+    <link href="https://decision01.com/post/3d984fbf.html"/>
+    <id>https://decision01.com/post/3d984fbf.html</id>
     <published>2022-08-10T15:36:23.000Z</published>
     <updated>2024-06-18T05:24:28.124Z</updated>
     
@@ -387,17 +387,17 @@
     
     
     
-    <category term="杂记" scheme="http://decision01.com/categories/%E6%9D%82%E8%AE%B0/"/>
+    <category term="杂记" scheme="https://decision01.com/categories/%E6%9D%82%E8%AE%B0/"/>
     
     
-    <category term="游记" scheme="http://decision01.com/tags/%E6%B8%B8%E8%AE%B0/"/>
+    <category term="游记" scheme="https://decision01.com/tags/%E6%B8%B8%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>毕业行·青海</title>
-    <link href="http://decision01.com/post/de12d551.html"/>
-    <id>http://decision01.com/post/de12d551.html</id>
+    <link href="https://decision01.com/post/de12d551.html"/>
+    <id>https://decision01.com/post/de12d551.html</id>
     <published>2022-08-10T15:35:11.000Z</published>
     <updated>2024-06-18T05:28:31.152Z</updated>
     
@@ -411,17 +411,17 @@
     
     
     
-    <category term="杂记" scheme="http://decision01.com/categories/%E6%9D%82%E8%AE%B0/"/>
+    <category term="杂记" scheme="https://decision01.com/categories/%E6%9D%82%E8%AE%B0/"/>
     
     
-    <category term="游记" scheme="http://decision01.com/tags/%E6%B8%B8%E8%AE%B0/"/>
+    <category term="游记" scheme="https://decision01.com/tags/%E6%B8%B8%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>毕业行·武汉</title>
-    <link href="http://decision01.com/post/5421685b.html"/>
-    <id>http://decision01.com/post/5421685b.html</id>
+    <link href="https://decision01.com/post/5421685b.html"/>
+    <id>https://decision01.com/post/5421685b.html</id>
     <published>2022-08-06T16:07:11.000Z</published>
     <updated>2024-04-08T08:03:49.047Z</updated>
     
@@ -435,17 +435,17 @@
     
     
     
-    <category term="杂记" scheme="http://decision01.com/categories/%E6%9D%82%E8%AE%B0/"/>
+    <category term="杂记" scheme="https://decision01.com/categories/%E6%9D%82%E8%AE%B0/"/>
     
     
-    <category term="游记" scheme="http://decision01.com/tags/%E6%B8%B8%E8%AE%B0/"/>
+    <category term="游记" scheme="https://decision01.com/tags/%E6%B8%B8%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>Epilogue/Prologue</title>
-    <link href="http://decision01.com/post/774346dc.html"/>
-    <id>http://decision01.com/post/774346dc.html</id>
+    <link href="https://decision01.com/post/774346dc.html"/>
+    <id>https://decision01.com/post/774346dc.html</id>
     <published>2022-06-08T14:46:47.000Z</published>
     <updated>2024-04-08T08:03:49.039Z</updated>
     
@@ -459,17 +459,17 @@
     
     
     
-    <category term="杂记" scheme="http://decision01.com/categories/%E6%9D%82%E8%AE%B0/"/>
+    <category term="杂记" scheme="https://decision01.com/categories/%E6%9D%82%E8%AE%B0/"/>
     
     
-    <category term="阶段性" scheme="http://decision01.com/tags/%E9%98%B6%E6%AE%B5%E6%80%A7/"/>
+    <category term="阶段性" scheme="https://decision01.com/tags/%E9%98%B6%E6%AE%B5%E6%80%A7/"/>
     
   </entry>
   
   <entry>
     <title>可验证随机函数</title>
-    <link href="http://decision01.com/post/b30aad48.html"/>
-    <id>http://decision01.com/post/b30aad48.html</id>
+    <link href="https://decision01.com/post/b30aad48.html"/>
+    <id>https://decision01.com/post/b30aad48.html</id>
     <published>2022-04-06T10:21:14.000Z</published>
     <updated>2024-04-10T08:30:38.279Z</updated>
     
@@ -483,19 +483,19 @@
     
     
     
-    <category term="Research" scheme="http://decision01.com/categories/Research/"/>
+    <category term="Research" scheme="https://decision01.com/categories/Research/"/>
     
     
-    <category term="blockchain" scheme="http://decision01.com/tags/blockchain/"/>
+    <category term="blockchain" scheme="https://decision01.com/tags/blockchain/"/>
     
-    <category term="cryptography" scheme="http://decision01.com/tags/cryptography/"/>
+    <category term="cryptography" scheme="https://decision01.com/tags/cryptography/"/>
     
   </entry>
   
   <entry>
     <title>《Carving Orphaned JPEG File Fragments》阅读笔记</title>
-    <link href="http://decision01.com/post/43168d0.html"/>
-    <id>http://decision01.com/post/43168d0.html</id>
+    <link href="https://decision01.com/post/43168d0.html"/>
+    <id>https://decision01.com/post/43168d0.html</id>
     <published>2021-11-09T07:58:48.000Z</published>
     <updated>2024-04-08T08:03:49.045Z</updated>
     
@@ -509,12 +509,12 @@
     
     
     
-    <category term="Research" scheme="http://decision01.com/categories/Research/"/>
+    <category term="Research" scheme="https://decision01.com/categories/Research/"/>
     
     
-    <category term="research" scheme="http://decision01.com/tags/research/"/>
+    <category term="research" scheme="https://decision01.com/tags/research/"/>
     
-    <category term="binary" scheme="http://decision01.com/tags/binary/"/>
+    <category term="binary" scheme="https://decision01.com/tags/binary/"/>
     
   </entry>
   

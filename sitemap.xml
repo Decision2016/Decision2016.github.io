@@ -9,14 +9,14 @@
   </url>
   
   <url>
-    <loc>https://decision01.com/post/b5ca29f5.html</loc>
+    <loc>https://decision01.com/post/898b7ce0.html</loc>
     
     <lastmod>2026-01-08</lastmod>
     
   </url>
   
   <url>
-    <loc>https://decision01.com/post/898b7ce0.html</loc>
+    <loc>https://decision01.com/post/b5ca29f5.html</loc>
     
     <lastmod>2026-01-08</lastmod>
     
@@ -317,14 +317,14 @@
   </url>
   
   <url>
-    <loc>https://decision01.com/post/e407e7f0.html</loc>
+    <loc>https://decision01.com/post/9f5baac8.html</loc>
     
     <lastmod>2024-04-08</lastmod>
     
   </url>
   
   <url>
-    <loc>https://decision01.com/post/9f5baac8.html</loc>
+    <loc>https://decision01.com/post/e407e7f0.html</loc>
     
     <lastmod>2024-04-08</lastmod>
     
@@ -466,13 +466,6 @@
   </url>
   
   <url>
-    <loc>https://decision01.com/tags/server/</loc>
-    <lastmod>2026-01-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://decision01.com/tags/distributed-network/</loc>
     <lastmod>2026-01-08</lastmod>
     <changefreq>daily</changefreq>
@@ -487,21 +480,14 @@
   </url>
   
   <url>
-    <loc>https://decision01.com/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</loc>
+    <loc>https://decision01.com/tags/server/</loc>
     <lastmod>2026-01-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://decision01.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
-    <lastmod>2026-01-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://decision01.com/tags/%E5%9B%BE%E8%AE%BA/</loc>
+    <loc>https://decision01.com/tags/struct/</loc>
     <lastmod>2026-01-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -522,6 +508,20 @@
   </url>
   
   <url>
+    <loc>https://decision01.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
+    <lastmod>2026-01-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://decision01.com/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</loc>
+    <lastmod>2026-01-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://decision01.com/tags/c/</loc>
     <lastmod>2026-01-08</lastmod>
     <changefreq>daily</changefreq>
@@ -530,6 +530,13 @@
   
   <url>
     <loc>https://decision01.com/tags/windows-UI/</loc>
+    <lastmod>2026-01-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://decision01.com/tags/%E5%9B%BE%E8%AE%BA/</loc>
     <lastmod>2026-01-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -564,7 +571,7 @@
   </url>
   
   <url>
-    <loc>https://decision01.com/tags/struct/</loc>
+    <loc>https://decision01.com/tags/assemble/</loc>
     <lastmod>2026-01-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -593,13 +600,6 @@
   
   <url>
     <loc>https://decision01.com/tags/C/</loc>
-    <lastmod>2026-01-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://decision01.com/tags/assemble/</loc>
     <lastmod>2026-01-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

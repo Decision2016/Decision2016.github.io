@@ -9,7 +9,7 @@
   </url>
   
   <url>
-    <loc>https://decision01.com/post/b5ca29f5.html</loc>
+    <loc>https://decision01.com/post/898b7ce0.html</loc>
     
     <lastmod>2026-01-08</lastmod>
     
@@ -23,7 +23,7 @@
   </url>
   
   <url>
-    <loc>https://decision01.com/post/898b7ce0.html</loc>
+    <loc>https://decision01.com/post/b5ca29f5.html</loc>
     
     <lastmod>2026-01-08</lastmod>
     
@@ -403,14 +403,14 @@
   </url>
   
   <url>
-    <loc>https://decision01.com/tags/bitcoin/</loc>
+    <loc>https://decision01.com/tags/%E9%9D%A2%E7%BB%8F/</loc>
     <lastmod>2026-01-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://decision01.com/tags/%E9%9D%A2%E7%BB%8F/</loc>
+    <loc>https://decision01.com/tags/bitcoin/</loc>
     <lastmod>2026-01-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -466,13 +466,6 @@
   </url>
   
   <url>
-    <loc>https://decision01.com/tags/distributed-network/</loc>
-    <lastmod>2026-01-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://decision01.com/tags/server/</loc>
     <lastmod>2026-01-08</lastmod>
     <changefreq>daily</changefreq>
@@ -481,6 +474,13 @@
   
   <url>
     <loc>https://decision01.com/tags/network/</loc>
+    <lastmod>2026-01-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://decision01.com/tags/distributed-network/</loc>
     <lastmod>2026-01-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -515,14 +515,14 @@
   </url>
   
   <url>
-    <loc>https://decision01.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
+    <loc>https://decision01.com/tags/%E5%9B%BE%E8%AE%BA/</loc>
     <lastmod>2026-01-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://decision01.com/tags/%E5%9B%BE%E8%AE%BA/</loc>
+    <loc>https://decision01.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
     <lastmod>2026-01-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -585,14 +585,14 @@
   </url>
   
   <url>
-    <loc>https://decision01.com/tags/miniprogram/</loc>
+    <loc>https://decision01.com/tags/assemble/</loc>
     <lastmod>2026-01-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://decision01.com/tags/assemble/</loc>
+    <loc>https://decision01.com/tags/miniprogram/</loc>
     <lastmod>2026-01-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -620,14 +620,14 @@
   </url>
   
   <url>
-    <loc>https://decision01.com/tags/%E5%9C%A3%E5%9C%B0%E5%B7%A1%E7%A4%BC/</loc>
+    <loc>https://decision01.com/tags/%E6%97%A5%E6%9C%AC/</loc>
     <lastmod>2026-01-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://decision01.com/tags/%E6%97%A5%E6%9C%AC/</loc>
+    <loc>https://decision01.com/tags/%E5%9C%A3%E5%9C%B0%E5%B7%A1%E7%A4%BC/</loc>
     <lastmod>2026-01-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
